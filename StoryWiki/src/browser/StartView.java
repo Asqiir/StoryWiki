@@ -1,5 +1,7 @@
 package browser;
 
+import java.awt.Color;
+import java.awt.GridLayout;
 import java.awt.event.*;
 import java.io.IOException;
 
@@ -68,11 +70,14 @@ public class StartView {
 		newPButton.addActionListener(newPButtonListener);
 		loadPButton.addActionListener(loadPButtonListener);
 		
-		f.getContentPane().setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
+		JPanel layer = new JPanel();
+		layer.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+		layer.setLayout(new GridLayout(2,1,10,10));
 		
-		f.getContentPane().add(newPButton);
-		f.getContentPane().add(loadPButton);
+		layer.add(newPButton);
+		layer.add(loadPButton);
 		
+		f.add(layer);
 		f.setVisible(true);
 		
 		return f;
