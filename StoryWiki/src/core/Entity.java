@@ -252,4 +252,7 @@ public class Entity implements Serializable, Searchable<Entity> {
 		return this;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
 }
