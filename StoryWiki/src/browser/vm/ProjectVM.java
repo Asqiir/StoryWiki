@@ -1,6 +1,9 @@
 package browser.vm;
 
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JTextField; //not ideal!
 
 import browser.vm.ProjectController.OpenViewListener;
@@ -31,7 +34,14 @@ public class ProjectVM extends SingleVM<Project> {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				//1. add the entity
-				String id = ((JTextField) arg0.getSource()).getText();
+				
+				ShowProjectView spView = (ShowProjectView) getView();
+				String id = spView.sendCreateAndShowEntityInput();
+				
+				if(id == null) {
+					return;
+				}
+				
 				getData().add(new Entity(id, Types.NOTE));
 				
 				//2. reload existing views
@@ -45,8 +55,12 @@ public class ProjectVM extends SingleVM<Project> {
 		ActionListener deleteEntityListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				JTextField textField = (JTextField) arg0.getSource();
-				String id = textField.getText();
+				String id = ((ShowProjectView) getView()).getSelected();
+				
+				if(id == null) {
+					return;
+				}
+				
 				getData().unContain(id);
 				
 				commitEdit();
@@ -62,12 +76,23 @@ public class ProjectVM extends SingleVM<Project> {
 			}
 		};
 		
-		return new ShowProjectView(getData().getName(), getData().getAll().size(), new SwapListener(), vcl, newEntityListener, deleteEntityListener, allEntitiesListener);
+		return new ShowProjectView(getData().getName(), getData().getAll().size(), createAllEntityOptions(), new SwapListener(), vcl, newEntityListener, deleteEntityListener, allEntitiesListener);
 	}
 
 	@Override
 	protected EditView<Project> getInstanceOfEditView(ViewClosedListener vcl) {
 		return new EditProjectView(getData().getName(), new SwapAndEditListener(), vcl);	
+	}
+	
+	protected String[] createAllEntityOptions() {
+		List<Entity> eList = ((Project) getData()).getEntities();
+		List<String> nameList = new ArrayList<String>();
+		
+		for(Entity element:eList) {
+			nameList.add(element.getIdentifier());
+		}
+		
+		return nameList.toArray(new String[nameList.size()]);
 	}
 
 

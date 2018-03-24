@@ -1,8 +1,9 @@
 package browser.vm.views;
 
 import javax.swing.*;
+
+import java.awt.GridLayout;
 import java.awt.event.*;
-import browser.vm.*;
 import core.*;
 
 public class EditProjectView extends EditView<Project> {
@@ -11,14 +12,26 @@ public class EditProjectView extends EditView<Project> {
 	public EditProjectView(String name, ActionListener saveAndSwapListener, WindowAdapter vcl) {
 		super(vcl, saveAndSwapListener);
 		
-		frame.setSize(200, 50);
+		frame.setSize(300, 120);
 		frame.setTitle("Bearbeite Projekt: " + name);
 		
-		input.setText(name);
-		frame.add(input);
+		//create an inner layer with borders
+		JPanel layer = new JPanel();
+		layer.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		
+		layer.setLayout(new GridLayout(2,1,10,10));
+		
+		input.setText(name);
 		input.addActionListener(getSaveAndSwapListener());
 		
+		JButton ready = new JButton("Fertig");
+		ready.addActionListener(saveAndSwapListener);
+		
+		layer.add(input);
+		layer.add(ready);
+		//==================
+		
+		frame.add(layer);
 		frame.setVisible(true);
 	}
 	

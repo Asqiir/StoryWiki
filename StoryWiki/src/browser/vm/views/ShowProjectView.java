@@ -2,82 +2,129 @@ package browser.vm.views;
 
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.text.html.parser.Entity;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.swing.*;
+
+import core.Entity;
 import core.Project;
 
 public class ShowProjectView extends ShowView<Project> {	
-	protected JLabel nameLabel;
-	protected JLabel numberLabel;
-	protected final JPanel showAll = new JPanel();
+	protected JLabel header;
+	protected JLabel showNumber;
 	
-	public ShowProjectView(String name, int number, ActionListener changeViewListener, WindowAdapter vcl, ActionListener createAndShowEntityListener, ActionListener deleteEntityListener, ActionListener allEntitiesListener) {
+	protected JList showAllEntities;
+	
+	protected JTextField renameField = new JTextField();
+	protected JTextField openAndShowField = new JTextField();
+	
+	public ShowProjectView(String name, int number, String[] allEntityOptions, ActionListener changeViewListener, WindowAdapter vcl, ActionListener createAndShowEntityListener, ActionListener deleteEntityListener, ActionListener allEntitiesListener) {
 		super(vcl);
-		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
 		frame.setTitle(name);
 		
-		//First row; contains name and button to edit it
-		JPanel nameRow = new JPanel();
-		nameRow.setLayout(new BorderLayout());
-		nameLabel = new JLabel(name);
-		nameRow.add(BorderLayout.WEST, nameLabel);
-		JButton editNameButton = new JButton("edit");
-		editNameButton.addActionListener(changeViewListener);
-		nameRow.add(BorderLayout.EAST, editNameButton);
+		JPanel layer = new JPanel();
+		layer.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		layer.setLayout(new BoxLayout(layer, BoxLayout.PAGE_AXIS));
 		
-		//second row; contains number of entities by now
-		JPanel numberRow = new JPanel();
-		numberLabel = new JLabel(Integer.toString(number));
-		numberRow.add(numberLabel);
-		numberRow.add(new JLabel("Entities"));
+		//first row: name and edit button
+		JPanel first = new JPanel();
+		first.setLayout(new BoxLayout(first, BoxLayout.LINE_AXIS));
 		
-		//third row; seeing all entities TODO: make this a scrollpane
-		showAll.setLayout(new BoxLayout(showAll, BoxLayout.Y_AXIS));
+		header = new JLabel(name);
+		header.setFont(new Font("Ubuntu", Font.BOLD, 26));
 		
-		//forth row; creating new entities
-		JPanel newE = new JPanel();
-		JLabel tNew = new JLabel("Zeige:");
-		JTextField newInput = new JTextField(10);
-		newInput.addActionListener(createAndShowEntityListener);
-		newE.add(tNew);
-		newE.add(newInput);
+		JButton edit = new JButton("Editieren");
+		edit.addActionListener(changeViewListener);
 		
-		//5 row to delete an entity
-		JPanel deleteRow = new JPanel();
-		deleteRow.add(new JLabel("Lösche:"));
-		JTextField deleteEntity = new JTextField(10);
-		deleteRow.add(deleteEntity);
-		deleteEntity.addActionListener(deleteEntityListener);
+		first.add(header);
+		first.add(Box.createHorizontalGlue());
+		first.add(edit);
 		
-		// 6 row to get all entities
-		JButton allE = new JButton("Alle Entities");
-		allE.addActionListener(allEntitiesListener);
+		//second row: all entities button, which is header
+		showNumber = new JLabel(number + " Entities");
+		showNumber.setFont(new Font("Ubuntu", Font.BOLD, 18));
+		//TODO: action-listener hinzufügen; in Button umwandeln
 		
-		//TODO: 7 row to close
+		//third row: Jlist for all entities
+		JScrollPane listScroll = new JScrollPane();
+		showAllEntities = new JList(allEntityOptions);
+		showAllEntities.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listScroll.setViewportView(showAllEntities);
+		listScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		listScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		
-		frame.add(nameRow);
-		frame.add(numberRow);
-		frame.add(showAll);
-		frame.add(newE);
-		frame.add(deleteRow);
-		frame.add(allE);
+		//4. - 6. grid layer
+		JPanel gridLayer = new JPanel();
+		gridLayer.setLayout(new GridLayout(2,2,10,10));
 		
-		frame.setSize(200, 400);
+		//fourth row: button open and button delete
+		JButton open = new JButton("Öffnen");
+		open.addActionListener(createAndShowEntityListener);
+		JButton delete = new JButton("Löschen");
+		delete.addActionListener(deleteEntityListener);
+		gridLayer.add(open);
+		gridLayer.add(delete);
+				
+		//fifth row: "new entity" and textfield
+		JLabel newE = new JLabel("(Erstelle &) Zeige:");
+		openAndShowField.addActionListener(createAndShowEntityListener);
+		gridLayer.add(newE);
+		gridLayer.add(openAndShowField);
+		
+		layer.add(first);
+		layer.add(Box.createRigidArea(new Dimension(0, 10)));
+		layer.add(showNumber);
+		layer.add(Box.createRigidArea(new Dimension(0, 10)));
+		layer.add(listScroll);
+		layer.add(Box.createRigidArea(new Dimension(0, 10)));
+		layer.add(gridLayer);
+		
+		frame.add(layer);
+		frame.setSize(600, 600);
 		frame.setVisible(true);
+	}
+	
+	protected void setNumber(int number) {
+		showNumber.setText(number + " Entities");
 	}
 
 	@Override
 	public void set(Project projShot) {
-		nameLabel.setText(projShot.getName());
-		numberLabel.setText(Integer.toString(projShot.getAll().size()));
+		header.setText(projShot.getName());
+		setNumber(projShot.getAll().size());
 		frame.setTitle(projShot.getName());
 		
-		showAll.removeAll();
+		//get all names, convert to String[]
+		List<Entity> eList = projShot.getEntities();
+		List<String> nameList = new ArrayList<String>();
 		
-		for(core.Entity e:projShot.getEntities()) {
-			showAll.add(new JLabel(e.getName()));
+		for(Entity element:eList) {
+			nameList.add(element.getIdentifier());
 		}
+		
+		String[] entityNames = nameList.toArray(new String[nameList.size()]);
+		//================
+		
+		showAllEntities.setListData(entityNames);
+	}
 
+	public String getSelected() {
+		return (String) showAllEntities.getSelectedValue();
+	}
+	
+	public String sendCreateAndShowEntityInput() {
+		String input = openAndShowField.getText();
+		
+		if(input.trim().length() > 0) {	
+			openAndShowField.setText("");
+			return input;
+		}
+		
+		if(!showAllEntities.isSelectionEmpty()) {
+			return getSelected();
+		}
+		
+		return null;
 	}
 }
