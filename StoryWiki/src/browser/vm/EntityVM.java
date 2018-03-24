@@ -29,6 +29,7 @@ public class EntityVM extends SingleVM<Entity> {
 
 	@Override
 	protected void writeEditToModel(Entity ess) {
+		getData().setName(ess.getName());
 		getData().setType(ess.get().getType());
 		getData().setDescription(ess.get().getDescription());
 	}

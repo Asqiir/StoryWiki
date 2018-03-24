@@ -21,44 +21,50 @@ public class ShowProjectView extends ShowView<Project> {
 	
 	public ShowProjectView(String name, int number, String[] allEntityOptions, ActionListener changeViewListener, WindowAdapter vcl, ActionListener createAndShowEntityListener, ActionListener deleteEntityListener, ActionListener allEntitiesListener) {
 		super(vcl);
+
 		frame.setTitle(name);
+		frame.setLayout(new BorderLayout(10,10));
 		
-		JPanel layer = new JPanel();
-		layer.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		layer.setLayout(new BoxLayout(layer, BoxLayout.PAGE_AXIS));
-		
-		//first row: name and edit button
-		JPanel first = new JPanel();
-		first.setLayout(new BoxLayout(first, BoxLayout.LINE_AXIS));
+		//NORTH
+		JPanel northern = new JPanel();
+		northern.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));
+		northern.setLayout(new BorderLayout(10,10));
+
+		JPanel headLine = new JPanel();
+		headLine.setLayout(new BoxLayout(headLine, BoxLayout.LINE_AXIS));
 		
 		header = new JLabel(name);
 		header.setFont(new Font("Ubuntu", Font.BOLD, 26));
 		
-		JButton edit = new JButton("Editieren");
+		JButton edit = new JButton("Bearbeiten");
 		edit.addActionListener(changeViewListener);
 		
-		first.add(header);
-		first.add(Box.createHorizontalGlue());
-		first.add(edit);
+		headLine.add(header);
+		headLine.add(Box.createHorizontalGlue());
+		headLine.add(edit);
 		
-		//second row: all entities button, which is header
 		showNumber = new JLabel(number + " Entities");
-		showNumber.setFont(new Font("Ubuntu", Font.BOLD, 18));
-		//TODO: action-listener hinzufügen; in Button umwandeln
-		
-		//third row: Jlist for all entities
+		showNumber.setFont(new Font("Ubuntu", Font.PLAIN, 20));
+		showNumber.setHorizontalAlignment(JLabel.CENTER);
+
+		northern.setMinimumSize(new Dimension(header.getPreferredSize().width + edit.getPreferredSize().width, northern.getPreferredSize().height));
+		northern.add(headLine, BorderLayout.NORTH);
+		northern.add(showNumber, BorderLayout.SOUTH);		
+
+		//CENTER
 		JScrollPane listScroll = new JScrollPane();
+		listScroll.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
 		showAllEntities = new JList(allEntityOptions);
 		showAllEntities.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listScroll.setViewportView(showAllEntities);
 		listScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		listScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		
-		//4. - 6. grid layer
+		//SOUTH
 		JPanel gridLayer = new JPanel();
+		gridLayer.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
 		gridLayer.setLayout(new GridLayout(2,2,10,10));
 		
-		//fourth row: button open and button delete
 		JButton open = new JButton("Öffnen");
 		open.addActionListener(createAndShowEntityListener);
 		JButton delete = new JButton("Löschen");
@@ -66,21 +72,16 @@ public class ShowProjectView extends ShowView<Project> {
 		gridLayer.add(open);
 		gridLayer.add(delete);
 				
-		//fifth row: "new entity" and textfield
 		JLabel newE = new JLabel("(Erstelle &) Zeige:");
 		openAndShowField.addActionListener(createAndShowEntityListener);
 		gridLayer.add(newE);
 		gridLayer.add(openAndShowField);
 		
-		layer.add(first);
-		layer.add(Box.createRigidArea(new Dimension(0, 10)));
-		layer.add(showNumber);
-		layer.add(Box.createRigidArea(new Dimension(0, 10)));
-		layer.add(listScroll);
-		layer.add(Box.createRigidArea(new Dimension(0, 10)));
-		layer.add(gridLayer);
+		//ADD ALL
+		frame.add(northern, BorderLayout.NORTH);
+		frame.add(listScroll, BorderLayout.CENTER);
+		frame.add(gridLayer, BorderLayout.SOUTH);
 		
-		frame.add(layer);
 		frame.setSize(600, 600);
 		frame.setVisible(true);
 	}
