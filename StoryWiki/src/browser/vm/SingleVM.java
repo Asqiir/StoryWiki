@@ -37,7 +37,6 @@ public abstract class SingleVM<MODEL> extends ViewModel<MODEL> {
 		EditView view = (EditView) getView();
 
 		MODEL edited = (MODEL) view.getEdited();
-		//TODO: cast entfernen
 		writeEditToModel(edited);
 		commitEdit();
 	}
