@@ -51,7 +51,7 @@ public class EditEntityView extends EditView<Entity> {
 
 	@Override
 	public Entity getEdited() {
-		Entity e = new Entity(nameField.getText(), Types.NOTE);
+		Entity e = new Entity(nameField.getText(), Types.NOTE); //TODO: make type changeable
 		e.setDescription(descArea.getText());
 		return e;
 	}
