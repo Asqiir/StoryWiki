@@ -4,8 +4,6 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JTextField; //not ideal!
-
 import browser.vm.ProjectController.OpenViewListener;
 import browser.vm.views.*;
 import core.*;
@@ -76,7 +74,44 @@ public class ProjectVM extends SingleVM<Project> {
 			}
 		};
 		
-		return new ShowProjectView(getData().getName(), getData().getAll().size(), createAllEntityOptions(), new SwapListener(), vcl, newEntityListener, deleteEntityListener, allEntitiesListener);
+		ActionListener linkListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Entity e1 = (Entity) getData().get(((ShowProjectView) getView()).getSelected());
+				Entity e2 = (Entity) getData().get(((ShowProjectView) getView()).getLinkTo());
+				
+				if(e1 == null || e2 == null) {
+					return;
+				}
+				
+				//if not linked yet, link
+				if(!e1.isLinkedTo(e2)) {
+					e1.link(e2);
+					commitEdit();
+				}
+				
+				//open both
+				OpenViewEvent ove1 = new OpenViewEvent(arg0.getSource(), ActionEvent.ACTION_PERFORMED, "", e1.getLink(e2));
+				OpenViewEvent ove2 = new OpenViewEvent(arg0.getSource(), ActionEvent.ACTION_PERFORMED, "", e2.getLink(e1));
+			}
+		};
+		
+		ActionListener unlinkListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Entity e1 = (Entity) getData().get(((ShowProjectView) getView()).getSelected());
+				Entity e2 = (Entity) getData().get(((ShowProjectView) getView()).getUnlink());
+				
+				if(e1 == null || e2 == null) {
+					return;
+				}
+				
+				e1.unLink(e2);
+				commitEdit();
+			}
+		};
+		
+		return new ShowProjectView(getData().getName(), getData().getAll().size(), createAllEntityOptions(), new SwapListener(), vcl, newEntityListener, deleteEntityListener, allEntitiesListener, linkListener, unlinkListener);
 	}
 
 	@Override

@@ -1,10 +1,12 @@
 package browser.vm;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import browser.vm.ProjectController.*;
 import browser.vm.views.*;
 import core.Entity;
+import core.Link;
 
 public class EntityVM extends SingleVM<Entity> {
 
@@ -24,13 +26,24 @@ public class EntityVM extends SingleVM<Entity> {
 
 	@Override
 	protected ShowView<Entity> getInstanceOfShowView(ViewClosedListener vcl) {
-		return new ShowEntityView(new SwapListener(), vcl, /*TODO: newLinkListener, openLinkListener, deleteLinkListener, */ getData());
+		return new ShowEntityView(new SwapListener(), new OpenLinkListener(), vcl, getData());
 	}
 
 	@Override
-	protected void writeEditToModel(Entity ess) {
-		getData().setName(ess.getName());
-		getData().setType(ess.get().getType());
-		getData().setDescription(ess.get().getDescription());
+	protected void writeEditToModel(Entity entity) {
+		getData().setName(entity.getName());
+		getData().setType(entity.get().getType());
+		getData().setDescription(entity.get().getDescription());
+	}
+	
+	class OpenLinkListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			String id = ((ShowEntityView) getView()).getSelectedLink();
+			
+			OpenViewEvent ove = new OpenViewEvent(arg0.getSource(), ActionEvent.ACTION_PERFORMED, "", getData().getLink(id));
+			
+			getOpenViewListener().actionPerformed(ove);
+		}
 	}
 }

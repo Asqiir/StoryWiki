@@ -19,7 +19,12 @@ public class ShowProjectView extends ShowView<Project> {
 	protected JTextField renameField = new JTextField();
 	protected JTextField openAndShowField = new JTextField();
 	
-	public ShowProjectView(String name, int number, String[] allEntityOptions, ActionListener changeViewListener, WindowAdapter vcl, ActionListener createAndShowEntityListener, ActionListener deleteEntityListener, ActionListener allEntitiesListener) {
+	protected JTextField linkToField = new JTextField();
+	protected JTextField unlinkField = new JTextField();
+	
+	public ShowProjectView(String name, int number, String[] allEntityOptions, ActionListener changeViewListener, WindowAdapter vcl,ActionListener createAndShowEntityListener,
+			ActionListener deleteEntityListener, ActionListener allEntitiesListener, ActionListener linkListener, ActionListener unlinkListener) {
+		
 		super(vcl);
 
 		frame.setTitle(name);
@@ -65,6 +70,8 @@ public class ShowProjectView extends ShowView<Project> {
 			public void mouseClicked(MouseEvent arg0) {
 				if(arg0.getClickCount()>1) {
 					openAndShowField.setText(getSelected());
+					linkToField.setText(getSelected());
+					unlinkField.setText(getSelected());
 				}
 			}
 
@@ -84,7 +91,7 @@ public class ShowProjectView extends ShowView<Project> {
 		//SOUTH
 		JPanel gridLayer = new JPanel();
 		gridLayer.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
-		gridLayer.setLayout(new GridLayout(2,2,10,10));
+		gridLayer.setLayout(new GridLayout(4,2,10,10));
 		
 		JButton open = new JButton("Öffnen");
 		open.addActionListener(createAndShowEntityListener);
@@ -97,6 +104,21 @@ public class ShowProjectView extends ShowView<Project> {
 		openAndShowField.addActionListener(createAndShowEntityListener);
 		gridLayer.add(newE);
 		gridLayer.add(openAndShowField);
+		
+		JButton linkTo = new JButton("Verlinke mit:");
+		linkTo.addActionListener(linkListener);
+		linkToField.addActionListener(linkListener);
+		
+		gridLayer.add(linkTo);
+		gridLayer.add(linkToField);
+		
+		JButton unlink = new JButton("Trennen");
+		unlink.addActionListener(unlinkListener);
+		unlinkField.addActionListener(unlinkListener);
+		
+		gridLayer.add(unlink);
+		gridLayer.add(unlinkField);
+		
 		
 		//ADD ALL
 		frame.add(northern, BorderLayout.NORTH);
@@ -148,5 +170,18 @@ public class ShowProjectView extends ShowView<Project> {
 		}
 		
 		return null;
+	}
+
+	public String getLinkTo() {
+		String content = linkToField.getText();
+		linkToField.setText("");
+		
+		return content;
+	}
+
+	public String getUnlink() {
+		String unlink = unlinkField.getText();
+		unlinkField.setText("");
+		return unlink;
 	}
 }

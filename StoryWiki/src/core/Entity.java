@@ -106,6 +106,10 @@ public class Entity implements Serializable, Searchable<Entity> {
 		return (Link) linkContainer.get(e.getName());
 	}
 	
+	public Link getLink(String id) {
+		return (Link) linkContainer.get(id);
+	}
+	
 	public LocalDate getValidFrom() {
 		return validFrom;
 	}

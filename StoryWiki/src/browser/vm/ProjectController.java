@@ -41,6 +41,10 @@ public class ProjectController {
 		if(arg instanceof Entity) {
 			openViews.add(new EntityVM(new CloseViewListener(), new CommitEditListener(), (Entity) arg, new OpenViewListener()));
 		}
+		if(arg instanceof Link) {
+			//TODO: open link view
+			System.out.println("Möchte öffnen");
+		}
 		if(arg instanceof List && !((List) arg).isEmpty()) {
 			Object firstItem = ((List) arg).get(0);
 			
