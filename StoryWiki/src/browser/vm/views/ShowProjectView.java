@@ -60,6 +60,27 @@ public class ShowProjectView extends ShowView<Project> {
 		listScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		listScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		
+		showAllEntities.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(arg0.getClickCount()>1) {
+					openAndShowField.setText(getSelected());
+				}
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {	}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {}
+		});
+		
 		//SOUTH
 		JPanel gridLayer = new JPanel();
 		gridLayer.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
