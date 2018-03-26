@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import browser.vm.ProjectController.*;
 import browser.vm.views.*;
 import core.Entity;
-import core.Link;
+import core.Group;
 
 public class EntityVM extends SingleVM<Entity> {
 
@@ -26,7 +26,46 @@ public class EntityVM extends SingleVM<Entity> {
 
 	@Override
 	protected ShowView<Entity> getInstanceOfShowView(ViewClosedListener vcl) {
-		return new ShowEntityView(new SwapListener(), new OpenLinkListener(), vcl, getData());
+		ActionListener openLinkListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String id = ((ShowEntityView) getView()).getSelectedLink();
+				
+				OpenViewEvent ove = new OpenViewEvent(arg0.getSource(), ActionEvent.ACTION_PERFORMED, "", getData().getLink(id));
+				
+				getOpenViewListener().actionPerformed(ove);
+			}
+		};
+		
+		ActionListener createGroupListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String name = ((ShowEntityView) getView()).sendInputGroup();
+				getData().createGroup(name);
+				
+				commitEdit();
+			}
+		};
+		
+		ActionListener openGroupListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Group group = getData().getGroup(((ShowEntityView) getView()).getSelectedGroup());
+				OpenViewEvent ove = new OpenViewEvent(arg0.getSource(), ActionEvent.ACTION_PERFORMED, "", group);
+				
+				getOpenViewListener().actionPerformed(ove);
+			}
+		};
+		
+		ActionListener deleteGroupListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				getData().removeGroup(((ShowEntityView) getView()).sendInputGroup());
+				commitEdit();
+			}
+		};
+		
+		return new ShowEntityView(new SwapListener(), openLinkListener, vcl, createGroupListener, openGroupListener, deleteGroupListener, getData());
 	}
 
 	@Override
@@ -34,16 +73,5 @@ public class EntityVM extends SingleVM<Entity> {
 		getData().setName(entity.getName());
 		getData().setType(entity.get().getType());
 		getData().setDescription(entity.get().getDescription());
-	}
-	
-	class OpenLinkListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			String id = ((ShowEntityView) getView()).getSelectedLink();
-			
-			OpenViewEvent ove = new OpenViewEvent(arg0.getSource(), ActionEvent.ACTION_PERFORMED, "", getData().getLink(id));
-			
-			getOpenViewListener().actionPerformed(ove);
-		}
 	}
 }

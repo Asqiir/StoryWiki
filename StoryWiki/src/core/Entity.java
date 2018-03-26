@@ -234,6 +234,9 @@ public class Entity implements Serializable, Searchable<Entity> {
 		return groups;
 	}
 	
+	public Group getGroup(String id) {
+		return (Group) groupContainer.get(id);
+	}
 
 	@Override
 	public Boolean match(String search) {
