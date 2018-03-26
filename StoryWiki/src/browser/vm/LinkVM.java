@@ -33,10 +33,4 @@ public class LinkVM extends SingleVM<Link> {
 	protected void writeEditToModel(Link edit) {
 		getData().setDescription(edit.getDescription());
 	}
-
-	@Override
-	public void initView(ViewClosedListener vcl) {
-		setView(getInstanceOfShowView(vcl));
-	}
-
 }

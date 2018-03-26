@@ -4,6 +4,7 @@ import java.awt.event.*;
 
 import browser.vm.ProjectController.CommitEditListener;
 import browser.vm.ProjectController.OpenViewListener;
+import browser.vm.ViewModel.ViewClosedListener;
 import browser.vm.views.EditView;
 import browser.vm.views.ShowView;
 
@@ -13,6 +14,11 @@ public abstract class SingleVM<MODEL> extends ViewModel<MODEL> {
 	public SingleVM(ActionListener cvl, CommitEditListener cel,  MODEL data, OpenViewListener ovl) {
 		super(cvl, data, ovl);
 		this.cel = cel;
+	}
+	
+	@Override
+	public void initView(ViewClosedListener vcl) {
+		setView(getInstanceOfShowView(vcl));
 	}
 	
 	protected void swapView() {

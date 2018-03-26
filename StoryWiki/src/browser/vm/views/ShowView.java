@@ -9,8 +9,8 @@ public abstract class ShowView<MODEL> extends View<MODEL> {
 	 * - don't edit data (input fields for open views)
 	 */
 
-	public ShowView(WindowAdapter vcl) {
-		super(vcl);
+	public ShowView(WindowAdapter viewClosedListener) {
+		super(viewClosedListener);
 	}
 
 	public abstract void set(MODEL dss);

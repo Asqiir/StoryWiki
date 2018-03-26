@@ -119,16 +119,13 @@ public class ShowEntityView extends ShowView<Entity> {
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
 				if(arg0.getClickCount() > 1) {
 					groupField.setText(getSelectedGroup());
 				}
 			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {}
 
 			@Override
 			public void mouseExited(MouseEvent arg0) {}

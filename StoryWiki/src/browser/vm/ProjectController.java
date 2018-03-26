@@ -45,7 +45,7 @@ public class ProjectController {
 			openViews.add(new LinkVM(new CloseViewListener(), new CommitEditListener(), (Link) arg, new OpenViewListener()));
 		}
 		if(arg instanceof Group) {
-			System.out.println("möchte öffnen");
+			openViews.add(new GroupVM(new CloseViewListener(), new CommitEditListener(), (Group) arg, new OpenViewListener()));
 		}
 		if(arg instanceof List && !((List) arg).isEmpty()) {
 			Object firstItem = ((List) arg).get(0);

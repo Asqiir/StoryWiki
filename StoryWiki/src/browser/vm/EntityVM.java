@@ -15,11 +15,6 @@ public class EntityVM extends SingleVM<Entity> {
 	}
 
 	@Override
-	public void initView(ViewClosedListener vcl) {
-		setView(getInstanceOfShowView(vcl));
-	}
-
-	@Override
 	protected EditView<Entity> getInstanceOfEditView(ViewClosedListener vcl) {
 		return new EditEntityView(vcl, new SwapAndEditListener(), getData());
 	}
@@ -41,9 +36,12 @@ public class EntityVM extends SingleVM<Entity> {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String name = ((ShowEntityView) getView()).sendInputGroup();
-				getData().createGroup(name);
 				
-				commitEdit();
+				if(!(name == null || name.equals(""))) {
+					getData().createGroup(name);
+					
+					commitEdit();
+				}
 			}
 		};
 		

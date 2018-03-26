@@ -15,11 +15,6 @@ public class ProjectVM extends SingleVM<Project> {
 		super(cvl, cel, data, ovl);
 	}
 
-	@Override
-	public void initView(ViewClosedListener vcl) {
-		setView(getInstanceOfShowView(vcl));
-	}
-
 	/*============================
 	 * Get the VIEW INSTANCES
 	 * ===========================*/
