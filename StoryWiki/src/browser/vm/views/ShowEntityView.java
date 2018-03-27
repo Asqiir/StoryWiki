@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import core.*;
 
 public class ShowEntityView extends ShowView<Entity> {
-	private JPanel layer = new JPanel();
 	private JLabel title = new JLabel();
 	private JTextArea descArea = new JTextArea();
 	
@@ -312,10 +311,6 @@ public class ShowEntityView extends ShowView<Entity> {
 		frame.setVisible(true);
 	}
 	
-	protected JPanel getLayer() {
-		return layer;
-	}
-
 	@Override
 	public void set(Entity entity) {
 		frame.setTitle(entity.getName());

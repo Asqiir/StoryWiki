@@ -5,6 +5,7 @@ import javax.swing.*;
 
 public abstract class View<MODEL> {
 	protected final JFrame frame = new JFrame();
+	protected final JPanel layer = new JPanel();
 	private WindowListener vcl;
 	
 	public View(WindowAdapter vcl) {
@@ -12,15 +13,15 @@ public abstract class View<MODEL> {
 		this.vcl = vcl; //remember, to delete later
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
-//		Action closeFrame = new AbstractAction() {
-//			@Override
-//			public void actionPerformed(ActionEvent arg0) {
-//				frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-//			}
-//		};
-//		
-//		getLayer().getInputMap().put(KeyStroke.getKeyStroke("control"), "control");
-//		getLayer().getActionMap().put("control", closeFrame);
+		Action closeFrame = new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+			}
+		};
+		
+		layer.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("control W"), "close frame");
+		layer.getActionMap().put("close frame", closeFrame);
 	}
 	
 	public void close() {
@@ -28,8 +29,6 @@ public abstract class View<MODEL> {
 		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 	}
 
-	protected abstract JPanel getLayer();
-	
 	public void removeCloseListener() { //removing is only meant to use when window is going to be closed; when vm shouldn't be stopped.
 		frame.removeWindowListener(vcl);
 		vcl = null;

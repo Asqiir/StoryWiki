@@ -8,7 +8,6 @@ import core.*;
 
 public class EditProjectView extends EditView<Project> {
 	private JTextField input = new JTextField(20);
-	private JPanel layer = new JPanel();
 	
 	public EditProjectView(String name, ActionListener saveAndSwapListener, WindowAdapter vcl) {
 		super(vcl, saveAndSwapListener);
@@ -32,10 +31,6 @@ public class EditProjectView extends EditView<Project> {
 		
 		frame.add(layer);
 		frame.setVisible(true);
-	}
-	
-	protected JPanel getLayer() {
-		return layer;
 	}
 	
 	@Override

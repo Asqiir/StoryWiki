@@ -11,12 +11,10 @@ import core.Entity;
 import core.Project;
 
 public class ShowProjectView extends ShowView<Project> {
-	private JPanel layer = new JPanel();
-	
 	protected JLabel header;
 	protected JLabel showNumber;
 	
-	protected JList showAllEntities;
+	protected JList<String> showAllEntities;
 	
 	protected JTextField renameField = new JTextField();
 	protected JTextField openAndShowField = new JTextField();
@@ -130,10 +128,6 @@ public class ShowProjectView extends ShowView<Project> {
 		frame.add(layer);
 		frame.setSize(600, 600);
 		frame.setVisible(true);
-	}
-	
-	protected JPanel getLayer() {
-		return layer;
 	}
 	
 	protected void setNumber(int number) {

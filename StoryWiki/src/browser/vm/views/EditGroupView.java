@@ -6,7 +6,6 @@ import java.awt.*;
 import core.*;
 
 public class EditGroupView extends EditView<Group> {
-	private JPanel layer = new JPanel();
 	private JTextField rename = new JTextField();
 
 	public EditGroupView(WindowAdapter vcl, ActionListener saveAndSwapListener, String title) {
@@ -31,10 +30,6 @@ public class EditGroupView extends EditView<Group> {
 		frame.setVisible(true);
 	}
 	
-	protected JPanel getLayer() {
-		return layer;
-	}
-
 	@Override
 	public Group getEdited() {
 		return new Group(rename.getText());

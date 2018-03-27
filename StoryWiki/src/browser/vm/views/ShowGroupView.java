@@ -9,7 +9,6 @@ import java.awt.*;
 import core.*;
 
 public class ShowGroupView extends ShowView<Group> {
-	private JPanel layer = new JPanel();
 	private JLabel title = new JLabel();
 	private JList<String> links = new JList<String>();
 	
@@ -59,10 +58,6 @@ public class ShowGroupView extends ShowView<Group> {
 		
 		frame.setSize(300, 400);
 		frame.setVisible(true);
-	}
-	
-	protected JPanel getLayer() {
-		return layer;
 	}
 	
 	public String getSelected() {

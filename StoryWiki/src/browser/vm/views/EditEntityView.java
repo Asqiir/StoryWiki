@@ -8,7 +8,6 @@ import core.*;
 import core.Entity.Types;
 
 public class EditEntityView extends EditView<Entity> {
-	private JPanel layer = new JPanel();
 	private JTextField nameField = new JTextField();
 	private JTextArea descArea = new JTextArea();
 	
@@ -46,10 +45,6 @@ public class EditEntityView extends EditView<Entity> {
 		
 		frame.add(layer);
 		frame.setVisible(true);
-	}
-
-	protected JPanel getLayer() {
-		return layer;
 	}
 	
 	@Override

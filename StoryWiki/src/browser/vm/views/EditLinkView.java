@@ -6,7 +6,6 @@ import java.awt.*;
 import core.*;
 
 public class EditLinkView extends EditView<Link> {
-	private JPanel layer = new JPanel();
 	private JTextArea input = new JTextArea();
 	private Entity linkedTo;
 
@@ -39,10 +38,6 @@ public class EditLinkView extends EditView<Link> {
 		frame.setVisible(true);
 	}
 	
-	protected JPanel getLayer() {
-		return layer;
-	}
-
 	@Override
 	public Link getEdited() {
 		return new Link(linkedTo, input.getText());

@@ -6,7 +6,6 @@ import java.awt.*;
 import core.*;
 
 public class ShowLinkView extends ShowView<Link> {
-	private JPanel layer = new JPanel();
 	private JTextArea description = new JTextArea();
 
 	public ShowLinkView(ActionListener swapListener, ActionListener openEntityListener, WindowAdapter vcl, Link link) {
@@ -45,10 +44,6 @@ public class ShowLinkView extends ShowView<Link> {
 		frame.setVisible(true);
 	}
 
-	protected JPanel getLayer() {
-		return layer;
-	}
-	
 	@Override
 	public void set(Link edit) {
 		frame.setTitle("Link zu: " + edit.getIdentifier());
