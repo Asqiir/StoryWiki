@@ -13,5 +13,5 @@ public abstract class ShowView<MODEL> extends View<MODEL> {
 		super(viewClosedListener);
 	}
 
-	public abstract void set(MODEL dss);
+	public abstract void set(MODEL model);
 }

@@ -11,8 +11,8 @@ import core.Link;
 
 public class EntityVM extends SingleVM<Entity> {
 
-	public EntityVM(ActionListener cvl, CommitEditListener cel, Entity data, OpenViewListener ovl) {
-		super(cvl, cel, data, ovl);
+	public EntityVM(ActionListener cvl, CommitEditListener cel, Entity data, OpenViewListener ovl, ActionListener ctrlQListener) {
+		super(cvl, cel, data, ovl, ctrlQListener);
 	}
 
 	@Override

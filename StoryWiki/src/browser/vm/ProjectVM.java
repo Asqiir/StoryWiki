@@ -11,8 +11,8 @@ import core.Entity.*;
 
 public class ProjectVM extends SingleVM<Project> {
 
-	public ProjectVM(ActionListener cvl, ProjectController.CommitEditListener cel, Project data, OpenViewListener ovl) {
-		super(cvl, cel, data, ovl);
+	public ProjectVM(ActionListener cvl, ProjectController.CommitEditListener cel, Project data, OpenViewListener ovl, ActionListener ctrlQListener) {
+		super(cvl, cel, data, ovl, ctrlQListener);
 	}
 
 	/*============================

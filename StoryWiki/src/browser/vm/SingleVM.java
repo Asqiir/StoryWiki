@@ -11,8 +11,8 @@ import browser.vm.views.ShowView;
 public abstract class SingleVM<MODEL> extends ViewModel<MODEL> {
 	private CommitEditListener cel;
 	
-	public SingleVM(ActionListener cvl, CommitEditListener cel,  MODEL data, OpenViewListener ovl) {
-		super(cvl, data, ovl);
+	public SingleVM(ActionListener cvl, CommitEditListener cel,  MODEL data, OpenViewListener ovl, ActionListener ctrlQListener) {
+		super(cvl, data, ovl, ctrlQListener);
 		this.cel = cel;
 	}
 	

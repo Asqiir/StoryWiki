@@ -8,13 +8,15 @@ import browser.vm.views.*;
 public abstract class ViewModel<MODEL> {
 	private ActionListener cvl;
 	private ActionListener ovl;
+	private ActionListener ctrlQListener;
 	private MODEL data;
 	private View<MODEL> view;
 	
-	public ViewModel(ActionListener cvl, MODEL data, OpenViewListener ovl) {
+	public ViewModel(ActionListener cvl, MODEL data, OpenViewListener ovl, ActionListener ctrlQListener) {
 		this.cvl = cvl;
 		this.data = data;
 		this.ovl = ovl;
+		this.ctrlQListener = ctrlQListener;
 		
 		initView(new ViewClosedListener());
 	}
@@ -37,6 +39,7 @@ public abstract class ViewModel<MODEL> {
 	}
 	protected void setView(View<MODEL> v) {
 		view = v;
+		view.addCtrlQListener(ctrlQListener);
 	}
 	protected ActionListener getOpenViewListener() {
 		return ovl;

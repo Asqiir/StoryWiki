@@ -22,7 +22,7 @@ public class ShowProjectView extends ShowView<Project> {
 	protected JTextField linkToField = new JTextField();
 	protected JTextField unlinkField = new JTextField();
 	
-	public ShowProjectView(String name, int number, String[] allEntityOptions, ActionListener changeViewListener, WindowAdapter vcl,ActionListener createAndShowEntityListener,
+	public ShowProjectView(String name, int number, String[] allEntityOptions, ActionListener changeViewListener, WindowAdapter vcl, ActionListener createAndShowEntityListener,
 			ActionListener deleteEntityListener, ActionListener allEntitiesListener, ActionListener linkListener, ActionListener unlinkListener) {
 		
 		super(vcl);

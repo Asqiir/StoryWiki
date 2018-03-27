@@ -7,8 +7,8 @@ import core.*;
 
 public class LinkVM extends SingleVM<Link> {
 
-	public LinkVM(ActionListener cvl, CommitEditListener cel, Link data, OpenViewListener ovl) {
-		super(cvl, cel, data, ovl);
+	public LinkVM(ActionListener cvl, CommitEditListener cel, Link data, OpenViewListener ovl, ActionListener ctrlQListener) {
+		super(cvl, cel, data, ovl, ctrlQListener);
 	}
 
 	@Override

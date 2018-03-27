@@ -36,16 +36,16 @@ public class ProjectController {
 	private void openView(Object arg) {
 		if(arg instanceof Project) {
 			//open, close (projectcontroller is closed when projects view is closed), edit
-			openViews.add(new ProjectVM(runningL, new CommitEditListener(), project, new OpenViewListener()));
+			openViews.add(new ProjectVM(runningL, new CommitEditListener(), project, new OpenViewListener(), new CtrlQListener()));
 		}
 		if(arg instanceof Entity) {
-			openViews.add(new EntityVM(new CloseViewListener(), new CommitEditListener(), (Entity) arg, new OpenViewListener()));
+			openViews.add(new EntityVM(new CloseViewListener(), new CommitEditListener(), (Entity) arg, new OpenViewListener(), new CtrlQListener()));
 		}
 		if(arg instanceof Link) {
-			openViews.add(new LinkVM(new CloseViewListener(), new CommitEditListener(), (Link) arg, new OpenViewListener()));
+			openViews.add(new LinkVM(new CloseViewListener(), new CommitEditListener(), (Link) arg, new OpenViewListener(), new CtrlQListener()));
 		}
 		if(arg instanceof Group) {
-			openViews.add(new GroupVM(new CloseViewListener(), new CommitEditListener(), (Group) arg, new OpenViewListener()));
+			openViews.add(new GroupVM(new CloseViewListener(), new CommitEditListener(), (Group) arg, new OpenViewListener(), new CtrlQListener()));
 		}
 		if(arg instanceof List && !((List) arg).isEmpty()) {
 			Object firstItem = ((List) arg).get(0);
@@ -76,6 +76,26 @@ public class ProjectController {
 			for(ViewModel<?> vm:openViews) {
 				vm.reload();
 			}
+		}
+	}
+	
+	class CtrlQListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			for(ViewModel element:openViews) {
+				if(element instanceof ProjectVM) {
+					/* Having pressed CTRL + Q, anything should be closed.
+					 * This happens by closing the main frame.
+					 * Program will return to start frame.
+					 */
+					
+					element.closeView();
+					return;
+				}
+			}
+			
+			
+			
 		}
 	}
 	

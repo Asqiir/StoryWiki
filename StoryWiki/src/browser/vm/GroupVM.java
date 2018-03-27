@@ -7,8 +7,8 @@ import core.*;
 
 public class GroupVM extends SingleVM<Group> {
 
-	public GroupVM(ActionListener cvl, CommitEditListener cel, Group data, OpenViewListener ovl) {
-		super(cvl, cel, data, ovl);
+	public GroupVM(ActionListener cvl, CommitEditListener cel, Group data, OpenViewListener ovl, ActionListener ctrlQListener) {
+		super(cvl, cel, data, ovl, ctrlQListener);
 	}
 
 	@Override

@@ -15,6 +15,17 @@ public class StartView {
 	public StartView(StartManager.StartListener sl) {
 		this.sl = sl;
 		frame = createNewOrLoadFrame(new StartButtonListener(false), new StartButtonListener(true));
+		
+		Action action = new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+			}
+		};
+		
+		frame.getRootPane().getInputMap().put(KeyStroke.getKeyStroke("ctrl W"), "close");
+		frame.getRootPane().getInputMap().put(KeyStroke.getKeyStroke("ctrl Q"), "close");
+		frame.getRootPane().getActionMap().put("close", action);
 	}
 	
 	void close() {
