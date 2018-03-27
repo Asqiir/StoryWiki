@@ -38,8 +38,6 @@ public class ShowLinkView extends ShowView<Link> {
 		layer.add(header, BorderLayout.NORTH);
 		layer.add(scroller, BorderLayout.CENTER);
 		
-		frame.add(layer);
-		
 		set(link);
 		frame.setVisible(true);
 	}

@@ -34,7 +34,6 @@ public class EditLinkView extends EditView<Link> {
 		layer.add(scroller, BorderLayout.CENTER);
 		layer.add(edit, BorderLayout.SOUTH);
 		
-		frame.add(layer);
 		frame.setVisible(true);
 	}
 	

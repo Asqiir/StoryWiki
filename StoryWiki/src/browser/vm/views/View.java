@@ -6,7 +6,7 @@ import java.util.*;
 
 public abstract class View<MODEL> {
 	protected final JFrame frame = new JFrame();
-	protected final JPanel layer = new JPanel();
+	protected final JPanel layer = (JPanel) frame.getContentPane();
 	private WindowListener vcl;
 	private List<ActionListener> ctrlQListener = new ArrayList<ActionListener>();
 	

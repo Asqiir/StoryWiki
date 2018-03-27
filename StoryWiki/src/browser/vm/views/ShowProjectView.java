@@ -125,7 +125,6 @@ public class ShowProjectView extends ShowView<Project> {
 		layer.add(listScroll, BorderLayout.CENTER);
 		layer.add(gridLayer, BorderLayout.SOUTH);
 		
-		frame.add(layer);
 		frame.setSize(600, 600);
 		frame.setVisible(true);
 	}

@@ -26,7 +26,6 @@ public class EditGroupView extends EditView<Group> {
 		layer.add(rename);
 		layer.add(finished);
 		
-		frame.add(layer);
 		frame.setVisible(true);
 	}
 	

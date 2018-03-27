@@ -304,9 +304,6 @@ public class ShowEntityView extends ShowView<Entity> {
 		layer.add(emptyPanel, cEmpty);
 		layer.add(adminGroups, cAdminGroups);
 
-
-		frame.add(layer);
-		
 		set(entity);
 		frame.setVisible(true);
 	}

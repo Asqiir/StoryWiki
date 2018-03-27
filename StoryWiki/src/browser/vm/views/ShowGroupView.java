@@ -52,8 +52,6 @@ public class ShowGroupView extends ShowView<Group> {
 		layer.add(scroller, BorderLayout.CENTER);
 		layer.add(grid, BorderLayout.SOUTH);
 		
-		frame.add(layer);
-		
 		set(group);
 		
 		frame.setSize(300, 400);

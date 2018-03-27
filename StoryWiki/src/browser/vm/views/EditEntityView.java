@@ -43,7 +43,6 @@ public class EditEntityView extends EditView<Entity> {
 		layer.add(scroller, BorderLayout.CENTER);
 		layer.add(finishedEdit, BorderLayout.SOUTH);
 		
-		frame.add(layer);
 		frame.setVisible(true);
 	}
 	

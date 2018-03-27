@@ -29,7 +29,6 @@ public class EditProjectView extends EditView<Project> {
 		layer.add(ready);
 		//==================
 		
-		frame.add(layer);
 		frame.setVisible(true);
 	}
 	
