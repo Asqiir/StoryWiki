@@ -23,18 +23,30 @@ public class GroupVM extends SingleVM<Group> {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String selected = ((ShowGroupView) getView()).getSelected();
-				Link link = (Link) getData().get(selected);
-				OpenViewEvent ove = new OpenViewEvent(arg0.getSource(), ActionEvent.ACTION_PERFORMED, "", link);
+				
+				if(!(selected == null || selected.equals(""))) {
+					String[] parts = selected.split("–");
+					
+					String id = parts[0].trim();
+					Link link = (Link) getData().get(id);
+					
+					OpenViewEvent ove = new OpenViewEvent(arg0.getSource(), ActionEvent.ACTION_PERFORMED, "", link);
+					getOpenViewListener().actionPerformed(ove);
+				}
 			}
 		};
 		
 		ActionListener removeLinkListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				String remByID = ((ShowGroupView) getView()).getSelected();
+				String rem = ((ShowGroupView) getView()).getSelected();
 				
-				getData().unContain(remByID);
-				commitEdit();
+				if(!(rem == null || rem.equals(""))) {
+					String remByID = rem.split("–")[0].trim();
+					
+					getData().unContain(remByID);
+					commitEdit();
+				}
 			}
 		};
 		

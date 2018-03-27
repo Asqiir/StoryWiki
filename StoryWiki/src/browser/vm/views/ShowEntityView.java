@@ -46,7 +46,8 @@ public class ShowEntityView extends ShowView<Entity> {
 	 * |______________________________________|		
 	 */
 	
-	public ShowEntityView(ActionListener swapListener, ActionListener openLinkListener, WindowAdapter vcl, ActionListener createGroupListener, ActionListener openGroupListener, ActionListener removeGroupListener, Entity entity) {
+	public ShowEntityView(ActionListener swapListener, ActionListener openLinkListener, WindowAdapter vcl, ActionListener createGroupListener, ActionListener openGroupListener,
+			ActionListener removeGroupListener, ActionListener addLinkToGroupListener, Entity entity) {
 		super(vcl);
 		 
 		frame.setSize(400, 500);
@@ -148,6 +149,9 @@ public class ShowEntityView extends ShowView<Entity> {
 		open_links.addActionListener(openLinkListener);
 		open_groups.addActionListener(openGroupListener);
 		
+		JButton add_link_to_group = new JButton("Link zu Gruppe hinzufügen");
+		add_link_to_group.addActionListener(addLinkToGroupListener);
+		
 		//=======BOX3====================
 		JButton create = new JButton("Gruppe erstellen");
 		JButton remove = new JButton ("Gruppe löschen");
@@ -247,9 +251,18 @@ public class ShowEntityView extends ShowView<Entity> {
 		cOpenbuttonGroups.weightx = 0.5;
 		cOpenbuttonGroups.weighty = 0;
 		
+		GridBagConstraints cAddLinkToGroup = new GridBagConstraints();
+		cAddLinkToGroup.gridx = 0;
+		cAddLinkToGroup.gridy = 5;
+		cAddLinkToGroup.fill = GridBagConstraints.HORIZONTAL;
+		cAddLinkToGroup.weightx = 0;
+		cAddLinkToGroup.weighty = 0;
+		cAddLinkToGroup.gridheight = 1;
+		cAddLinkToGroup.gridwidth = 2;
+		
 		GridBagConstraints cEmpty = new GridBagConstraints();
 		cEmpty.gridx = 0;
-		cEmpty.gridy = 5;
+		cEmpty.gridy = 6;
 		cEmpty.fill = GridBagConstraints.HORIZONTAL;
 		cEmpty.weightx = 0;
 		cEmpty.weighty = 0;
@@ -258,7 +271,7 @@ public class ShowEntityView extends ShowView<Entity> {
 		
 		GridBagConstraints cAdminGroups = new GridBagConstraints();
 		cAdminGroups.gridx = 0;
-		cAdminGroups.gridy = 6;
+		cAdminGroups.gridy = 7;
 		cAdminGroups.fill = GridBagConstraints.HORIZONTAL;
 		cAdminGroups.weightx = 0;
 		cAdminGroups.weighty = 0;
@@ -288,6 +301,7 @@ public class ShowEntityView extends ShowView<Entity> {
 		
 		layer.add(open_links, cOpenbuttonLinks);
 		layer.add(open_groups, cOpenbuttonGroups);
+		layer.add(add_link_to_group, cAddLinkToGroup);
 		
 		layer.add(emptyPanel, cEmpty);
 		layer.add(adminGroups, cAdminGroups);

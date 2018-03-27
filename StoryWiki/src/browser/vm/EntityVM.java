@@ -7,6 +7,7 @@ import browser.vm.ProjectController.*;
 import browser.vm.views.*;
 import core.Entity;
 import core.Group;
+import core.Link;
 
 public class EntityVM extends SingleVM<Entity> {
 
@@ -63,7 +64,23 @@ public class EntityVM extends SingleVM<Entity> {
 			}
 		};
 		
-		return new ShowEntityView(new SwapListener(), openLinkListener, vcl, createGroupListener, openGroupListener, deleteGroupListener, getData());
+		ActionListener addLinkToGroupListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String linkID = ((ShowEntityView) getView()).getSelectedLink();
+				String groupID = ((ShowEntityView) getView()).getSelectedGroup();
+				
+				if(!(linkID == null || linkID.equals("") || groupID == null || groupID.equals(""))) {
+					Link link = getData().getLink(linkID);
+					Group group = getData().getGroup(groupID);
+					
+					group.add(link);
+					commitEdit();
+				}
+			}
+		};
+		
+		return new ShowEntityView(new SwapListener(), openLinkListener, vcl, createGroupListener, openGroupListener, deleteGroupListener, addLinkToGroupListener, getData());
 	}
 
 	@Override

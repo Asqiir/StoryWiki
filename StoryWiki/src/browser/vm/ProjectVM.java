@@ -35,6 +35,8 @@ public class ProjectVM extends SingleVM<Project> {
 					return;
 				}
 				
+				id = id.replaceAll("–", "");
+				
 				getData().add(new Entity(id, Types.NOTE));
 				
 				//2. reload existing views
