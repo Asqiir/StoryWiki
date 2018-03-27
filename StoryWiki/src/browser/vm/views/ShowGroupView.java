@@ -9,8 +9,9 @@ import java.awt.*;
 import core.*;
 
 public class ShowGroupView extends ShowView<Group> {
-	JLabel title = new JLabel();
-	JList<String> links = new JList<String>();
+	private JPanel layer = new JPanel();
+	private JLabel title = new JLabel();
+	private JList<String> links = new JList<String>();
 	
 	public ShowGroupView(WindowAdapter vcl, ActionListener swapListener, ActionListener openLinkListener, ActionListener removeLinkListener, Group group) {
 		super(vcl);
@@ -45,7 +46,6 @@ public class ShowGroupView extends ShowView<Group> {
 		grid.add(remove);
 		
 		//Layer
-		JPanel layer = new JPanel();
 		layer.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 		layer.setLayout(new BorderLayout(10,10));
 		
@@ -59,6 +59,10 @@ public class ShowGroupView extends ShowView<Group> {
 		
 		frame.setSize(300, 400);
 		frame.setVisible(true);
+	}
+	
+	protected JPanel getLayer() {
+		return layer;
 	}
 	
 	public String getSelected() {

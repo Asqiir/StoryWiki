@@ -6,13 +6,14 @@ import java.awt.*;
 import core.*;
 
 public class ShowLinkView extends ShowView<Link> {
-	JTextArea description = new JTextArea();
+	private JPanel layer = new JPanel();
+	private JTextArea description = new JTextArea();
 
 	public ShowLinkView(ActionListener swapListener, ActionListener openEntityListener, WindowAdapter vcl, Link link) {
 		super(vcl);
 
 		frame.setSize(300, 400);
-		frame.setLayout(new BorderLayout(10,10));
+		layer.setLayout(new BorderLayout(10,10));
 		
 		JPanel header = new JPanel();
 		header.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));
@@ -35,13 +36,19 @@ public class ShowLinkView extends ShowView<Link> {
 		description.setEditable(false);
 		scroller.setViewportView(description);
 		
-		frame.add(header, BorderLayout.NORTH);
-		frame.add(scroller, BorderLayout.CENTER);
+		layer.add(header, BorderLayout.NORTH);
+		layer.add(scroller, BorderLayout.CENTER);
+		
+		frame.add(layer);
 		
 		set(link);
 		frame.setVisible(true);
 	}
 
+	protected JPanel getLayer() {
+		return layer;
+	}
+	
 	@Override
 	public void set(Link edit) {
 		frame.setTitle("Link zu: " + edit.getIdentifier());

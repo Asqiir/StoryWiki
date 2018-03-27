@@ -10,7 +10,9 @@ import javax.swing.*;
 import core.Entity;
 import core.Project;
 
-public class ShowProjectView extends ShowView<Project> {	
+public class ShowProjectView extends ShowView<Project> {
+	private JPanel layer = new JPanel();
+	
 	protected JLabel header;
 	protected JLabel showNumber;
 	
@@ -28,7 +30,7 @@ public class ShowProjectView extends ShowView<Project> {
 		super(vcl);
 
 		frame.setTitle(name);
-		frame.setLayout(new BorderLayout(10,10));
+		layer.setLayout(new BorderLayout(10,10));
 		
 		//NORTH
 		JPanel northern = new JPanel();
@@ -121,12 +123,17 @@ public class ShowProjectView extends ShowView<Project> {
 		
 		
 		//ADD ALL
-		frame.add(northern, BorderLayout.NORTH);
-		frame.add(listScroll, BorderLayout.CENTER);
-		frame.add(gridLayer, BorderLayout.SOUTH);
+		layer.add(northern, BorderLayout.NORTH);
+		layer.add(listScroll, BorderLayout.CENTER);
+		layer.add(gridLayer, BorderLayout.SOUTH);
 		
+		frame.add(layer);
 		frame.setSize(600, 600);
 		frame.setVisible(true);
+	}
+	
+	protected JPanel getLayer() {
+		return layer;
 	}
 	
 	protected void setNumber(int number) {

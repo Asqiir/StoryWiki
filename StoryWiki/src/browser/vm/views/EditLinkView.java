@@ -6,8 +6,9 @@ import java.awt.*;
 import core.*;
 
 public class EditLinkView extends EditView<Link> {
-	JTextArea input = new JTextArea();
-	Entity linkedTo;
+	private JPanel layer = new JPanel();
+	private JTextArea input = new JTextArea();
+	private Entity linkedTo;
 
 	public EditLinkView(WindowAdapter vcl, ActionListener saveAndSwapListener, Link link) {
 		super(vcl, saveAndSwapListener);
@@ -16,7 +17,6 @@ public class EditLinkView extends EditView<Link> {
 		
 		frame.setSize(300, 400);
 
-		JPanel layer = new JPanel();
 		layer.setLayout(new BorderLayout(10,10));
 		layer.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		
@@ -37,6 +37,10 @@ public class EditLinkView extends EditView<Link> {
 		
 		frame.add(layer);
 		frame.setVisible(true);
+	}
+	
+	protected JPanel getLayer() {
+		return layer;
 	}
 
 	@Override

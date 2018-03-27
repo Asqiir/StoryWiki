@@ -8,8 +8,9 @@ import core.*;
 import core.Entity.Types;
 
 public class EditEntityView extends EditView<Entity> {
-	JTextField nameField = new JTextField();
-	JTextArea descArea = new JTextArea();
+	private JPanel layer = new JPanel();
+	private JTextField nameField = new JTextField();
+	private JTextArea descArea = new JTextArea();
 	
 	public EditEntityView(WindowAdapter vcl, ActionListener sasl, Entity entity) {
 		super(vcl, sasl);
@@ -17,7 +18,6 @@ public class EditEntityView extends EditView<Entity> {
 		frame.setTitle(entity.get().getName());
 		frame.setSize(300, 500);
 		
-		JPanel layer = new JPanel();
 		layer.setLayout(new BorderLayout(10,10));
 		layer.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		
@@ -46,9 +46,12 @@ public class EditEntityView extends EditView<Entity> {
 		
 		frame.add(layer);
 		frame.setVisible(true);
-		
 	}
 
+	protected JPanel getLayer() {
+		return layer;
+	}
+	
 	@Override
 	public Entity getEdited() {
 		Entity e = new Entity(nameField.getText(), Types.NOTE); //TODO: make type changeable

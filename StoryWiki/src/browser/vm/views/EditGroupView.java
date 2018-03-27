@@ -6,6 +6,7 @@ import java.awt.*;
 import core.*;
 
 public class EditGroupView extends EditView<Group> {
+	private JPanel layer = new JPanel();
 	private JTextField rename = new JTextField();
 
 	public EditGroupView(WindowAdapter vcl, ActionListener saveAndSwapListener, String title) {
@@ -14,7 +15,6 @@ public class EditGroupView extends EditView<Group> {
 		frame.setSize(300, 120);
 		frame.setTitle("Gruppe " + title + " umbenennen");
 		
-		JPanel layer = new JPanel();
 		layer.setLayout(new GridLayout(2,1,10,10));
 		layer.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		
@@ -29,6 +29,10 @@ public class EditGroupView extends EditView<Group> {
 		
 		frame.add(layer);
 		frame.setVisible(true);
+	}
+	
+	protected JPanel getLayer() {
+		return layer;
 	}
 
 	@Override

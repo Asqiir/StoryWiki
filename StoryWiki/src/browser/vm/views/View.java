@@ -3,7 +3,7 @@ package browser.vm.views;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class View<MODEL> {
+public abstract class View<MODEL> {
 	protected final JFrame frame = new JFrame();
 	private WindowListener vcl;
 	
@@ -11,6 +11,16 @@ public class View<MODEL> {
 		frame.addWindowListener(vcl);
 		this.vcl = vcl; //remember, to delete later
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+//		Action closeFrame = new AbstractAction() {
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+//				frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+//			}
+//		};
+//		
+//		getLayer().getInputMap().put(KeyStroke.getKeyStroke("control"), "control");
+//		getLayer().getActionMap().put("control", closeFrame);
 	}
 	
 	public void close() {
@@ -18,6 +28,8 @@ public class View<MODEL> {
 		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 	}
 
+	protected abstract JPanel getLayer();
+	
 	public void removeCloseListener() { //removing is only meant to use when window is going to be closed; when vm shouldn't be stopped.
 		frame.removeWindowListener(vcl);
 		vcl = null;

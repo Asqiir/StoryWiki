@@ -10,16 +10,17 @@ import java.util.ArrayList;
 import core.*;
 
 public class ShowEntityView extends ShowView<Entity> {
-	JLabel title = new JLabel();
-	JTextArea descArea = new JTextArea();
+	private JPanel layer = new JPanel();
+	private JLabel title = new JLabel();
+	private JTextArea descArea = new JTextArea();
 	
-	JLabel list_header_links = new JLabel();
-	JLabel list_header_groups = new JLabel();
+	private JLabel list_header_links = new JLabel();
+	private JLabel list_header_groups = new JLabel();
 	
-	JList<String> links = new JList<String>();
-	JList<String> groups = new JList<String>();
+	private JList<String> links = new JList<String>();
+	private JList<String> groups = new JList<String>();
 	
-	JTextField groupField = new JTextField();
+	private JTextField groupField = new JTextField();
 	
 	/* JFrame: BoxLayout
 	 * 	 _____________________________________			POSITION java (jpanels name)
@@ -51,7 +52,6 @@ public class ShowEntityView extends ShowView<Entity> {
 		super(vcl);
 		 
 		frame.setSize(400, 500);
-		frame.setLayout(new BorderLayout(10,10));
 		
 		//========BOX1==================
 		
@@ -285,7 +285,6 @@ public class ShowEntityView extends ShowView<Entity> {
 		emptyPanel.setMinimumSize(new Dimension(10,10));
 		
 		//ADD All to frame
-		JPanel layer = new JPanel();
 		layer.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
 		layer.setLayout(new GridBagLayout());
 		
@@ -311,6 +310,10 @@ public class ShowEntityView extends ShowView<Entity> {
 		
 		set(entity);
 		frame.setVisible(true);
+	}
+	
+	protected JPanel getLayer() {
+		return layer;
 	}
 
 	@Override
