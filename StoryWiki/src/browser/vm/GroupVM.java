@@ -13,8 +13,7 @@ public class GroupVM extends SingleVM<Group> {
 
 	@Override
 	protected EditView<Group> getInstanceOfEditView(ViewClosedListener vcl) {
-		// TODO Auto-generated method stub
-		return null;
+		return new EditGroupView(vcl, new SwapAndEditListener(), getData().getIdentifier());
 	}
 
 	@Override
@@ -54,8 +53,7 @@ public class GroupVM extends SingleVM<Group> {
 	}
 
 	@Override
-	protected void writeEditToModel(Group dss) {
-		// TODO Auto-generated method stub
-		
+	protected void writeEditToModel(Group group) {
+		getData().rename(group.getIdentifier());
 	}
 }
