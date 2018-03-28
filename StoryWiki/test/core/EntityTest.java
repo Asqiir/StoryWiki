@@ -323,4 +323,13 @@ public class EntityTest {
 		
 		assertEquals(2, e.getGroups().size());
 	}
+
+	//TYPES STUFF
+	@Test
+	public void testTypes() {
+		Types t = Entity.Types.ERA;
+		Types t2 = Entity.Types.getByValue(t.shownAs);
+		
+		assertEquals(t,t2);
+	}
 }

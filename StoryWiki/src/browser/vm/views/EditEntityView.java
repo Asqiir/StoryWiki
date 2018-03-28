@@ -10,6 +10,7 @@ import core.Entity.Types;
 public class EditEntityView extends EditView<Entity> {
 	private JTextField nameField = new JTextField();
 	private JTextArea descArea = new JTextArea();
+	private JComboBox<String> typeDropDown = new JComboBox<String>();
 	
 	public EditEntityView(WindowAdapter vcl, ActionListener sasl, Entity entity) {
 		super(vcl, sasl);
@@ -25,6 +26,20 @@ public class EditEntityView extends EditView<Entity> {
 		nameField.setFont(new Font("Ubuntu", Font.BOLD, 16));
 		nameField.setMaximumSize(new Dimension(1000000,200));
 		
+		//dropdown
+		for(Entity.Types element:Entity.Types.values()) {
+			typeDropDown.addItem(element.showName());
+		}
+		
+		typeDropDown.setSelectedItem(entity.getType());
+		
+		//northern grid
+		JPanel northernGrid = new JPanel();
+		northernGrid.setLayout(new GridLayout(2,1,10,10));
+		northernGrid.add(nameField);
+		northernGrid.add(typeDropDown);
+		
+		
 		//second line: text
 		JScrollPane scroller = new JScrollPane();
 		scroller.setViewportView(descArea);
@@ -39,7 +54,7 @@ public class EditEntityView extends EditView<Entity> {
 		JButton finishedEdit = new JButton("Fertig");
 		finishedEdit.addActionListener(sasl);
 		
-		layer.add(nameField, BorderLayout.NORTH);
+		layer.add(northernGrid, BorderLayout.NORTH);
 		layer.add(scroller, BorderLayout.CENTER);
 		layer.add(finishedEdit, BorderLayout.SOUTH);
 		
@@ -48,7 +63,7 @@ public class EditEntityView extends EditView<Entity> {
 	
 	@Override
 	public Entity getEdited() {
-		Entity e = new Entity(nameField.getText(), Types.NOTE); //TODO: make type changeable
+		Entity e = new Entity(nameField.getText(), Entity.Types.getByValue((String) typeDropDown.getSelectedItem())); //TODO: make type changeable
 		e.setDescription(descArea.getText());
 		return e;
 	}

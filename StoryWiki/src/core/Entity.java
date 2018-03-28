@@ -20,6 +20,15 @@ public class Entity implements Serializable, Searchable<Entity> {
 		public String showName() {
 			return shownAs;
 		}
+		
+		public static Types getByValue(String s) {
+			for(Types element:values()) {
+				if(element.showName().equals(s)) {
+					return element;
+				}
+			}
+			return null;
+		}
 	};
 	public Types type;
 	
