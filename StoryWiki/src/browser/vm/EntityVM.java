@@ -1,16 +1,11 @@
 package browser.vm;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
+import java.awt.event.*;
 import browser.vm.ProjectController.*;
 import browser.vm.views.*;
-import core.Entity;
-import core.Group;
-import core.Link;
+import core.*;
 
 public class EntityVM extends SingleVM<Entity> {
-
 	public EntityVM(ActionListener cvl, CommitEditListener cel, Entity data, OpenViewListener ovl, ActionListener ctrlQListener) {
 		super(cvl, cel, data, ovl, ctrlQListener);
 	}

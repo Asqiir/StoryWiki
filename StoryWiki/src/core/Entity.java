@@ -6,7 +6,17 @@ import java.time.*;
 
 @SuppressWarnings("serial")
 public class Entity implements Serializable, Searchable<Entity> {
-	public enum Types {NOTE, ERA, EVENT, PERSON};
+	public enum Types {
+		NOTE("Notitz"),
+		ERA("Zeitspanne"),
+		EVENT("Ereignis"),
+		PERSON("Person");
+		
+		String shownAs;
+		Types(String s) {
+			shownAs = s;
+		}
+	};
 	public Types type;
 	
 	private SearchContainer<Link> linkContainer = new SearchContainer<Link>() {
