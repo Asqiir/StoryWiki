@@ -16,6 +16,10 @@ public class Entity implements Serializable, Searchable<Entity> {
 		Types(String s) {
 			shownAs = s;
 		}
+		
+		public String showName() {
+			return shownAs;
+		}
 	};
 	public Types type;
 	

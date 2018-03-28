@@ -310,8 +310,8 @@ public class ShowEntityView extends ShowView<Entity> {
 	
 	@Override
 	public void set(Entity entity) {
-		frame.setTitle(entity.getName());
-		title.setText(entity.getName());
+		frame.setTitle(entity.getType().showName() + " :: " + entity.getName());
+		title.setText(entity.getType().showName() + " :: " + entity.getName());
 		descArea.setText(entity.getDescription());
 		list_header_links.setText(entity.getLinks().size() + " Links");
 		list_header_groups.setText(entity.getGroups().size() + " Gruppen");
@@ -338,7 +338,7 @@ public class ShowEntityView extends ShowView<Entity> {
 	
 	public String getSelectedGroup() {
 		return (String) groups.getSelectedValue();
-	}
+	} 
 	
 	public String sendInputGroup() {
 		String input = groupField.getText();
