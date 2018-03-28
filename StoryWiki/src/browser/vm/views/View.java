@@ -5,7 +5,13 @@ import javax.swing.*;
 import java.util.*;
 
 public abstract class View<MODEL> {
-	protected final JFrame frame = new JFrame();
+	class MyFrame extends JFrame { //needed to make sure getContentPane() returns a JPanel
+		public MyFrame(JComponent layer) {
+			setContentPane(layer);
+		}
+	}
+	
+	protected final JFrame frame = new MyFrame(new JPanel());
 	protected final JPanel layer = (JPanel) frame.getContentPane();
 	private WindowListener vcl;
 	private List<ActionListener> ctrlQListener = new ArrayList<ActionListener>();
