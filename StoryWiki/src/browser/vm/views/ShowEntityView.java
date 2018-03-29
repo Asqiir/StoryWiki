@@ -11,6 +11,7 @@ import core.*;
 
 public class ShowEntityView extends ShowView<Entity> {
 	private JLabel title = new JLabel();
+	private JLabel dateField = new JLabel();
 	private JTextArea descArea = new JTextArea();
 	
 	private JLabel list_header_links = new JLabel();
@@ -25,6 +26,8 @@ public class ShowEntityView extends ShowView<Entity> {
 	 * 	 _____________________________________			POSITION java (jpanels name)
 	 *  /_____________________________________\
 	 * | JLabel TITLE			button edit	  |		|header
+	 * |									  |
+	 * | date_from - date_until				  |		|dateField
 	 * | ____________________________________ |		
 	 * ||									|||		|
 	 * ||		descArea					|||		|main
@@ -55,6 +58,8 @@ public class ShowEntityView extends ShowView<Entity> {
 		//========BOX1==================
 		
 		/* |  JLabel TITLE			button edit	  |		|header
+		 * |									  |
+		 * | date_from - date_until				  |		|dateField
 		 * | ____________________________________ |		
 		 * ||									|||		|
 		 * ||		descArea					|||		|main
@@ -75,12 +80,17 @@ public class ShowEntityView extends ShowView<Entity> {
 		header.add(Box.createHorizontalGlue());
 		header.add(edit);
 		
+		//dateField
+		
+		
+		
 		//main
 		JScrollPane main = new JScrollPane();
 		main.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		main.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		descArea.setLineWrap(true);
 		descArea.setWrapStyleWord(true);
+		descArea.setEditable(false);
 		main.setViewportView(descArea);
 		
 		//===================================
@@ -191,9 +201,20 @@ public class ShowEntityView extends ShowView<Entity> {
 		cHeader.ipadx = 10;
 		cHeader.ipady = 10;
 		
+		GridBagConstraints cDateField = new GridBagConstraints();
+		cDateField.gridx = 0;
+		cDateField.gridy = 1;
+		cDateField.gridwidth = 2;
+		cDateField.gridheight = 1;
+		cDateField.fill = GridBagConstraints.HORIZONTAL;
+		cDateField.weightx = 0.5;
+		cDateField.weighty = 0;
+		cDateField.ipadx = 10;
+		cDateField.ipady = 10;
+		
 		GridBagConstraints cMain = new GridBagConstraints();
 		cMain.gridx = 0;
-		cMain.gridy = 1;
+		cMain.gridy = 2;
 		cMain.gridheight = 1;
 		cMain.gridwidth = 2;
 		cMain.fill = GridBagConstraints.BOTH;
@@ -204,7 +225,7 @@ public class ShowEntityView extends ShowView<Entity> {
 		
 		GridBagConstraints cListHeaderLinks = new GridBagConstraints();
 		cListHeaderLinks.gridx = 0;
-		cListHeaderLinks.gridy = 2;
+		cListHeaderLinks.gridy = 3;
 		cListHeaderLinks.fill = GridBagConstraints.HORIZONTAL;
 		cListHeaderLinks.weightx = 0.5;
 		cListHeaderLinks.weighty = 0;
@@ -213,7 +234,7 @@ public class ShowEntityView extends ShowView<Entity> {
 		
 		GridBagConstraints cListHeaderGroups = new GridBagConstraints();
 		cListHeaderGroups.gridx = 1;
-		cListHeaderGroups.gridy = 2;
+		cListHeaderGroups.gridy = 3;
 		cListHeaderGroups.fill = GridBagConstraints.HORIZONTAL;
 		cListHeaderGroups.weightx = 0.5;
 		cListHeaderGroups.weighty = 0;
@@ -222,28 +243,28 @@ public class ShowEntityView extends ShowView<Entity> {
 		
 		GridBagConstraints cListLinks = new GridBagConstraints();
 		cListLinks.gridx = 0;
-		cListLinks.gridy = 3;
+		cListLinks.gridy = 4;
 		cListLinks.fill = GridBagConstraints.BOTH;
 		cListLinks.weightx = 0.5;
 		cListLinks.weighty = 0.2;
 		
 		GridBagConstraints cListGroups = new GridBagConstraints();
 		cListGroups.gridx = 1;
-		cListGroups.gridy = 3;
+		cListGroups.gridy = 4;
 		cListGroups.fill = GridBagConstraints.BOTH;
 		cListGroups.weightx = 0.5;
 		cListGroups.weighty = 0.2;
 		
 		GridBagConstraints cOpenbuttonLinks = new GridBagConstraints();
 		cOpenbuttonLinks.gridx = 0;
-		cOpenbuttonLinks.gridy = 4;
+		cOpenbuttonLinks.gridy = 5;
 		cOpenbuttonLinks.fill = GridBagConstraints.HORIZONTAL;
 		cOpenbuttonLinks.weightx = 0.5;
 		cOpenbuttonLinks.weighty = 0;
 		
 		GridBagConstraints cOpenbuttonGroups = new GridBagConstraints();
 		cOpenbuttonGroups.gridx = 1;
-		cOpenbuttonGroups.gridy = 4;
+		cOpenbuttonGroups.gridy = 5;
 		cOpenbuttonGroups.fill = GridBagConstraints.HORIZONTAL;
 		cOpenbuttonGroups.gridheight = 1;
 		cOpenbuttonGroups.gridwidth = 1;
@@ -252,7 +273,7 @@ public class ShowEntityView extends ShowView<Entity> {
 		
 		GridBagConstraints cAddLinkToGroup = new GridBagConstraints();
 		cAddLinkToGroup.gridx = 0;
-		cAddLinkToGroup.gridy = 5;
+		cAddLinkToGroup.gridy = 6;
 		cAddLinkToGroup.fill = GridBagConstraints.HORIZONTAL;
 		cAddLinkToGroup.weightx = 0;
 		cAddLinkToGroup.weighty = 0;
@@ -261,7 +282,7 @@ public class ShowEntityView extends ShowView<Entity> {
 		
 		GridBagConstraints cEmpty = new GridBagConstraints();
 		cEmpty.gridx = 0;
-		cEmpty.gridy = 6;
+		cEmpty.gridy = 7;
 		cEmpty.fill = GridBagConstraints.HORIZONTAL;
 		cEmpty.weightx = 0;
 		cEmpty.weighty = 0;
@@ -270,7 +291,7 @@ public class ShowEntityView extends ShowView<Entity> {
 		
 		GridBagConstraints cAdminGroups = new GridBagConstraints();
 		cAdminGroups.gridx = 0;
-		cAdminGroups.gridy = 7;
+		cAdminGroups.gridy = 8;
 		cAdminGroups.fill = GridBagConstraints.HORIZONTAL;
 		cAdminGroups.weightx = 0;
 		cAdminGroups.weighty = 0;
@@ -287,8 +308,8 @@ public class ShowEntityView extends ShowView<Entity> {
 		layer.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
 		layer.setLayout(new GridBagLayout());
 		
-		layer.add(header, cHeader);
-		
+		layer.add(header, cDateField);
+		layer.add(dateField, cDateField);
 		layer.add(main, cMain);
 		
 		layer.add(list_header_links, cListHeaderLinks);
@@ -312,6 +333,11 @@ public class ShowEntityView extends ShowView<Entity> {
 	public void set(Entity entity) {
 		frame.setTitle(entity.getType().showName() + " :: " + entity.getName());
 		title.setText(entity.getType().showName() + " :: " + entity.getName());
+		
+		if(entity.getValidFrom() != null && entity.getValidTime() != null) {
+			dateField.setText(entity.getValidFrom() + " - ");
+		}
+		
 		descArea.setText(entity.getDescription());
 		list_header_links.setText(entity.getLinks().size() + " Links");
 		list_header_groups.setText(entity.getGroups().size() + " Gruppen");

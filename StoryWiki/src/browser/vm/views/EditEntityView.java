@@ -5,7 +5,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import core.*;
-import core.Entity.Types;
 
 public class EditEntityView extends EditView<Entity> {
 	private JTextField nameField = new JTextField();
@@ -15,33 +14,25 @@ public class EditEntityView extends EditView<Entity> {
 	public EditEntityView(WindowAdapter vcl, ActionListener sasl, Entity entity) {
 		super(vcl, sasl);
 		
-		frame.setTitle(entity.get().getName());
-		frame.setSize(300, 500);
-		
-		layer.setLayout(new BorderLayout(10,10));
-		layer.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		
 		//first line: name
 		nameField.setText(entity.get().getName());
 		nameField.setFont(new Font("Ubuntu", Font.BOLD, 16));
 		nameField.setMaximumSize(new Dimension(1000000,200));
 		
 		//dropdown
+		typeDropDown.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
 		for(Entity.Types element:Entity.Types.values()) {
 			typeDropDown.addItem(element.showName());
 		}
-		
 		typeDropDown.setSelectedItem(entity.getType());
 		
-		//northern grid
-		JPanel northernGrid = new JPanel();
-		northernGrid.setLayout(new GridLayout(2,1,10,10));
-		northernGrid.add(nameField);
-		northernGrid.add(typeDropDown);
+		//datepicker
+		
 		
 		
 		//second line: text
 		JScrollPane scroller = new JScrollPane();
+		scroller.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
 		scroller.setViewportView(descArea);
 		scroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -54,16 +45,51 @@ public class EditEntityView extends EditView<Entity> {
 		JButton finishedEdit = new JButton("Fertig");
 		finishedEdit.addActionListener(sasl);
 		
-		layer.add(northernGrid, BorderLayout.NORTH);
-		layer.add(scroller, BorderLayout.CENTER);
-		layer.add(finishedEdit, BorderLayout.SOUTH);
+		//frame
+		frame.setTitle(entity.get().getName());
+		frame.setSize(300, 500);
+		
+		layer.setLayout(new GridBagLayout());
+		layer.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		
+		GridBagConstraints cNameField = new GridBagConstraints();
+		cNameField.gridy = 0;
+		cNameField.weightx = 1;
+		cNameField.weighty = 0;
+		cNameField.fill = GridBagConstraints.HORIZONTAL;
+		
+		GridBagConstraints cDropDown = new GridBagConstraints();
+		cDropDown.gridy = 1;
+		cDropDown.weightx = 1;
+		cDropDown.weighty = 0;
+		cDropDown.fill = GridBagConstraints.HORIZONTAL;
+		
+		//cDatePicker here
+		
+		GridBagConstraints cScroller = new GridBagConstraints();
+		cScroller.gridy = 2;
+		cScroller.weightx = 1;
+		cScroller.weighty = 1;
+		cScroller.fill = GridBagConstraints.BOTH;
+		
+		GridBagConstraints cFinished = new GridBagConstraints();
+		cFinished.gridy = 3;
+		cFinished.weightx = 1;
+		cFinished.weighty = 0;
+		cFinished.fill = GridBagConstraints.HORIZONTAL;
+		
+		layer.add(nameField, cNameField);
+		layer.add(typeDropDown, cDropDown);
+		layer.add(scroller, cScroller);
+		layer.add(finishedEdit, cFinished);
+		
 		
 		frame.setVisible(true);
 	}
 	
 	@Override
 	public Entity getEdited() {
-		Entity e = new Entity(nameField.getText(), Entity.Types.getByValue((String) typeDropDown.getSelectedItem())); //TODO: make type changeable
+		Entity e = new Entity(nameField.getText(), Entity.Types.getByValue((String) typeDropDown.getSelectedItem()));
 		e.setDescription(descArea.getText());
 		return e;
 	}
