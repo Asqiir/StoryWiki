@@ -5,6 +5,8 @@ import javax.swing.border.TitledBorder;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import core.*;
@@ -81,8 +83,6 @@ public class ShowEntityView extends ShowView<Entity> {
 		header.add(edit);
 		
 		//dateField
-		
-		
 		
 		//main
 		JScrollPane main = new JScrollPane();
@@ -308,7 +308,7 @@ public class ShowEntityView extends ShowView<Entity> {
 		layer.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
 		layer.setLayout(new GridBagLayout());
 		
-		layer.add(header, cDateField);
+		layer.add(header, cHeader);
 		layer.add(dateField, cDateField);
 		layer.add(main, cMain);
 		
@@ -334,9 +334,12 @@ public class ShowEntityView extends ShowView<Entity> {
 		frame.setTitle(entity.getType().showName() + " :: " + entity.getName());
 		title.setText(entity.getType().showName() + " :: " + entity.getName());
 		
-		if(entity.getValidFrom() != null && entity.getValidTime() != null) {
-			dateField.setText(entity.getValidFrom() + " - ");
+		String dateText = "";
+		if(entity.getValidFrom() != null) {
+			dateText = entity.getValidFrom().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + " - " + Searchable.getValidUntil(entity).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
 		}
+		dateField.setText(dateText);
+		
 		
 		descArea.setText(entity.getDescription());
 		list_header_links.setText(entity.getLinks().size() + " Links");

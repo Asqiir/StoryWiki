@@ -83,5 +83,7 @@ public class EntityVM extends SingleVM<Entity> {
 		getData().setName(entity.getName());
 		getData().setType(entity.get().getType());
 		getData().setDescription(entity.get().getDescription());
+		getData().setDate(entity.getValidFrom());
+		getData().setDuration(entity.getValidFrom(), Searchable.getValidUntil(entity));
 	}
 }
