@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import core.*;
+import core.Entity.Types;
 
 public class ShowEntityView extends ShowView<Entity> {
 	private JLabel title = new JLabel();
@@ -335,8 +336,12 @@ public class ShowEntityView extends ShowView<Entity> {
 		title.setText(entity.getType().showName() + " :: " + entity.getName());
 		
 		String dateText = "";
-		if(entity.getValidFrom() != null) {
-			dateText = entity.getValidFrom().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + " - " + Searchable.getValidUntil(entity).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+		if(entity.getType() != Types.NOTE && entity.getValidFrom() != null) {
+			dateText = entity.getValidFrom().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+			
+			if(entity.getType() != Types.EVENT) {
+				dateText += " - " + Searchable.getValidUntil(entity).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+			}
 		}
 		dateField.setText(dateText);
 		

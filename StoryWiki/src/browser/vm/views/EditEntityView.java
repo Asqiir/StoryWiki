@@ -35,11 +35,19 @@ public class EditEntityView extends EditView<Entity> {
 		
 		//datepicker
 		from.setText(createValidDateStringOf(entity.getValidFrom()));
-		until.setText(createValidDateStringOf(Searchable.getValidUntil(entity)));
+		
+		if(entity.getValidFrom() != null) {
+			until.setText(createValidDateStringOf(Searchable.getValidUntil(entity)));			
+		} else {
+			until.setText("02.01.2000");
+		}
+		
 		
 		JPanel datePanel = new JPanel();
+		
 		datePanel.setBorder(new TitledBorder("Von - bis [tt.mm.jjjj]"));
 		datePanel.setLayout(new GridLayout(2,1,10,10));
+		
 		datePanel.add(from);
 		datePanel.add(until);
 		
