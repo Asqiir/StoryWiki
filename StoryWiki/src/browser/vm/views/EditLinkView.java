@@ -1,19 +1,19 @@
 package browser.vm.views;
 
 import java.awt.event.*;
+import java.util.*;
+import java.util.List;
+
 import javax.swing.*;
 import java.awt.*;
 import core.*;
 
 public class EditLinkView extends EditView<Link> {
 	private JTextArea input = new JTextArea();
-	private Entity linkedTo;
 
 	public EditLinkView(WindowAdapter vcl, ActionListener saveAndSwapListener, Link link) {
 		super(vcl, saveAndSwapListener);
 
-		linkedTo = link.getEntity();
-		
 		frame.setSize(300, 400);
 
 		layer.setLayout(new BorderLayout(10,10));
@@ -36,10 +36,17 @@ public class EditLinkView extends EditView<Link> {
 		
 		frame.setVisible(true);
 	}
-	
+
 	@Override
-	public Link getEdited() {
-		return new Link(linkedTo, input.getText());
+	public Map<String, String> getInput() {
+		Map<String, String> input = new HashMap<String, String>();
+		input.put("description", this.input.getText());
+		
+		return input;
 	}
 
+	@Override
+	public void mark(List<String> inValidKeys) {
+		//nothing to mark over here; because there are no conditions for description which is the only changeable thing here
+	}
 }

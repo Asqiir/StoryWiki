@@ -2,7 +2,9 @@ package browser.vm;
 
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import browser.vm.ProjectController.OpenViewListener;
 import browser.vm.views.*;
@@ -132,7 +134,20 @@ public class ProjectVM extends SingleVM<Project> {
 	 * write data to model
 	 * ===========================*/
 	@Override
-	protected void writeEditToModel(Project dss) {
-		getData().rename(dss.getName());
+	protected void writeEditToModel(Project project) {
+		getData().rename(project.getName());
+	}
+
+	@Override
+	protected Project createEdited(Map<String, String> input) {
+		return new Project(input.get("name"));
+	}
+
+	@Override
+	protected Map<String, Boolean> isSingleValid(Map<String, String> input) {
+		Map<String, Boolean> valid = new HashMap<String, Boolean>();
+		valid.put("name", input.get("name") != null && !input.get("name").equals(""));
+		
+		return valid;
 	}
 }

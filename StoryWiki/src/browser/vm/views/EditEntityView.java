@@ -8,6 +8,9 @@ import java.awt.event.*;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import core.*;
 
@@ -118,24 +121,42 @@ public class EditEntityView extends EditView<Entity> {
 		}
 		return "01.01.2000";
 	}
-	
+
 	@Override
-	public Entity getEdited() {
-		Entity e = new Entity(nameField.getText(), Entity.Types.getByValue((String) typeDropDown.getSelectedItem()));
-		e.setDescription(descArea.getText());
-		try {
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-			
-			LocalDate startDateInclusive = LocalDate.parse(from.getText(), formatter);
-			LocalDate endDateExclusive = LocalDate.parse(until.getText(), formatter);
-			
-			e.setDate(startDateInclusive);
-			e.setDuration(startDateInclusive, endDateExclusive);
-		}
-		catch(java.time.format.DateTimeParseException ex) {
-			e.setNoDate();
-		}
-		return e;
+	public Map<String, String> getInput() {
+		Map<String, String> input = new HashMap<String, String>();
+		input.put("id", nameField.getText());
+		input.put("description", descArea.getText());
+		input.put("type", (String) typeDropDown.getSelectedItem());
+		input.put("date from", from.getText());
+		input.put("date until", until.getText());
+		
+		return input;
 	}
 
+	@Override
+	public void mark(List<String> inValidKeys) {
+		//remove any mark before
+		nameField.setForeground(Color.BLACK);
+		descArea.setForeground(Color.BLACK);
+		typeDropDown.setForeground(Color.BLACK);
+		from.setForeground(Color.BLACK);
+		until.setForeground(Color.BLACK);
+		
+		if(inValidKeys.contains("id")) {
+			nameField.setForeground(Color.RED);
+		}
+		if(inValidKeys.contains("description")) {
+			descArea.setForeground(Color.RED);
+		}
+		if(inValidKeys.contains("type")) {
+			typeDropDown.setForeground(Color.RED);
+		}
+		if(inValidKeys.contains("date from")) {
+			from.setForeground(Color.RED);
+		}
+		if(inValidKeys.contains("date until")) {
+			until.setForeground(Color.RED);
+		}
+	}
 }

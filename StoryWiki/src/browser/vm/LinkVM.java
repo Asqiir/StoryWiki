@@ -1,6 +1,8 @@
 package browser.vm;
 
 import java.awt.event.*;
+import java.util.*;
+
 import browser.vm.ProjectController.*;
 import browser.vm.views.*;
 import core.*;
@@ -32,5 +34,19 @@ public class LinkVM extends SingleVM<Link> {
 	@Override
 	protected void writeEditToModel(Link edit) {
 		getData().setDescription(edit.getDescription());
+	}
+
+	@Override
+	protected Link createEdited(Map<String, String> input) {
+		return new Link(getData().getEntity(), input.get("description"));
+	}
+
+	@Override
+	protected Map<String, Boolean> isSingleValid(Map<String, String> input) {
+		Map<String, Boolean> valids = new HashMap<String, Boolean>();
+		valids.put("description", true);
+		//desc is nothing but an additional string
+		
+		return valids;
 	}
 }

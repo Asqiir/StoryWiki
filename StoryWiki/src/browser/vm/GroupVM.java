@@ -1,6 +1,9 @@
 package browser.vm;
 
 import java.awt.event.*;
+import java.util.HashMap;
+import java.util.Map;
+
 import browser.vm.ProjectController.*;
 import browser.vm.views.*;
 import core.*;
@@ -55,5 +58,18 @@ public class GroupVM extends SingleVM<Group> {
 	@Override
 	protected void writeEditToModel(Group group) {
 		getData().rename(group.getIdentifier());
+	}
+
+	@Override
+	protected Group createEdited(Map<String, String> input) {
+		return new Group(input.get("name"));
+	}
+
+	@Override
+	protected Map<String, Boolean> isSingleValid(Map<String, String> input) {
+		Map<String, Boolean> valids = new HashMap<String, Boolean>();
+		valids.put("name", (input.get("name") != null && !input.get("name").equals("")));
+		
+		return valids;
 	}
 }

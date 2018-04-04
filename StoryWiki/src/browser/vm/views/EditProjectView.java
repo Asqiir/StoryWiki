@@ -2,8 +2,11 @@ package browser.vm.views;
 
 import javax.swing.*;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.*;
+import java.util.*;
+
 import core.*;
 
 public class EditProjectView extends EditView<Project> {
@@ -31,10 +34,20 @@ public class EditProjectView extends EditView<Project> {
 		
 		frame.setVisible(true);
 	}
-	
+
 	@Override
-	public Project getEdited() {
-		return new Project(input.getText());
+	public Map<String, String> getInput() {
+		Map<String, String> input = new HashMap<String, String>();
+		input.put("name", this.input.getText());
+		return input;
 	}
 
+	@Override
+	public void mark(List<String> inValidKeys) {
+		if(inValidKeys.contains("name")) {
+			input.setForeground(Color.RED);
+		} else {
+			input.setForeground(Color.BLACK);
+		}
+	}
 }

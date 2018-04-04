@@ -1,12 +1,10 @@
 package browser.vm;
 
 import java.awt.event.*;
+import java.util.*;
 
-import browser.vm.ProjectController.CommitEditListener;
-import browser.vm.ProjectController.OpenViewListener;
-import browser.vm.ViewModel.ViewClosedListener;
-import browser.vm.views.EditView;
-import browser.vm.views.ShowView;
+import browser.vm.ProjectController.*;
+import browser.vm.views.*;
 
 public abstract class SingleVM<MODEL> extends ViewModel<MODEL> {
 	private CommitEditListener cel;
@@ -35,21 +33,10 @@ public abstract class SingleVM<MODEL> extends ViewModel<MODEL> {
 		}
 	}
 	
-	protected final void edit() {
-		/* 1. get edit
-		 * 2. write write it
-		 * 3. commit edit*/
-		
-		EditView view = (EditView) getView();
-
-		MODEL edited = (MODEL) view.getEdited();
-		writeEditToModel(edited);
-		commitEdit();
-	}
-	
 	protected void commitEdit() {
 		cel.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "commit edit"));
 	}
+	
 	
 	protected abstract EditView<MODEL> getInstanceOfEditView(ViewClosedListener vcl);
 	protected abstract ShowView<MODEL> getInstanceOfShowView(ViewClosedListener vcl);
@@ -74,8 +61,43 @@ public abstract class SingleVM<MODEL> extends ViewModel<MODEL> {
 	protected class SwapAndEditListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			edit();
-			swapView();
+			Map<String,String> input = ((EditView) getView()).getInput();
+			Map<String,Boolean> valid = isSingleValid(input);
+			
+			if(isInputValid(valid)) {
+				MODEL edited = createEdited(input);
+				writeEditToModel(edited);
+				commitEdit();
+				swapView();
+			} else {
+				markInvalid(valid);
+			}
+
 		}
+	}
+	
+	protected abstract MODEL createEdited(Map<String,String> input);
+	
+	protected abstract Map<String,Boolean> isSingleValid(Map<String,String> input);
+	
+	protected void markInvalid(Map<String,Boolean> valids) {
+		List<String> invalidKeys = new ArrayList();
+		
+		for(String key:valids.keySet()) {
+			if(!valids.get(key)) {
+				invalidKeys.add(key);
+			}
+		}
+		((EditView) getView()).mark(invalidKeys);
+	}
+	
+	protected boolean isInputValid(Map<String,Boolean> valids) {
+		boolean isValid = true;
+		
+		//test, wether any value equals true
+		for(String key:valids.keySet()) {
+			isValid = isValid && valids.get(key);
+		}
+		return isValid;
 	}
 }

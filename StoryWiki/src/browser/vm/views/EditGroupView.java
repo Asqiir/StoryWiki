@@ -1,6 +1,10 @@
 package browser.vm.views;
 
 import java.awt.event.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.swing.*;
 import java.awt.*;
 import core.*;
@@ -28,10 +32,22 @@ public class EditGroupView extends EditView<Group> {
 		
 		frame.setVisible(true);
 	}
-	
+
 	@Override
-	public Group getEdited() {
-		return new Group(rename.getText());
+	public Map<String, String> getInput() {
+		Map<String, String> input = new HashMap<String, String>();
+		input.put("name", rename.getText());
+
+		return input;
+	}
+
+	@Override
+	public void mark(List<String> inValidKeys) {
+		rename.setForeground(Color.BLACK);
+		
+		if(inValidKeys.contains("name")) {
+			rename.setForeground(Color.RED);
+		}
 	}
 
 }
