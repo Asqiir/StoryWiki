@@ -335,7 +335,15 @@ public class ShowEntityView extends ShowView<Entity> {
 		frame.setTitle(entity.getType().showName() + " :: " + entity.getName());
 		title.setText(entity.getType().showName() + " :: " + entity.getName());
 		
-		String dateText = entity.getValidFrom().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + " - " + Searchable.getValidUntil(entity).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+		String dateText = "";
+		if(entity.getType() != Types.NOTE && entity.getValidFrom() != null) {
+			dateText = entity.getValidFrom().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+			
+			if(entity.getType() != Types.EVENT) {
+				dateText += " - " + Searchable.getValidUntil(entity).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+			}
+		}
+
 		dateField.setText(dateText);
 		
 		
