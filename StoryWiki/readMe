@@ -1,0 +1,28 @@
+StoryWiki – where to create notes to organise your story's world
+
+This readMe contains:
+1. How to run the StoryWikiBrowser
+2. Where to find manual (and faq)
+3. Where to find the documentation
+
+
+1. How to run the StoryWikiBrowser
+
+Since the SWB is written with java it can be run on any system. You have to have installed a JRE (java runtime environment). On linux, you can run the comment >java -version to find out what version you have installed. (If you get an error, java is probably not installed.)
+Java is installed? Fine! It's not? You have to install a JRE which fits to your operating system (linux, windows, osx, etc) and your system architecture (32 bit or 64 bit).
+
+Having done this, you can download the pre-compiled program from github. (github.com/asqiir/StoryWiki) Move to the directory noobs-files and download the file StoryWikiBrowser-javaX-latest.jar where X equals your java version. (Hint: java 1.5 is java 5, 1.6 is 6 and so on)
+
+If you want to compile the StoryWikiBrowser yourself (because your java version doesn't fit to any of the pre-compiled jars), you need a JDK (java development kit). The program was made with the IDE eclipse so you could easily import it, but other IDEs will work as well.
+
+
+2. Where to find manual and faq
+
+Both files are in the folder noobs-files, which is stored in the root directory. If they are not there, the don't exist yet.
+(Questions left? Contact me asqiir@blaupost.de)
+
+
+3. Where to find the documentation
+
+At the root layer of the repository will be stored a folder called 'documentation'. It contains anything.
+
