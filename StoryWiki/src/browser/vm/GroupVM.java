@@ -55,6 +55,7 @@ public class GroupVM extends ViewModel<Group> {
 		return new ShowGroupView(vcl, new SwapListener(), openLinkListener, removeLinkListener, getData());
 	}
 
+	protected ListView<Group> getInstanceOfListView(ViewClosedListener vcl) { return null; }
 	
 	
 	@Override

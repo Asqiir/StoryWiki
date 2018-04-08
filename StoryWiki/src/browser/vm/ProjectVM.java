@@ -119,7 +119,7 @@ public class ProjectVM extends ViewModel<Project> {
 		return new EditProjectView(getData().getName(), new SwapAndEditListener(), vcl);	
 	}
 	
-//	protected ListView<Project> getInstanceOfListView(ViewClosedListener vcl) { return null; }
+	protected ListView<Project> getInstanceOfListView(ViewClosedListener vcl) { return null; }
 	
 	protected String[] createAllEntityOptions() {
 		List<Entity> eList = ((Project) getData()).getEntities();

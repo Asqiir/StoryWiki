@@ -32,6 +32,10 @@ public class LinkVM extends ViewModel<Link> {
 	}
 
 	@Override
+	protected ListView<Link> getInstanceOfListView(ViewClosedListener vcl) { return null; }
+	
+	
+	@Override
 	protected void writeEditToModel(Link edit) {
 		getData().setDescription(edit.getDescription());
 	}

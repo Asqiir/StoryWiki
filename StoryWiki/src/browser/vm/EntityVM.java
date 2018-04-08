@@ -85,7 +85,7 @@ public class EntityVM extends ViewModel<Entity> {
 		return new ShowEntityView(new SwapListener(), openLinkListener, vcl, createGroupListener, openGroupListener, deleteGroupListener, addLinkToGroupListener, getData());
 	}
 
-//	protected ListView<Entity> getInstanceOfListView(ViewClosedListener vcl) { return null; }
+	protected ListView<Entity> getInstanceOfListView(ViewClosedListener vcl) { return null; }
 	
 	@Override
 	protected void writeEditToModel(Entity entity) {

@@ -60,34 +60,43 @@ public abstract class ViewModel<MODEL> {
 	
 	protected abstract EditView<MODEL> getInstanceOfEditView(ViewClosedListener vcl);
 	protected abstract ShowView<MODEL> getInstanceOfShowView(ViewClosedListener vcl);
-//	protected abstract ListView<?> getInstanceOfListView(ViewClosedListener vcl);
+	protected abstract ListView<MODEL> getInstanceOfListView(ViewClosedListener vcl);
 	
 	/*===========================
 	 * 	Concrete
 	 *===========================*/
 	private void initView(ViewClosedListener vcl) {
-		View v = getInstanceOfShowView(vcl);
-		if(vcl != null) {
+		View<MODEL> v = getInstanceOfShowView(vcl);
+		if(v != null) {
 			setView(v);
 		} else {
-			System.out.println("list view required");
-//			setView(getInstanceOfListView(vcl));
+			setView(getInstanceOfListView(vcl));
 		}
 	}
 	
-	private View getNextView(View oldView, ViewClosedListener vcl) { //TODO: add list view
+	private View getNextView(final View oldView, ViewClosedListener vcl) {
+		View nextView = oldView;
+		
 		if(oldView instanceof ShowView) {
-			return getInstanceOfEditView(vcl);
+			nextView = getInstanceOfEditView(vcl);
 		}
-		return getInstanceOfShowView(vcl);
+		if(oldView instanceof EditView || nextView == null) {
+			nextView = getInstanceOfListView(vcl);
+		}
+		if(oldView instanceof ListView || nextView == null) {
+			nextView = getInstanceOfShowView(vcl);
+		}
+		if(nextView == null) {
+			nextView = getInstanceOfEditView(vcl);
+		}
+		return nextView;
 	}
 	
 	private void swapView() {
-		//removing the listener first, so the vm will continue existing
 		getView().removeCloseListener();
 		closeView();
 		
-		setView(getNextView(getView(), new ViewClosedListener())); //causes probably NullPointerException. Then: getNextView before closing old one
+		setView(getNextView(getView(), new ViewClosedListener()));
 	}
 	
 	public final void reload() {
@@ -95,7 +104,11 @@ public abstract class ViewModel<MODEL> {
 			((ShowView<MODEL>) getView()).set(getData());
 			getView().repaint();
 		}
-		//TODO: add listview here
+
+//		if(getView() instanceof ListView) {
+//			((ListView<MODEL>) getView()).set(getData());
+//			getView().repaint();
+//		}
 	}
 	
 	protected void commitEdit() {
