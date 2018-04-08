@@ -35,16 +35,16 @@ public class ProjectController {
 	
 	private void openView(Object arg) {
 		if(arg instanceof Project) {
-			openViews.add(new ProjectVM(runningL, new CommitEditListener(), project, new OpenViewListener(), new CtrlQListener()));
+			openViews.add(new ProjectVM(runningL, project, new OpenViewListener(), new CtrlQListener(), new CommitEditListener()));
 		}
 		if(arg instanceof Entity) {
-			openViews.add(new EntityVM(new CloseViewListener(), new CommitEditListener(), (Entity) arg, new OpenViewListener(), new CtrlQListener()));
+			openViews.add(new EntityVM(new CloseViewListener(), (Entity) arg, new OpenViewListener(), new CtrlQListener(), new CommitEditListener()));
 		}
 		if(arg instanceof Link) {
-			openViews.add(new LinkVM(new CloseViewListener(), new CommitEditListener(), (Link) arg, new OpenViewListener(), new CtrlQListener()));
+			openViews.add(new LinkVM(new CloseViewListener(), (Link) arg, new OpenViewListener(), new CtrlQListener(), new CommitEditListener()));
 		}
 		if(arg instanceof Group) {
-			openViews.add(new GroupVM(new CloseViewListener(), new CommitEditListener(), (Group) arg, new OpenViewListener(), new CtrlQListener()));
+			openViews.add(new GroupVM(new CloseViewListener(), (Group) arg, new OpenViewListener(), new CtrlQListener(), new CommitEditListener()));
 		}
 	}
 	

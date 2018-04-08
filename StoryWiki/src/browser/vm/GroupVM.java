@@ -8,10 +8,10 @@ import browser.vm.ProjectController.*;
 import browser.vm.views.*;
 import core.*;
 
-public class GroupVM extends SingleVM<Group> {
+public class GroupVM extends ViewModel<Group> {
 
-	public GroupVM(ActionListener cvl, CommitEditListener cel, Group data, OpenViewListener ovl, ActionListener ctrlQListener) {
-		super(cvl, cel, data, ovl, ctrlQListener);
+	public GroupVM(ActionListener cvl, Group data, OpenViewListener ovl, ActionListener ctrlQListener, CommitEditListener cel) {
+		super(cvl, data, ovl, ctrlQListener, cel);
 	}
 
 	@Override
@@ -55,6 +55,8 @@ public class GroupVM extends SingleVM<Group> {
 		return new ShowGroupView(vcl, new SwapListener(), openLinkListener, removeLinkListener, getData());
 	}
 
+	
+	
 	@Override
 	protected void writeEditToModel(Group group) {
 		getData().rename(group.getIdentifier());
@@ -72,4 +74,6 @@ public class GroupVM extends SingleVM<Group> {
 		
 		return valids;
 	}
+
+
 }

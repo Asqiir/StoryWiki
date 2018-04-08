@@ -12,9 +12,9 @@ import browser.vm.views.*;
 import core.*;
 import core.Entity.Types;
 
-public class EntityVM extends SingleVM<Entity> {
-	public EntityVM(ActionListener cvl, CommitEditListener cel, Entity data, OpenViewListener ovl, ActionListener ctrlQListener) {
-		super(cvl, cel, data, ovl, ctrlQListener);
+public class EntityVM extends ViewModel<Entity> {
+	public EntityVM(ActionListener cvl, Entity data, OpenViewListener ovl, ActionListener ctrlQListener, CommitEditListener cel) {
+		super(cvl, data, ovl, ctrlQListener, cel);
 	}
 
 	@Override
@@ -85,6 +85,8 @@ public class EntityVM extends SingleVM<Entity> {
 		return new ShowEntityView(new SwapListener(), openLinkListener, vcl, createGroupListener, openGroupListener, deleteGroupListener, addLinkToGroupListener, getData());
 	}
 
+//	protected ListView<Entity> getInstanceOfListView(ViewClosedListener vcl) { return null; }
+	
 	@Override
 	protected void writeEditToModel(Entity entity) {
 		getData().setName(entity.getName());
@@ -144,4 +146,6 @@ public class EntityVM extends SingleVM<Entity> {
 		
 		return valids;
 	}
+
+
 }

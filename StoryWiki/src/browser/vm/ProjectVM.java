@@ -6,15 +6,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import browser.vm.ProjectController.CommitEditListener;
 import browser.vm.ProjectController.OpenViewListener;
 import browser.vm.views.*;
 import core.*;
 import core.Entity.*;
 
-public class ProjectVM extends SingleVM<Project> {
+public class ProjectVM extends ViewModel<Project> {
 
-	public ProjectVM(ActionListener cvl, ProjectController.CommitEditListener cel, Project data, OpenViewListener ovl, ActionListener ctrlQListener) {
-		super(cvl, cel, data, ovl, ctrlQListener);
+	public ProjectVM(ActionListener cvl, Project data, OpenViewListener ovl, ActionListener ctrlQListener, CommitEditListener cel) {
+		super(cvl, data, ovl, ctrlQListener, cel);
 	}
 
 	/*============================
@@ -117,6 +118,8 @@ public class ProjectVM extends SingleVM<Project> {
 	protected EditView<Project> getInstanceOfEditView(ViewClosedListener vcl) {
 		return new EditProjectView(getData().getName(), new SwapAndEditListener(), vcl);	
 	}
+	
+//	protected ListView<Project> getInstanceOfListView(ViewClosedListener vcl) { return null; }
 	
 	protected String[] createAllEntityOptions() {
 		List<Entity> eList = ((Project) getData()).getEntities();

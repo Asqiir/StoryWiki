@@ -7,10 +7,10 @@ import browser.vm.ProjectController.*;
 import browser.vm.views.*;
 import core.*;
 
-public class LinkVM extends SingleVM<Link> {
+public class LinkVM extends ViewModel<Link> {
 
-	public LinkVM(ActionListener cvl, CommitEditListener cel, Link data, OpenViewListener ovl, ActionListener ctrlQListener) {
-		super(cvl, cel, data, ovl, ctrlQListener);
+	public LinkVM(ActionListener cvl, Link data, OpenViewListener ovl, ActionListener ctrlQListener, CommitEditListener cel) {
+		super(cvl, data, ovl, ctrlQListener, cel);
 	}
 
 	@Override
