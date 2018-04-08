@@ -35,7 +35,6 @@ public class ProjectController {
 	
 	private void openView(Object arg) {
 		if(arg instanceof Project) {
-			//open, close (projectcontroller is closed when projects view is closed), edit
 			openViews.add(new ProjectVM(runningL, new CommitEditListener(), project, new OpenViewListener(), new CtrlQListener()));
 		}
 		if(arg instanceof Entity) {
@@ -47,15 +46,6 @@ public class ProjectController {
 		if(arg instanceof Group) {
 			openViews.add(new GroupVM(new CloseViewListener(), new CommitEditListener(), (Group) arg, new OpenViewListener(), new CtrlQListener()));
 		}
-		if(arg instanceof List && !((List) arg).isEmpty()) {
-			Object firstItem = ((List) arg).get(0);
-			
-			if(firstItem instanceof Entity) {
-				//TODO openViews.add(new EntityListVM(new CloseViewListener(), new Project(project), new OpenViewListener()));
-			}
-			//TODO: add other types
-		}
-		//TODO: add rest
 	}
 	
 	public class OpenViewListener implements ActionListener {
@@ -93,11 +83,7 @@ public class ProjectController {
 					return;
 				}
 			}
-			
-			
-			
 		}
 	}
-	
 }
 

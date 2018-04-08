@@ -68,7 +68,7 @@ public class ProjectVM extends SingleVM<Project> {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				OpenViewEvent ove = new OpenViewEvent(this, ActionEvent.ACTION_PERFORMED, "", getData().getEntities());
+				OpenViewEvent ove = new OpenViewEvent(this, ActionEvent.ACTION_PERFORMED, "list", getData());
 				getOpenViewListener().actionPerformed(ove);
 			}
 		};

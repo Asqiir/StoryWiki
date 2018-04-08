@@ -57,9 +57,9 @@ public class ProjectTest {
 		
 		e1.setDescription("kl");
 		
-		List<Searchable> matches1 = SearchContainer.search(p.getAll(), "kl");
-		List<Searchable> matches2 = SearchContainer.search(p.getAll(), "k");
-		List<Searchable> matches3 = SearchContainer.search(p.getAll(), "j");
+		List<Searchable<?>> matches1 = SearchContainer.search(p.getAll(), "kl");
+		List<Searchable<?>> matches2 = SearchContainer.search(p.getAll(), "k");
+		List<Searchable<?>> matches3 = SearchContainer.search(p.getAll(), "j");
 
 		assertEquals(2, matches1.size());
 		assertEquals(3, matches2.size());
