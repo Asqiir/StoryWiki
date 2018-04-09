@@ -1,26 +1,27 @@
-package browser.vm;
+package browser;
 
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import browser.vm.ProjectController.CommitEditListener;
-import browser.vm.ProjectController.OpenViewListener;
-import browser.vm.ViewModel.ViewClosedListener;
-import browser.vm.views.*;
+import browser.vm.views.View;
+import browser.vm.views.ShowView;
+import browser.vm.views.EditView;
+import browser.vm.views.ListView;
+import browser.vm.views.ResetContentView;
 
 public abstract class ViewModel<MODEL> {
 	private ActionListener cvl; //close view listener
 	private ActionListener ovl; //open view listener
 	private ActionListener ctrlQListener;
-	private CommitEditListener cel;
+	private ActionListener cel; //commitEditListener
 	
 	
 	private MODEL data;
 	private View<MODEL> view;
 	
-	public ViewModel(ActionListener cvl, MODEL data, OpenViewListener ovl, ActionListener ctrlQListener, CommitEditListener cel) {
+	public ViewModel(ActionListener cvl, MODEL data, ActionListener ovl, ActionListener ctrlQListener, ActionListener cel) {
 		this.cvl = cvl;
 		this.data = data;
 		this.ovl = ovl;
@@ -100,8 +101,8 @@ public abstract class ViewModel<MODEL> {
 	}
 	
 	public final void reload() {
-		if(getView() instanceof ShowView) {
-			((ShowView<MODEL>) getView()).set(getData());
+		if(getView() instanceof ResetContentView) {
+			((ResetContentView<MODEL>) getView()).set(getData());
 			getView().repaint();
 		}
 
@@ -130,7 +131,7 @@ public abstract class ViewModel<MODEL> {
 		getCloseListener().actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, ""));
 	}
 	
-	class ViewClosedListener extends WindowAdapter {
+	public class ViewClosedListener extends WindowAdapter {
 		public void windowClosing(WindowEvent e)
 	    {
 			discharge();
@@ -174,6 +175,8 @@ public abstract class ViewModel<MODEL> {
 	 * 	swapping classes
 	 * ==========================*/
 	protected class SwapListener implements ActionListener {
+		public SwapListener() {}
+
 		@Override //This action listener swap views
 		public void actionPerformed(ActionEvent arg0) {
 			swapView();
@@ -181,6 +184,8 @@ public abstract class ViewModel<MODEL> {
 	}
 	
 	protected class SwapAndEditListener implements ActionListener {
+		public SwapAndEditListener() {}
+
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			Map<String,String> input = ((EditView) getView()).getInput();

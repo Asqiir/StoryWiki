@@ -3,13 +3,14 @@ package browser.vm;
 import java.awt.event.*;
 import java.util.*;
 
-import browser.vm.ProjectController.*;
+import browser.ViewModel;
+import browser.ProjectController.*;
 import browser.vm.views.*;
 import core.*;
 
 public class LinkVM extends ViewModel<Link> {
 
-	public LinkVM(ActionListener cvl, Link data, OpenViewListener ovl, ActionListener ctrlQListener, CommitEditListener cel) {
+	public LinkVM(ActionListener cvl, Link data, ActionListener ovl, ActionListener ctrlQListener, ActionListener cel) {
 		super(cvl, data, ovl, ctrlQListener, cel);
 	}
 

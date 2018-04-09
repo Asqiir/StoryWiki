@@ -1,9 +1,12 @@
-package browser.vm;
+package browser;
 
 import java.awt.event.*;
 import java.io.IOException;
 import java.util.*;
-import core.*;
+
+import browser.vm.OpenViewEvent;
+import browser.vm.ProjectVM;
+import core.Project;
 
 public class ProjectController {
 	private Project project; //shared model
@@ -34,18 +37,7 @@ public class ProjectController {
 	}
 	
 	private void openView(Object arg) {
-		if(arg instanceof Project) {
-			openViews.add(new ProjectVM(runningL, project, new OpenViewListener(), new CtrlQListener(), new CommitEditListener()));
-		}
-		if(arg instanceof Entity) {
-			openViews.add(new EntityVM(new CloseViewListener(), (Entity) arg, new OpenViewListener(), new CtrlQListener(), new CommitEditListener()));
-		}
-		if(arg instanceof Link) {
-			openViews.add(new LinkVM(new CloseViewListener(), (Link) arg, new OpenViewListener(), new CtrlQListener(), new CommitEditListener()));
-		}
-		if(arg instanceof Group) {
-			openViews.add(new GroupVM(new CloseViewListener(), (Group) arg, new OpenViewListener(), new CtrlQListener(), new CommitEditListener()));
-		}
+		openViews.add(VMFactory.createVM(arg, runningL, project, new CloseViewListener(), new OpenViewListener(), new CtrlQListener(), new CommitEditListener()));
 	}
 	
 	public class OpenViewListener implements ActionListener {

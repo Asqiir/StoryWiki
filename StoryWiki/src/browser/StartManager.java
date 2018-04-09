@@ -2,10 +2,8 @@ package browser;
 
 import java.awt.event.*;
 import java.io.IOException;
-import java.util.*;
 
-import browser.vm.ProjectController;
-import core.*;
+import core.Project;
 
 public class StartManager {
 	StartView view;
@@ -32,9 +30,19 @@ public class StartManager {
 	}
 	
 	
-	class StartListener implements EventListener {
-		public void actionPerformed(StartEvent se) throws IOException { //we need exactly to know, what to do: new or open; and which directory
-			deActivate(getProjectFrom(se), getDirFrom(se)); //StartManager deactivated; Project views activated
+	class StartListener implements ActionListener {
+		public void actionPerformed(ActionEvent se) { //we need exactly to know, what to do: new or open; and which directory
+			if(se instanceof StartEvent) {
+				StartEvent sEvent = (StartEvent) se;
+				try {
+					deActivate(getProjectFrom(sEvent), getDirFrom(sEvent)); //StartManager deactivated; Project views activated
+				} catch (IOException e) {
+					System.out.println("directory konnte nicht aufgelöst werden");
+					e.printStackTrace();
+				} 
+			} else {
+				System.out.println("falsches Event beim StartListener");
+			}
 		}
 		
 		//reorder this stuff!

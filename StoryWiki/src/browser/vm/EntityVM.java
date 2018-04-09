@@ -7,13 +7,14 @@ import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
 
-import browser.vm.ProjectController.*;
+import browser.ViewModel;
+import browser.ProjectController.*;
 import browser.vm.views.*;
 import core.*;
 import core.Entity.Types;
 
 public class EntityVM extends ViewModel<Entity> {
-	public EntityVM(ActionListener cvl, Entity data, OpenViewListener ovl, ActionListener ctrlQListener, CommitEditListener cel) {
+	public EntityVM(ActionListener cvl, Entity data, ActionListener ovl, ActionListener ctrlQListener, ActionListener cel) {
 		super(cvl, data, ovl, ctrlQListener, cel);
 	}
 

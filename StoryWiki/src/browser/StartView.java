@@ -1,18 +1,16 @@
 package browser;
 
-import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.*;
-import java.io.IOException;
 
 import javax.swing.*;
 
 public class StartView {
 	JFrame frame;
 	JFileChooser chooser;
-	StartManager.StartListener sl;
+	ActionListener sl;
 	
-	public StartView(StartManager.StartListener sl) {
+	public StartView(ActionListener sl) {
 		this.sl = sl;
 		frame = createNewOrLoadFrame(new StartButtonListener(false), new StartButtonListener(true));
 		
@@ -53,12 +51,7 @@ public class StartView {
 			se.setIsNew(isNew);
 			
 			//send
-			try {
-				sl.actionPerformed(se);
-			} catch (IOException ioe) {
-				System.out.println("error while sending startevent to startlistener");
-				ioe.printStackTrace();
-			}
+			sl.actionPerformed(se);
 		}
 		
 	}

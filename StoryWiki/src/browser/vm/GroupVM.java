@@ -4,13 +4,14 @@ import java.awt.event.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import browser.vm.ProjectController.*;
+import browser.ViewModel;
+import browser.ProjectController.*;
 import browser.vm.views.*;
 import core.*;
 
 public class GroupVM extends ViewModel<Group> {
 
-	public GroupVM(ActionListener cvl, Group data, OpenViewListener ovl, ActionListener ctrlQListener, CommitEditListener cel) {
+	public GroupVM(ActionListener cvl, Group data, ActionListener ovl, ActionListener ctrlQListener, ActionListener cel) {
 		super(cvl, data, ovl, ctrlQListener, cel);
 	}
 

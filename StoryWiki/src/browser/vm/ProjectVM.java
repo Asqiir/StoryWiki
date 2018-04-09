@@ -6,15 +6,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import browser.vm.ProjectController.CommitEditListener;
-import browser.vm.ProjectController.OpenViewListener;
+import browser.ViewModel;
 import browser.vm.views.*;
 import core.*;
 import core.Entity.*;
 
 public class ProjectVM extends ViewModel<Project> {
 
-	public ProjectVM(ActionListener cvl, Project data, OpenViewListener ovl, ActionListener ctrlQListener, CommitEditListener cel) {
+	public ProjectVM(ActionListener cvl, Project data, ActionListener ovl, ActionListener ctrlQListener, ActionListener cel) {
 		super(cvl, data, ovl, ctrlQListener, cel);
 	}
 
