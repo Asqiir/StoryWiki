@@ -4,6 +4,7 @@ import java.awt.event.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import browser.OpenViewEvent;
 import browser.ViewModel;
 import browser.ProjectController.*;
 import browser.vm.views.*;

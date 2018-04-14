@@ -3,6 +3,7 @@ package browser.vm;
 import java.awt.event.*;
 import java.util.*;
 
+import browser.OpenViewEvent;
 import browser.ViewModel;
 import browser.ProjectController.*;
 import browser.vm.views.*;

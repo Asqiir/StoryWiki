@@ -1,4 +1,4 @@
-package browser.vm;
+package browser;
 
 import java.awt.event.ActionEvent;
 

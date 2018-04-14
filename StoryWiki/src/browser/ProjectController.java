@@ -3,9 +3,6 @@ package browser;
 import java.awt.event.*;
 import java.io.IOException;
 import java.util.*;
-
-import browser.vm.OpenViewEvent;
-import browser.vm.ProjectVM;
 import core.Project;
 
 public class ProjectController {
@@ -26,7 +23,7 @@ public class ProjectController {
 	
 	public void close() throws IOException {
 		while(!openViews.isEmpty()) {
-			if(!(openViews.get(0) instanceof ProjectVM)) { //the project vm is already closing.
+			if(!VMFactory.isMainVM(openViews.get(0))) { //the project vm is already closing.
 				//in order to the close pattern, it will remove itself in the last step from the list
 				openViews.get(0).closeView();
 			} else {
@@ -65,7 +62,7 @@ public class ProjectController {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			for(ViewModel element:openViews) {
-				if(element instanceof ProjectVM) {
+				if(VMFactory.isMainVM(element)) {
 					/* Having pressed CTRL + Q, anything should be closed.
 					 * This happens by closing the main frame.
 					 * Program will return to start frame.

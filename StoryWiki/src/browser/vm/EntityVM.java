@@ -7,6 +7,7 @@ import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
 
+import browser.OpenViewEvent;
 import browser.ViewModel;
 import browser.ProjectController.*;
 import browser.vm.views.*;

@@ -6,12 +6,15 @@ import browser.vm.EntityVM;
 import browser.vm.GroupVM;
 import browser.vm.LinkVM;
 import browser.vm.ProjectVM;
+
 import core.Entity;
 import core.Group;
 import core.Link;
 import core.Project;
 
 public class VMFactory {
+	private VMFactory() {}
+	
 	public static ViewModel<?> createVM(Object arg, ActionListener runningL, Project project, ActionListener close, ActionListener open, ActionListener ctrlQ, ActionListener commitEdit) {
 		if(arg instanceof Project) {
 			return new ProjectVM(runningL, project, open, ctrlQ, commitEdit);
@@ -27,5 +30,9 @@ public class VMFactory {
 		}
 		
 		return null;
+	}
+	
+	public static boolean isMainVM(ViewModel vm) {
+		return vm instanceof ProjectVM;
 	}
 }
