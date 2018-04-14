@@ -83,7 +83,7 @@ public class EntityVM extends ViewModel<Entity> {
 			}
 		};
 		
-		return new ShowEntityView(new SwapListener(), openLinkListener, vcl, createGroupListener, openGroupListener, deleteGroupListener, addLinkToGroupListener, getData());
+		return new ShowEntityView(new SwapAndEditListener(), openLinkListener, vcl, createGroupListener, openGroupListener, deleteGroupListener, addLinkToGroupListener, getData());
 	}
 
 	protected ListView<Entity> getInstanceOfListView(ViewClosedListener vcl) { return null; }

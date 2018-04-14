@@ -133,7 +133,7 @@ public abstract class ViewModel<MODEL> {
 				invalidKeys.add(key);
 			}
 		}
-		getView().mark(invalidKeys);
+		((EditView) getView()).mark(invalidKeys);
 	}
 	
 	protected boolean isInputValid(Map<String,Boolean> valids) {

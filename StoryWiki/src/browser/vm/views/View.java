@@ -59,6 +59,8 @@ public abstract class View<MODEL> {
 		frame.removeWindowListener(vcl);
 		vcl = null;
 	}
+	
+	public abstract Map<String, String> getInput();
 
 	public abstract void set(MODEL data);
 	

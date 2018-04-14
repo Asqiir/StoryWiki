@@ -1,6 +1,7 @@
 package browser.vm.views;
 
 import java.awt.event.WindowAdapter;
+import java.util.Map;
 
 public abstract class ShowView<MODEL> extends View<MODEL> implements ResetContentView<MODEL> {
 	/*a view, that:
@@ -11,5 +12,9 @@ public abstract class ShowView<MODEL> extends View<MODEL> implements ResetConten
 
 	public ShowView(WindowAdapter viewClosedListener) {
 		super(viewClosedListener);
+	}
+	
+	public Map<String, String> getInput() {
+		return null;
 	}
 }

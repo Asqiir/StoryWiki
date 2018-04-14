@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.*;
 
@@ -23,7 +24,7 @@ public class ShowProjectView extends ShowView<Project> {
 	protected JTextField unlinkField = new JTextField();
 	
 	public ShowProjectView(String name, int number, String[] allEntityOptions, ActionListener changeViewListener, WindowAdapter vcl, ActionListener createAndShowEntityListener,
-			ActionListener deleteEntityListener, ActionListener allEntitiesListener, ActionListener linkListener, ActionListener unlinkListener) {
+			ActionListener deleteEntityListener, ActionListener linkListener, ActionListener unlinkListener) {
 		
 		super(vcl);
 

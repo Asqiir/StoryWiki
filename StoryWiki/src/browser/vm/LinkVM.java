@@ -29,7 +29,7 @@ public class LinkVM extends ViewModel<Link> {
 			}
 		};
 		
-		return new ShowLinkView(new SwapListener(), openEntityListener, vcl, getData());
+		return new ShowLinkView(new SwapAndEditListener(), openEntityListener, vcl, getData());
 	}
 
 	@Override
