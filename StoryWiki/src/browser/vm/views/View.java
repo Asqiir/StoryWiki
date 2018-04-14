@@ -60,6 +60,8 @@ public abstract class View<MODEL> {
 		vcl = null;
 	}
 
+	public abstract void set(MODEL data);
+	
 	public void repaint() {
 		frame.validate();
 		frame.repaint();

@@ -5,11 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import browser.vm.views.View;
-import browser.vm.views.ShowView;
-import browser.vm.views.EditView;
-import browser.vm.views.ListView;
-import browser.vm.views.ResetContentView;
+import browser.vm.views.*;
 
 public abstract class ViewModel<MODEL> {
 	private ActionListener cvl; //close view listener
@@ -28,7 +24,7 @@ public abstract class ViewModel<MODEL> {
 		this.ctrlQListener = ctrlQListener;
 		this.cel = cel;
 		
-		initView(new ViewClosedListener());
+		setView(getInitView(new ViewClosedListener()));
 	}
 	
 	/*============================
@@ -59,57 +55,37 @@ public abstract class ViewModel<MODEL> {
 	 *============================*/
 	protected abstract void writeEditToModel(MODEL data);
 	
-	protected abstract EditView<MODEL> getInstanceOfEditView(ViewClosedListener vcl);
 	protected abstract ShowView<MODEL> getInstanceOfShowView(ViewClosedListener vcl);
+	protected abstract EditView<MODEL> getInstanceOfEditView(ViewClosedListener vcl);
 	protected abstract ListView<MODEL> getInstanceOfListView(ViewClosedListener vcl);
 	
+	protected View<MODEL> getInitView(ViewClosedListener vcl) {
+		return getInstanceOfShowView(vcl);
+	}
+	
+	protected View<MODEL> createNextView(View<MODEL> oldView, ViewClosedListener vcl) {
+		oldView.removeCloseListener();
+		
+		if(oldView instanceof ShowView) {
+			return getInstanceOfEditView(vcl);
+		} else {
+			return getInstanceOfShowView(vcl);
+		}
+	}
 	/*===========================
 	 * 	Concrete
 	 *===========================*/
-	private void initView(ViewClosedListener vcl) {
-		View<MODEL> v = getInstanceOfShowView(vcl);
-		if(v != null) {
-			setView(v);
-		} else {
-			setView(getInstanceOfListView(vcl));
-		}
-	}
-	
-	private View getNextView(final View oldView, ViewClosedListener vcl) {
-		View nextView = oldView;
-		
-		if(oldView instanceof ShowView) {
-			nextView = getInstanceOfEditView(vcl);
-		}
-		if(oldView instanceof EditView || nextView == null) {
-			nextView = getInstanceOfListView(vcl);
-		}
-		if(oldView instanceof ListView || nextView == null) {
-			nextView = getInstanceOfShowView(vcl);
-		}
-		if(nextView == null) {
-			nextView = getInstanceOfEditView(vcl);
-		}
-		return nextView;
-	}
 	
 	private void swapView() {
 		getView().removeCloseListener();
 		closeView();
 		
-		setView(getNextView(getView(), new ViewClosedListener()));
+		setView(createNextView(getView(), new ViewClosedListener()));
 	}
 	
 	public final void reload() {
-		if(getView() instanceof ResetContentView) {
-			((ResetContentView<MODEL>) getView()).set(getData());
-			getView().repaint();
-		}
-
-//		if(getView() instanceof ListView) {
-//			((ListView<MODEL>) getView()).set(getData());
-//			getView().repaint();
-//		}
+		getView().set(getData());
+		getView().repaint();
 	}
 	
 	protected void commitEdit() {
@@ -157,7 +133,7 @@ public abstract class ViewModel<MODEL> {
 				invalidKeys.add(key);
 			}
 		}
-		((EditView) getView()).mark(invalidKeys);
+		getView().mark(invalidKeys);
 	}
 	
 	protected boolean isInputValid(Map<String,Boolean> valids) {
@@ -172,23 +148,20 @@ public abstract class ViewModel<MODEL> {
 	
 	
 	/*===========================
-	 * 	swapping classes
+	 * 	swapping class
 	 * ==========================*/
-	protected class SwapListener implements ActionListener {
-		public SwapListener() {}
-
-		@Override //This action listener swap views
-		public void actionPerformed(ActionEvent arg0) {
-			swapView();
-		}
-	}
-	
 	protected class SwapAndEditListener implements ActionListener {
 		public SwapAndEditListener() {}
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			Map<String,String> input = ((EditView) getView()).getInput();
+			Map<String,String> input = getView().getInput();
+			
+			if(input == null) {
+				swapView();
+				return;
+			}
+			
 			Map<String,Boolean> valid = isSingleValid(input);
 			
 			if(isInputValid(valid)) {

@@ -64,15 +64,6 @@ public class ProjectVM extends ViewModel<Project> {
 			}
 		};
 		
-		ActionListener allEntitiesListener = new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				OpenViewEvent ove = new OpenViewEvent(this, ActionEvent.ACTION_PERFORMED, "list", getData());
-				getOpenViewListener().actionPerformed(ove);
-			}
-		};
-		
 		ActionListener linkListener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -110,7 +101,7 @@ public class ProjectVM extends ViewModel<Project> {
 			}
 		};
 		
-		return new ShowProjectView(getData().getName(), getData().getAll().size(), createAllEntityOptions(), new SwapListener(), vcl, newEntityListener, deleteEntityListener, allEntitiesListener, linkListener, unlinkListener);
+		return new ShowProjectView(getData().getName(), getData().getAll().size(), createAllEntityOptions(), new SwapAndEditListener(), vcl, newEntityListener, deleteEntityListener, linkListener, unlinkListener);
 	}
 
 	@Override
