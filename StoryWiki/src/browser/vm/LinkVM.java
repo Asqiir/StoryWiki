@@ -15,12 +15,11 @@ public class LinkVM extends ViewModel<Link> {
 		super(cvl, data, ovl, ctrlQListener, cel);
 	}
 
-	@Override
+	//old
 	protected EditView<Link> getInstanceOfEditView(ViewClosedListener vcl) {
 		return new EditLinkView(vcl, new SwapAndEditListener(), getData());
 	}
 
-	@Override
 	protected ShowView<Link> getInstanceOfShowView(ViewClosedListener vcl) {
 		ActionListener openEntityListener = new ActionListener() {
 			@Override
@@ -33,10 +32,23 @@ public class LinkVM extends ViewModel<Link> {
 		return new ShowLinkView(new SwapAndEditListener(), openEntityListener, vcl, getData());
 	}
 
-	@Override
-	protected ListView<Link> getInstanceOfListView(ViewClosedListener vcl) { return null; }
+
+	//new
+	protected View<Link> createInitView(ViewClosedListener vcl) {
+		return getInstanceOfShowView(vcl);
+	}
 	
+	protected View<Link> createNextView(ViewClosedListener vcl) {
+		if(getView() instanceof EditView) {
+			return getInstanceOfShowView(vcl);
+		} else {
+			return getInstanceOfEditView(vcl);
+		}
+	}
 	
+	/* =====================
+	 * 		edit stuff
+	 * ===================== */
 	@Override
 	protected void writeEditToModel(Link edit) {
 		getData().setDescription(edit.getDescription());

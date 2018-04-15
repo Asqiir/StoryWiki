@@ -16,12 +16,11 @@ public class GroupVM extends ViewModel<Group> {
 		super(cvl, data, ovl, ctrlQListener, cel);
 	}
 
-	@Override
+	//old
 	protected EditView<Group> getInstanceOfEditView(ViewClosedListener vcl) {
 		return new EditGroupView(vcl, new SwapAndEditListener(), getData().getIdentifier());
 	}
 
-	@Override
 	protected ShowView<Group> getInstanceOfShowView(ViewClosedListener vcl) {
 		ActionListener openLinkListener = new ActionListener() {
 			@Override
@@ -57,9 +56,23 @@ public class GroupVM extends ViewModel<Group> {
 		return new ShowGroupView(vcl, new SwapAndEditListener(), openLinkListener, removeLinkListener, getData());
 	}
 
-	protected ListView<Group> getInstanceOfListView(ViewClosedListener vcl) { return null; }
+	//new
+	protected View<Group> createInitView(ViewClosedListener vcl) {
+		return getInstanceOfShowView(vcl);
+	}
 	
+	protected View<Group> createNextView(ViewClosedListener vcl) {
+		if(getView() instanceof ShowView) {
+			return getInstanceOfEditView(vcl);
+		} else {
+			return getInstanceOfShowView(vcl);
+		}
+	}
+
 	
+	/* ====================
+	 * 		edit stuff
+	 * ==================== */
 	@Override
 	protected void writeEditToModel(Group group) {
 		getData().rename(group.getIdentifier());

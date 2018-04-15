@@ -24,7 +24,7 @@ public abstract class ViewModel<MODEL> {
 		this.ctrlQListener = ctrlQListener;
 		this.cel = cel;
 		
-		setView(getInitView(new ViewClosedListener()));
+		setView(createInitView(new ViewClosedListener()));
 	}
 	
 	/*============================
@@ -55,23 +55,26 @@ public abstract class ViewModel<MODEL> {
 	 *============================*/
 	protected abstract void writeEditToModel(MODEL data);
 	
-	protected abstract ShowView<MODEL> getInstanceOfShowView(ViewClosedListener vcl);
-	protected abstract EditView<MODEL> getInstanceOfEditView(ViewClosedListener vcl);
-	protected abstract ListView<MODEL> getInstanceOfListView(ViewClosedListener vcl);
+	protected abstract View<MODEL> createInitView(ViewClosedListener vcl);
+	protected abstract View<MODEL> createNextView(ViewClosedListener vcl);
 	
-	protected View<MODEL> getInitView(ViewClosedListener vcl) {
-		return getInstanceOfShowView(vcl);
-	}
-	
-	protected View<MODEL> createNextView(View<MODEL> oldView, ViewClosedListener vcl) {
-		oldView.removeCloseListener();
-		
-		if(oldView instanceof ShowView) {
-			return getInstanceOfEditView(vcl);
-		} else {
-			return getInstanceOfShowView(vcl);
-		}
-	}
+//	protected abstract ShowView<MODEL> getInstanceOfShowView(ViewClosedListener vcl);
+//	protected abstract EditView<MODEL> getInstanceOfEditView(ViewClosedListener vcl);
+//	protected abstract ListView<MODEL> getInstanceOfListView(ViewClosedListener vcl);
+//	
+//	protected View<MODEL> getInitView(ViewClosedListener vcl) {
+//		return getInstanceOfShowView(vcl);
+//	}
+//	
+//	protected View<MODEL> createNextView(View<MODEL> oldView, ViewClosedListener vcl) {
+//		oldView.removeCloseListener();
+//		
+//		if(oldView instanceof ShowView) {
+//			return getInstanceOfEditView(vcl);
+//		} else {
+//			return getInstanceOfShowView(vcl);
+//		}
+//	}
 	/*===========================
 	 * 	Concrete
 	 *===========================*/
@@ -80,7 +83,7 @@ public abstract class ViewModel<MODEL> {
 		getView().removeCloseListener();
 		closeView();
 		
-		setView(createNextView(getView(), new ViewClosedListener()));
+		setView(createNextView(new ViewClosedListener()));
 	}
 	
 	public final void reload() {
@@ -107,7 +110,7 @@ public abstract class ViewModel<MODEL> {
 		getCloseListener().actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, ""));
 	}
 	
-	public class ViewClosedListener extends WindowAdapter {
+	protected class ViewClosedListener extends WindowAdapter {
 		public void windowClosing(WindowEvent e)
 	    {
 			discharge();

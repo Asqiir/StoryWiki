@@ -19,12 +19,11 @@ public class EntityVM extends ViewModel<Entity> {
 		super(cvl, data, ovl, ctrlQListener, cel);
 	}
 
-	@Override
+	//old. remove somewhen
 	protected EditView<Entity> getInstanceOfEditView(ViewClosedListener vcl) {
 		return new EditEntityView(vcl, new SwapAndEditListener(), getData());
 	}
 
-	@Override
 	protected ShowView<Entity> getInstanceOfShowView(ViewClosedListener vcl) {
 		ActionListener openLinkListener = new ActionListener() {
 			@Override
@@ -87,7 +86,22 @@ public class EntityVM extends ViewModel<Entity> {
 		return new ShowEntityView(new SwapAndEditListener(), openLinkListener, vcl, createGroupListener, openGroupListener, deleteGroupListener, addLinkToGroupListener, getData());
 	}
 
-	protected ListView<Entity> getInstanceOfListView(ViewClosedListener vcl) { return null; }
+	//new. maybe going to be removed for viewFactory
+	protected View<Entity> createInitView(ViewClosedListener vcl) {
+		return getInstanceOfShowView(vcl);
+	}
+	
+	protected View<Entity> createNextView(ViewClosedListener vcl) {
+		if(getView() instanceof ShowView) {
+			return getInstanceOfEditView(vcl);
+		} else {
+			return getInstanceOfShowView(vcl);
+		}
+	}
+	
+	/* ==========================
+	 * 		edit stuff
+	 * ========================== */
 	
 	@Override
 	protected void writeEditToModel(Entity entity) {
@@ -97,7 +111,6 @@ public class EntityVM extends ViewModel<Entity> {
 		getData().setDate(entity.getValidFrom());
 		getData().setDuration(entity.getValidFrom(), Searchable.getValidUntil(entity));
 	}
-
 	
 	@Override
 	protected Entity createEdited(Map<String, String> input) {
@@ -148,6 +161,4 @@ public class EntityVM extends ViewModel<Entity> {
 		
 		return valids;
 	}
-
-
 }

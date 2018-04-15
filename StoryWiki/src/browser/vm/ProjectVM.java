@@ -18,10 +18,7 @@ public class ProjectVM extends ViewModel<Project> {
 		super(cvl, data, ovl, ctrlQListener, cel);
 	}
 
-	/*============================
-	 * Get the VIEW INSTANCES
-	 * ===========================*/
-	@Override
+	//old
 	protected ShowView<Project> getInstanceOfShowView(ViewClosedListener vcl) {
 		
 		/* The newEntityListener waits for the "new entities" text field,
@@ -105,13 +102,25 @@ public class ProjectVM extends ViewModel<Project> {
 		return new ShowProjectView(getData().getName(), getData().getAll().size(), createAllEntityOptions(), new SwapAndEditListener(), vcl, newEntityListener, deleteEntityListener, linkListener, unlinkListener);
 	}
 
-	@Override
 	protected EditView<Project> getInstanceOfEditView(ViewClosedListener vcl) {
 		return new EditProjectView(getData().getName(), new SwapAndEditListener(), vcl);	
 	}
 	
-	protected ListView<Project> getInstanceOfListView(ViewClosedListener vcl) { return null; }
+
+	//new
+	protected View<Project> createInitView(ViewClosedListener vcl) {
+		return getInstanceOfShowView(vcl);
+	}
 	
+	protected View<Project> createNextView(ViewClosedListener vcl) {
+		if(getView() instanceof EditView) {
+			return getInstanceOfShowView(vcl);
+		} else {
+			return getInstanceOfEditView(vcl);
+		}
+	}
+	
+	//???
 	protected String[] createAllEntityOptions() {
 		List<Entity> eList = ((Project) getData()).getEntities();
 		List<String> nameList = new ArrayList<String>();
