@@ -54,7 +54,7 @@ public class ShowEntityView extends ShowView<Entity> {
 	
 	public ShowEntityView(ActionListener swapListener, ActionListener openLinkListener, WindowAdapter vcl, ActionListener createGroupListener, ActionListener openGroupListener,
 			ActionListener removeGroupListener, ActionListener addLinkToGroupListener, Entity entity) {
-		super(vcl);
+		super(vcl, entity);
 		 
 		frame.setSize(400, 500);
 		

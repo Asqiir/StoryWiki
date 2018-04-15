@@ -13,7 +13,7 @@ public class ShowGroupView extends ShowView<Group> {
 	private JList<String> links = new JList<String>();
 	
 	public ShowGroupView(WindowAdapter vcl, ActionListener swapListener, ActionListener openLinkListener, ActionListener removeLinkListener, Group group) {
-		super(vcl);
+		super(vcl, group);
 		
 		//header
 		title.setFont(new Font("Ubuntu", Font.BOLD, 26));

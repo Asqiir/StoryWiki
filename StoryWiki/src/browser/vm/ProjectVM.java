@@ -77,10 +77,6 @@ public class ProjectVM extends ViewModel<Project> {
 					e1.link(e2);
 					commitEdit();
 				}
-				
-				//open both
-				OpenViewEvent ove1 = new OpenViewEvent(arg0.getSource(), ActionEvent.ACTION_PERFORMED, "", e1.getLink(e2));
-				OpenViewEvent ove2 = new OpenViewEvent(arg0.getSource(), ActionEvent.ACTION_PERFORMED, "", e2.getLink(e1));
 			}
 		};
 		
@@ -99,7 +95,7 @@ public class ProjectVM extends ViewModel<Project> {
 			}
 		};
 		
-		return new ShowProjectView(getData().getName(), getData().getAll().size(), createAllEntityOptions(), new SwapAndEditListener(), vcl, newEntityListener, deleteEntityListener, linkListener, unlinkListener);
+		return new ShowProjectView(getData(), new SwapAndEditListener(), vcl, newEntityListener, deleteEntityListener, linkListener, unlinkListener);
 	}
 
 	protected EditView<Project> getInstanceOfEditView(ViewClosedListener vcl) {
@@ -118,18 +114,6 @@ public class ProjectVM extends ViewModel<Project> {
 		} else {
 			return getInstanceOfEditView(vcl);
 		}
-	}
-	
-	//???
-	protected String[] createAllEntityOptions() {
-		List<Entity> eList = ((Project) getData()).getEntities();
-		List<String> nameList = new ArrayList<String>();
-		
-		for(Entity element:eList) {
-			nameList.add(element.getIdentifier());
-		}
-		
-		return nameList.toArray(new String[nameList.size()]);
 	}
 
 

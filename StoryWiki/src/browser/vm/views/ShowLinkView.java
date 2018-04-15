@@ -9,7 +9,7 @@ public class ShowLinkView extends ShowView<Link> {
 	private JTextArea description = new JTextArea();
 
 	public ShowLinkView(ActionListener swapListener, ActionListener openEntityListener, WindowAdapter vcl, Link link) {
-		super(vcl);
+		super(vcl, link);
 
 		frame.setSize(300, 400);
 		layer.setLayout(new BorderLayout(10,10));

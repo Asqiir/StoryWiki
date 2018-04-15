@@ -16,9 +16,12 @@ public abstract class View<MODEL> {
 	private WindowListener vcl;
 	private List<ActionListener> ctrlQListener = new ArrayList<ActionListener>();
 	
-	public View(WindowAdapter vcl) {
+	private MODEL model;
+	
+	public View(WindowAdapter vcl, MODEL model) {
 		frame.addWindowListener(vcl);
 		this.vcl = vcl; //remember, to delete later
+		this.model = model;
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		Action closeFrame = new AbstractAction() {
@@ -62,10 +65,14 @@ public abstract class View<MODEL> {
 	
 	public abstract Map<String, String> getInput();
 
-	public abstract void set(MODEL data);
+	public abstract void update();
 	
 	public void repaint() {
 		frame.validate();
 		frame.repaint();
+	}
+
+	protected MODEL getModel() {
+		return model;
 	}
 }

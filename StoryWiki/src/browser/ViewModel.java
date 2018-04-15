@@ -45,6 +45,7 @@ public abstract class ViewModel<MODEL> {
 	protected void setView(View<MODEL> v) {
 		view = v;
 		view.addCtrlQListener(ctrlQListener);
+		reload();
 	}
 	protected ActionListener getOpenViewListener() {
 		return ovl;
@@ -87,7 +88,7 @@ public abstract class ViewModel<MODEL> {
 	}
 	
 	public final void reload() {
-		getView().set(getData());
+		getView().update();
 		getView().repaint();
 	}
 	

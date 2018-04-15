@@ -9,7 +9,7 @@ public abstract class EditView<MODEL> extends View<MODEL> {
 	ActionListener sasl;
 
 	public EditView(WindowAdapter vcl, ActionListener saveAndSwapListener) {
-		super(vcl);
+		super(vcl, null); //editviews don't need to updated their content
 		sasl = saveAndSwapListener;
 	}
 	
@@ -18,7 +18,7 @@ public abstract class EditView<MODEL> extends View<MODEL> {
 	}
 
 	@Override
-	public void set(MODEL data) {}
+	public void update() {}
 	
 	public abstract Map<String, String> getInput();
 	public abstract void mark(List<String> inValidKeys);

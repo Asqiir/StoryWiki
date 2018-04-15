@@ -12,10 +12,10 @@ import core.Entity;
 import core.Project;
 
 public class ShowProjectView extends ShowView<Project> {
-	protected JLabel header;
-	protected JLabel showNumber;
+	protected JLabel header = new JLabel();
+	protected JLabel showNumber = new JLabel();
 	
-	protected JList<String> showAllEntities;
+	protected JList<String> showAllEntities = new JList();
 	
 	protected JTextField renameField = new JTextField();
 	protected JTextField openAndShowField = new JTextField();
@@ -23,12 +23,11 @@ public class ShowProjectView extends ShowView<Project> {
 	protected JTextField linkToField = new JTextField();
 	protected JTextField unlinkField = new JTextField();
 	
-	public ShowProjectView(String name, int number, String[] allEntityOptions, ActionListener changeViewListener, WindowAdapter vcl, ActionListener createAndShowEntityListener,
+	public ShowProjectView(Project project, ActionListener changeViewListener, WindowAdapter vcl, ActionListener createAndShowEntityListener,
 			ActionListener deleteEntityListener, ActionListener linkListener, ActionListener unlinkListener) {
 		
-		super(vcl);
+		super(vcl, project);
 
-		frame.setTitle(name);
 		layer.setLayout(new BorderLayout(10,10));
 		
 		//NORTH
@@ -39,7 +38,6 @@ public class ShowProjectView extends ShowView<Project> {
 		JPanel headLine = new JPanel();
 		headLine.setLayout(new BoxLayout(headLine, BoxLayout.LINE_AXIS));
 		
-		header = new JLabel(name);
 		header.setFont(new Font("Ubuntu", Font.BOLD, 26));
 		
 		JButton edit = new JButton("Bearbeiten");
@@ -49,7 +47,6 @@ public class ShowProjectView extends ShowView<Project> {
 		headLine.add(Box.createHorizontalGlue());
 		headLine.add(edit);
 		
-		showNumber = new JLabel(number + " Entities");
 		showNumber.setFont(new Font("Ubuntu", Font.PLAIN, 20));
 		showNumber.setHorizontalAlignment(JLabel.CENTER);
 
@@ -60,7 +57,6 @@ public class ShowProjectView extends ShowView<Project> {
 		//CENTER
 		JScrollPane listScroll = new JScrollPane();
 		listScroll.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
-		showAllEntities = new JList(allEntityOptions);
 		showAllEntities.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listScroll.setViewportView(showAllEntities);
 		listScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
