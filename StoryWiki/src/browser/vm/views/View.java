@@ -63,8 +63,6 @@ public abstract class View<MODEL> {
 		vcl = null;
 	}
 	
-	public abstract Map<String, String> getInput();
-
 	public abstract void update();
 	
 	public void repaint() {

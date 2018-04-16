@@ -159,13 +159,12 @@ public abstract class ViewModel<MODEL> {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			Map<String,String> input = getView().getInput();
-			
-			if(input == null) {
+			if(!(getView() instanceof EditView)) {
 				swapView();
 				return;
 			}
 			
+			Map<String,String> input = ((EditView) getView()).getInput();
 			Map<String,Boolean> valid = isSingleValid(input);
 			
 			if(isInputValid(valid)) {

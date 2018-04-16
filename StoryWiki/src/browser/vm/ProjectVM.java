@@ -102,6 +102,19 @@ public class ProjectVM extends ViewModel<Project> {
 		return new EditProjectView(getData().getName(), new SwapAndEditListener(), vcl);	
 	}
 	
+	
+	protected SingleListView<Entity, Project> getInstanceOfListView(ViewClosedListener vcl) {
+		ListManager list = new ListManager(getData());
+		
+		List<String> inputs = new ArrayList<String>();
+		Map<String,ActionListener> actions = new HashMap<String, ActionListener>();
+		Map<String,String> optNames = new HashMap<String, String>();
+		
+		actions.put("swap", new SwapAndEditListener());
+		optNames.put("swap", "Weiter");
+		
+		return new SingleListView<Entity, Project>(vcl, getData(), list, inputs, actions, optNames);
+	}
 
 	//new
 	protected View<Project> createInitView(ViewClosedListener vcl) {
@@ -109,10 +122,15 @@ public class ProjectVM extends ViewModel<Project> {
 	}
 	
 	protected View<Project> createNextView(ViewClosedListener vcl) {
-		if(getView() instanceof EditView) {
-			return getInstanceOfShowView(vcl);
-		} else {
+		if(getView() instanceof ShowView) {
 			return getInstanceOfEditView(vcl);
+		} else {
+			if(getView() instanceof EditView) {
+				return getInstanceOfListView(vcl);
+			} else {
+				return getInstanceOfShowView(vcl);
+			}
+			
 		}
 	}
 

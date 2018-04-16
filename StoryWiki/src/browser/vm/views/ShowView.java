@@ -19,8 +19,4 @@ public abstract class ShowView<MODEL> extends View<MODEL> {
 	}
 	
 	protected abstract void set(MODEL model);
-	
-	public Map<String, String> getInput() {
-		return null;
-	}
 }
