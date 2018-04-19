@@ -17,13 +17,17 @@ public class SingleListView<INNER extends Searchable<INNER>, MODEL extends Searc
 		frame.setSize(400,400);
 		layer.setLayout(new GridBagLayout());
 		
-		JPanel listPanel = getListManager().getListPanel();
+		JComponent listComp = getListManager().getListComp();
 		JPanel searchOptionsPanel = getListManager().getSearchOptionsPanel();
 		JPanel ownOptions = getOwnOptions();
 		
 		GridBagConstraints listC = new GridBagConstraints();
 		listC.weightx = 1;
 		listC.weighty = 1;
+		listC.gridx = 0;
+		listC.gridy = 0;
+		listC.gridheight = 1;
+		listC.gridwidth = 2;
 		listC.fill = GridBagConstraints.BOTH;
 		
 		GridBagConstraints soptC = new GridBagConstraints();
@@ -39,7 +43,7 @@ public class SingleListView<INNER extends Searchable<INNER>, MODEL extends Searc
 		ooptC.gridx = 1;
 		ooptC.gridy = 1;
 		
-		layer.add(listPanel, listC);
+		layer.add(listComp, listC);
 		layer.add(searchOptionsPanel, soptC);
 		layer.add(ownOptions, ooptC);
 		

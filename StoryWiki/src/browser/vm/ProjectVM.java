@@ -104,7 +104,8 @@ public class ProjectVM extends ViewModel<Project> {
 	
 	
 	protected SingleListView<Entity, Project> getInstanceOfListView(ViewClosedListener vcl) {
-		ListManager list = new ListManager(getData());
+		String[] columnNames = {"id", "from", "until"};
+		ListManager list = new ListManager(getData(), columnNames);
 		
 		List<String> inputs = new ArrayList<String>();
 		Map<String,ActionListener> actions = new HashMap<String, ActionListener>();
