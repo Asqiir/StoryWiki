@@ -19,41 +19,6 @@ public class GroupVM extends ViewModel<Group> {
 		return new EditGroupView(vcl, new SwapAndEditListener(), getData().getIdentifier());
 	}
 
-	protected ShowView<Group> getInstanceOfShowView(ViewClosedListener vcl) {
-		ActionListener openLinkListener = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				String selected = ((ShowGroupView) getView()).getSelected();
-				
-				if(!(selected == null || selected.equals(""))) {
-					String[] parts = selected.split("–");
-					
-					String id = parts[0].trim();
-					Link link = (Link) getData().get(id);
-					
-					OpenViewEvent ove = new OpenViewEvent(arg0.getSource(), ActionEvent.ACTION_PERFORMED, "", link);
-					getOpenViewListener().actionPerformed(ove);
-				}
-			}
-		};
-		
-		ActionListener removeLinkListener = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				String rem = ((ShowGroupView) getView()).getSelected();
-				
-				if(!(rem == null || rem.equals(""))) {
-					String remByID = rem.split("–")[0].trim();
-					
-					getData().unContain(remByID);
-					commitEdit();
-				}
-			}
-		};
-		
-		return new ShowGroupView(vcl, new SwapAndEditListener(), openLinkListener, removeLinkListener, getData());
-	}
-
 	protected SingleListView<Link, Group> getInstanceOfListView(ViewClosedListener vcl) {
 		//columns
 		String[] columnNames = { "id", "description", "type", "from", "until" };
