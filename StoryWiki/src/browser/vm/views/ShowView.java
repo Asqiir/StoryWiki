@@ -9,14 +9,14 @@ import javax.swing.*;
 import core.Link;
 import core.Searchable;
 
-public class ShowSView<MODEL extends Searchable<MODEL>> extends View<MODEL> {
+public class ShowView<MODEL extends Searchable<MODEL>> extends View<MODEL> {
 	private JComponent titleComp;
 	private final JTextArea timeArea = new JTextArea();
 	private final JTextArea descArea = new JTextArea();
 	
 	private Searchable<?> model;
 	
-	public ShowSView(WindowAdapter vcl, MODEL model, ActionListener swapListener) {
+	public ShowView(WindowAdapter vcl, MODEL model, ActionListener swapListener) {
 		super(vcl, model);
 		this.model = model;
 		
@@ -30,7 +30,7 @@ public class ShowSView<MODEL extends Searchable<MODEL>> extends View<MODEL> {
 		drawFrame(swapListener, jta);
 	}
 
-	public ShowSView(WindowAdapter vcl, MODEL model, ActionListener swapListener, ActionListener titleListener) {
+	public ShowView(WindowAdapter vcl, MODEL model, ActionListener swapListener, ActionListener titleListener) {
 		super(vcl, model);
 		this.model = model;
 		

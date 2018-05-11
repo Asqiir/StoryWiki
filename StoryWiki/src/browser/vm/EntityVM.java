@@ -23,67 +23,7 @@ public class EntityVM extends ViewModel<Entity> {
 	}
 
 	protected View<Entity> getInstanceOfShowView(ViewClosedListener vcl) {
-		
-		return new ShowSView<Entity>(vcl,getData(),new SwapAndEditListener());
-//		ActionListener openLinkListener = new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent arg0) {
-//				String id = ((ShowEntityView) getView()).getSelectedLink();
-//				
-//				OpenViewEvent ove = new OpenViewEvent(arg0.getSource(), ActionEvent.ACTION_PERFORMED, "", getData().getLink(id));
-//				
-//				getOpenViewListener().actionPerformed(ove);
-//			}
-//		};
-//		
-//		ActionListener createGroupListener = new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent arg0) {
-//				String name = ((ShowEntityView) getView()).sendInputGroup();
-//				
-//				if(!(name == null || name.equals(""))) {
-//					getData().createGroup(name);
-//					
-//					commitEdit();
-//				}
-//			}
-//		};
-//		
-//		ActionListener openGroupListener = new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent arg0) {
-//				Group group = getData().getGroup(((ShowEntityView) getView()).getSelectedGroup());
-//				OpenViewEvent ove = new OpenViewEvent(arg0.getSource(), ActionEvent.ACTION_PERFORMED, "", group);
-//				
-//				getOpenViewListener().actionPerformed(ove);
-//			}
-//		};
-//		
-//		ActionListener deleteGroupListener = new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent arg0) {
-//				getData().removeGroup(((ShowEntityView) getView()).sendInputGroup());
-//				commitEdit();
-//			}
-//		};
-//		
-//		ActionListener addLinkToGroupListener = new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent arg0) {
-//				String linkID = ((ShowEntityView) getView()).getSelectedLink();
-//				String groupID = ((ShowEntityView) getView()).getSelectedGroup();
-//				
-//				if(!(linkID == null || linkID.equals("") || groupID == null || groupID.equals(""))) {
-//					Link link = getData().getLink(linkID);
-//					Group group = getData().getGroup(groupID);
-//					
-//					group.add(link);
-//					commitEdit();
-//				}
-//			}
-//		};
-//		
-//		return new ShowEntityView(new SwapAndEditListener(), openLinkListener, vcl, createGroupListener, openGroupListener, deleteGroupListener, addLinkToGroupListener, getData());
+		return new ShowView<Entity>(vcl,getData(),new SwapAndEditListener());
 	}
 
 	protected ListView<Entity> getInstanceOfListView(ViewClosedListener vcl) {
@@ -192,7 +132,7 @@ public class EntityVM extends ViewModel<Entity> {
 	}
 	
 	protected View<Entity> createNextView(ViewClosedListener vcl) {
-		if(getView() instanceof ShowSView) {
+		if(getView() instanceof ShowView) {
 			return getInstanceOfEditView(vcl);
 		} else {
 			if(getView() instanceof EditView) {

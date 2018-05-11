@@ -20,7 +20,7 @@ public class LinkVM extends ViewModel<Link> {
 	}
 
 	protected View<Link> getInstanceOfShowView(ViewClosedListener vcl) {
-		return new ShowSView<Link>(vcl,getData(), new SwapAndEditListener(), new ActionListener() {
+		return new ShowView<Link>(vcl,getData(), new SwapAndEditListener(), new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				OpenViewEvent ove = new OpenViewEvent(arg0.getSource(), ActionEvent.ACTION_PERFORMED, "", getData().getEntity());
@@ -36,7 +36,7 @@ public class LinkVM extends ViewModel<Link> {
 	}
 	
 	protected View<Link> createNextView(ViewClosedListener vcl) {
-		if(getView() instanceof ShowSView) {
+		if(getView() instanceof ShowView) {
 			return getInstanceOfEditView(vcl);
 		} else {
 			return getInstanceOfShowView(vcl);
