@@ -16,4 +16,17 @@ public class SearchableTest {
 		
 		assertTrue(Searchable.isValidTo(e, LocalDate.of(2000, 1, 1), Period.ofDays(1)));
 	}
+	
+	@Test
+	public void testDescriptionBehavior() {
+		Entity e = new Entity("a", Types.NOTE);
+		e.setDescription("this entity is great");
+		
+		assertEquals(e.getDescription(), "this entity is great");
+		
+		String s = "this\nare\nmultiple\nlines";
+		
+		String[] d = s.split("\n");
+		assertEquals(d.length, 4);
+	}
 }

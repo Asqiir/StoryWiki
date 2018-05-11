@@ -3,7 +3,9 @@ package core;
 import java.io.Serializable;
 import java.time.*;
 
-public class Group extends SearchContainer implements Searchable<Group>, Serializable {
+import core.Entity.Types;
+
+public class Group extends SearchContainer<Link> implements Searchable<Group>, Serializable {
 	String name;
 	
 	public Group(String name) {
@@ -47,5 +49,20 @@ public class Group extends SearchContainer implements Searchable<Group>, Seriali
 	@Override
 	public Group get() {
 		return this;
+	}
+	
+	@Override
+	public String getDescription() {
+		return "";
+	}
+	
+	@Override
+	public String getTitle() {
+		return name;
+	}
+	
+	@Override
+	public Entity.Types getType() {
+		return null;
 	}
 }

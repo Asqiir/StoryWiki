@@ -23,13 +23,15 @@ public class EditProjectView extends EditView<Project> {
 		layer.setLayout(new GridLayout(2,1,10,10));
 		
 		input.setText(name);
-		input.addActionListener(getSaveAndSwapListener());
+		input.addActionListener(saveAndSwapListener);
+		input.setFont(DEFAULT_FONT);
 		
-		JButton ready = new JButton("Fertig");
-		ready.addActionListener(saveAndSwapListener);
+		JButton swap = new JButton("Weiter");
+		swap.addActionListener(saveAndSwapListener);
+		swap.setFont(DEFAULT_FONT);
 		
 		layer.add(input);
-		layer.add(ready);
+		layer.add(swap);
 		//==================
 		
 		frame.setVisible(true);

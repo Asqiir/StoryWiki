@@ -1,10 +1,19 @@
 package browser.vm.views;
 
+import java.awt.Font;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
 
 public abstract class View<MODEL> {
+	//GUI constants
+	public static final int BIG_BORDER = 10;
+	public static final int SMALL_BORDER = 3;
+	
+	public static final Font DEFAULT_FONT = new Font("Ubuntu", Font.PLAIN, 12);
+	public static final Font TITLE_FONT = new Font("Ubuntu", Font.BOLD, 26);
+	public static final Font SUBTITLE_FONT = new Font("Ubuntu", Font.BOLD, 16);
+	
 	class MyFrame extends JFrame { //needed to make sure getContentPane() returns a JPanel
 		public MyFrame(JComponent layer) {
 			setContentPane(layer);
@@ -23,6 +32,8 @@ public abstract class View<MODEL> {
 		this.vcl = vcl; //remember, to delete later
 		this.model = model;
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setFont(DEFAULT_FONT);
+		layer.setBorder(BorderFactory.createEmptyBorder(BIG_BORDER, BIG_BORDER, BIG_BORDER, BIG_BORDER));
 		
 		Action closeFrame = new AbstractAction() {
 			@Override

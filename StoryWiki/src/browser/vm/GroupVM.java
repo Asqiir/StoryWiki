@@ -1,12 +1,10 @@
 package browser.vm;
 
 import java.awt.event.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import browser.OpenViewEvent;
 import browser.ViewModel;
-import browser.ProjectController.*;
 import browser.vm.views.*;
 import core.*;
 
@@ -56,16 +54,54 @@ public class GroupVM extends ViewModel<Group> {
 		return new ShowGroupView(vcl, new SwapAndEditListener(), openLinkListener, removeLinkListener, getData());
 	}
 
+	protected SingleListView<Link, Group> getInstanceOfListView(ViewClosedListener vcl) {
+		//columns
+		String[] columnNames = { "id", "description", "type", "from", "until" };
+		ListManager listM = new ListManager(getData(), columnNames,new Buffer[] {});
+		
+		List<String> input = new ArrayList<String>();
+		Map<String, ActionListener> actions = new HashMap<String, ActionListener>();
+		Map<String, String> optNames = new HashMap<String, String>();
+		
+		actions.put("open", new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Searchable<?> link = listM.getSelected();
+				OpenViewEvent ove = new OpenViewEvent(this, ActionEvent.ACTION_PERFORMED, "open link", link);
+				
+				getOpenViewListener().actionPerformed(ove);
+			}
+		});
+		optNames.put("open", "Öffnen");
+		
+		actions.put("delete", new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Searchable<?> link = listM.getSelected();
+				if(link != null) {
+					getData().unContain(link.getIdentifier());
+					commitEdit();
+				}
+			}
+		});
+		optNames.put("delete", "Entfernen");
+		
+		actions.put("swap", new SwapAndEditListener());
+		optNames.put("swap", "Weiter");
+		
+		return new SingleListView<Link, Group>(vcl, getData(), listM, input, actions, optNames, new HashMap<String,Buffer>(), new String[] {"open", "delete", "swap"});
+	}
+	
 	//new
 	protected View<Group> createInitView(ViewClosedListener vcl) {
-		return getInstanceOfShowView(vcl);
+		return createNextView(vcl);
 	}
 	
 	protected View<Group> createNextView(ViewClosedListener vcl) {
-		if(getView() instanceof ShowView) {
+		if(getView() instanceof ListView) {
 			return getInstanceOfEditView(vcl);
 		} else {
-			return getInstanceOfShowView(vcl);
+			return getInstanceOfListView(vcl);
 		}
 	}
 

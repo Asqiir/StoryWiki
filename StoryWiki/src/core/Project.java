@@ -34,6 +34,11 @@ public class Project extends SearchContainer<Entity> implements Serializable {
 		name = newName;
 	}
 	
+	@Override
+	public String getTitle() {
+		return getName();
+	}
+	
 	//==========================
 	//       SAVE & LOAD
 	//==========================
@@ -64,7 +69,7 @@ public class Project extends SearchContainer<Entity> implements Serializable {
 	//==========================
  	
  	@Override
-	public boolean unContain(String id) {
+	public boolean unContain(String id) { //returns true if something is deleted
 		if(!contains(id)) {
 			return false;
 		}

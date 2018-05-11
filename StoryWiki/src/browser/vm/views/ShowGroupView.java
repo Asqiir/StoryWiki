@@ -67,10 +67,10 @@ public class ShowGroupView extends ShowView<Group> {
 		frame.setTitle("Gruppe: " + group.getIdentifier());
 		title.setText(group.getIdentifier());
 		
-		List<Link> linkList = group.getAll();
+		List<Searchable<Link>> linkList = group.getAll();
 		List<String> nameList = new ArrayList<String>();
 		
-		for(Link l:linkList) {
+		for(Searchable<Link> l:linkList) {
 			String firstPart = l.getDescription().split("[\n|\r]")[0];
 			nameList.add(l.getIdentifier() + " – " + firstPart);
 		}

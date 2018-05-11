@@ -4,12 +4,10 @@ import java.awt.event.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import browser.OpenViewEvent;
 import browser.ViewModel;
-import browser.ProjectController.*;
 import browser.vm.views.*;
 import core.*;
 import core.Entity.Types;
@@ -24,78 +22,185 @@ public class EntityVM extends ViewModel<Entity> {
 		return new EditEntityView(vcl, new SwapAndEditListener(), getData());
 	}
 
-	protected ShowView<Entity> getInstanceOfShowView(ViewClosedListener vcl) {
-		ActionListener openLinkListener = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				String id = ((ShowEntityView) getView()).getSelectedLink();
-				
-				OpenViewEvent ove = new OpenViewEvent(arg0.getSource(), ActionEvent.ACTION_PERFORMED, "", getData().getLink(id));
-				
-				getOpenViewListener().actionPerformed(ove);
-			}
-		};
+	protected View<Entity> getInstanceOfShowView(ViewClosedListener vcl) {
 		
-		ActionListener createGroupListener = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				String name = ((ShowEntityView) getView()).sendInputGroup();
-				
-				if(!(name == null || name.equals(""))) {
-					getData().createGroup(name);
-					
-					commitEdit();
-				}
-			}
-		};
-		
-		ActionListener openGroupListener = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				Group group = getData().getGroup(((ShowEntityView) getView()).getSelectedGroup());
-				OpenViewEvent ove = new OpenViewEvent(arg0.getSource(), ActionEvent.ACTION_PERFORMED, "", group);
-				
-				getOpenViewListener().actionPerformed(ove);
-			}
-		};
-		
-		ActionListener deleteGroupListener = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				getData().removeGroup(((ShowEntityView) getView()).sendInputGroup());
-				commitEdit();
-			}
-		};
-		
-		ActionListener addLinkToGroupListener = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				String linkID = ((ShowEntityView) getView()).getSelectedLink();
-				String groupID = ((ShowEntityView) getView()).getSelectedGroup();
-				
-				if(!(linkID == null || linkID.equals("") || groupID == null || groupID.equals(""))) {
-					Link link = getData().getLink(linkID);
-					Group group = getData().getGroup(groupID);
-					
-					group.add(link);
-					commitEdit();
-				}
-			}
-		};
-		
-		return new ShowEntityView(new SwapAndEditListener(), openLinkListener, vcl, createGroupListener, openGroupListener, deleteGroupListener, addLinkToGroupListener, getData());
+		return new ShowSView<Entity>(vcl,getData(),new SwapAndEditListener());
+//		ActionListener openLinkListener = new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+//				String id = ((ShowEntityView) getView()).getSelectedLink();
+//				
+//				OpenViewEvent ove = new OpenViewEvent(arg0.getSource(), ActionEvent.ACTION_PERFORMED, "", getData().getLink(id));
+//				
+//				getOpenViewListener().actionPerformed(ove);
+//			}
+//		};
+//		
+//		ActionListener createGroupListener = new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+//				String name = ((ShowEntityView) getView()).sendInputGroup();
+//				
+//				if(!(name == null || name.equals(""))) {
+//					getData().createGroup(name);
+//					
+//					commitEdit();
+//				}
+//			}
+//		};
+//		
+//		ActionListener openGroupListener = new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+//				Group group = getData().getGroup(((ShowEntityView) getView()).getSelectedGroup());
+//				OpenViewEvent ove = new OpenViewEvent(arg0.getSource(), ActionEvent.ACTION_PERFORMED, "", group);
+//				
+//				getOpenViewListener().actionPerformed(ove);
+//			}
+//		};
+//		
+//		ActionListener deleteGroupListener = new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+//				getData().removeGroup(((ShowEntityView) getView()).sendInputGroup());
+//				commitEdit();
+//			}
+//		};
+//		
+//		ActionListener addLinkToGroupListener = new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+//				String linkID = ((ShowEntityView) getView()).getSelectedLink();
+//				String groupID = ((ShowEntityView) getView()).getSelectedGroup();
+//				
+//				if(!(linkID == null || linkID.equals("") || groupID == null || groupID.equals(""))) {
+//					Link link = getData().getLink(linkID);
+//					Group group = getData().getGroup(groupID);
+//					
+//					group.add(link);
+//					commitEdit();
+//				}
+//			}
+//		};
+//		
+//		return new ShowEntityView(new SwapAndEditListener(), openLinkListener, vcl, createGroupListener, openGroupListener, deleteGroupListener, addLinkToGroupListener, getData());
 	}
 
+	protected ListView<Entity> getInstanceOfListView(ViewClosedListener vcl) {
+		Map<String,Buffer> buffers = new HashMap<String,Buffer>();
+		Buffer linkBuffer = new Buffer(getData().getLinkContainer());
+		Buffer groupBuffer = new Buffer(getData().getGroupContainer());
+		
+		buffers.put("gen add to l", linkBuffer);
+		buffers.put("gen add to g", groupBuffer);
+		
+		ListManager linkManager = new ListManager(getData().getLinkContainer(), new String[] {"id", "description", "type", "from", "until"}, new Buffer[] {linkBuffer}, "Links durchsuchen");
+		ListManager groupManager = new ListManager(getData().getGroupContainer(), new String[] {"id"}, new Buffer[] {groupBuffer}, "Gruppen durchsuchen");
+		
+		List<String> inputs = new ArrayList<String>();
+		Map<String, ActionListener> actions = new HashMap<String, ActionListener>();
+		Map<String, String> optNames = new HashMap<String, String>();
+		
+		actions.put("open link", new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(linkManager.getSelected() != null) {
+					OpenViewEvent ove = new OpenViewEvent(this, ActionEvent.ACTION_PERFORMED, "", linkManager.getSelected());
+					getOpenViewListener().actionPerformed(ove);
+				}
+			}
+		});
+		optNames.put("open link", "Link öffnen");
+		
+		actions.put("delete link", new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Link l = (Link) linkManager.getSelected();
+				
+				if(l != null && getData().isLinkedTo(l.getEntity())) {
+					getData().unLink(l.getEntity());
+					commitEdit();
+				}
+			}
+		});
+		optNames.put("delete link", "Link entfernen");
+		
+		actions.put("open group", new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(groupManager.getSelected() != null) {
+					OpenViewEvent ove = new OpenViewEvent(this, ActionEvent.ACTION_PERFORMED, "", groupManager.getSelected());
+					getOpenViewListener().actionPerformed(ove);
+				}
+			}
+		});
+		optNames.put("open group", "Gruppe öffnen");
+		
+		actions.put("delete group", new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Group g = (Group) groupManager.getSelected();
+				
+				if(g != null) {
+					getData().removeGroup(g.getIdentifier());
+					commitEdit();
+				}
+			}
+		});
+		optNames.put("delete group", "Gruppe löschen");
+		
+		actions.put("create group", new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String input = ((ListView) getView()).getInput("create group");
+				
+				if(input !=  null && !input.equals("")) {
+					getData().createGroup(input);
+					((ListView) getView()).clearField("create group");
+					commitEdit();
+				}
+			}
+		});
+		inputs.add("create group");
+		optNames.put("create group", "Gruppe erstellen");
+		
+		
+		actions.put("gen add to", new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Group g = (Group) groupBuffer.getSelected();
+				Link l = (Link) linkBuffer.getSelected();
+				
+				if(g != null && l != null) {
+					g.add(l);
+					commitEdit();
+				}
+			}
+		});
+		optNames.put("gen add to", "Link zu Gruppe hinzufügen");
+		
+		actions.put("gen swap", new SwapAndEditListener());
+		optNames.put("gen swap", "Weiter");		
+		
+		return new GroupsAndLinksListView(vcl, getData(), linkManager, groupManager, inputs, actions, optNames, buffers,
+				new String[] {"open link", "open group", "delete link", "delete group", "create group", "gen add to", "gen swap"}, getData().getType().showName() + " :: " + getData().getIdentifier());
+	}
+	
 	//new. maybe going to be removed for viewFactory
 	protected View<Entity> createInitView(ViewClosedListener vcl) {
-		return getInstanceOfShowView(vcl);
+		return createNextView(vcl);
 	}
 	
 	protected View<Entity> createNextView(ViewClosedListener vcl) {
-		if(getView() instanceof ShowView) {
+		if(getView() instanceof ShowSView) {
 			return getInstanceOfEditView(vcl);
 		} else {
-			return getInstanceOfShowView(vcl);
+			if(getView() instanceof EditView) {
+				return getInstanceOfListView(vcl);
+			} else {
+				return getInstanceOfShowView(vcl);
+			}
+			
 		}
 	}
 	

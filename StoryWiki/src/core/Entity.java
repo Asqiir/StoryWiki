@@ -45,6 +45,11 @@ public class Entity implements Serializable, Searchable<Entity> {
 			 }
 			 return false;
 		 }
+		 
+		 @Override
+		 public String getTitle() {
+			 return name;
+		 }
 	};
 	
 	private SearchContainer<Group> groupContainer = new SearchContainer<Group>() {
@@ -55,6 +60,11 @@ public class Entity implements Serializable, Searchable<Entity> {
 				 return true;
 			 }
 			 return false;
+		}
+		
+		@Override
+		public String getTitle() {
+			return name;
 		}
 	};
 		
@@ -164,7 +174,7 @@ public class Entity implements Serializable, Searchable<Entity> {
 		}
 	}
 		
-	public void unLink(Entity e) {	
+	public void unLink(Entity e) {	//returns true if there was a link
 		linkContainer.unContain(e.getName());
 		
 		if(e.isLinkedTo(this)) {
@@ -205,11 +215,11 @@ public class Entity implements Serializable, Searchable<Entity> {
 		return links;
 	}
 	
-	static List<Link> convertToLink3(List<Searchable> list) {
+	static List<Link> convertToLink3(List<Searchable<?>> list) {
 		List<Link> links = new ArrayList<Link>();
 		
-		for(Searchable<Link> se:list) {
-			links.add(se.get());
+		for(Searchable<?> se:list) {
+			links.add((Link) se);
 		}
 		return links;
 	}
@@ -284,5 +294,13 @@ public class Entity implements Serializable, Searchable<Entity> {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public SearchContainer<Link> getLinkContainer() {
+		return linkContainer;
+	}
+	
+	public SearchContainer<Group> getGroupContainer() {
+		return groupContainer;
 	}
 }

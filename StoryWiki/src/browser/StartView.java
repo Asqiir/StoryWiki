@@ -5,6 +5,8 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+import browser.vm.views.View;
+
 public class StartView {
 	JFrame frame;
 	JFileChooser chooser;
@@ -71,12 +73,15 @@ public class StartView {
 		JButton newPButton = new JButton("Neues Projekt erstellen");
 		JButton loadPButton = new JButton("Projekt laden");
 		
+		newPButton.setFont(View.DEFAULT_FONT);
+		loadPButton.setFont(View.DEFAULT_FONT);
+		
 		newPButton.addActionListener(newPButtonListener);
 		loadPButton.addActionListener(loadPButtonListener);
 		
 		JPanel layer = new JPanel();
-		layer.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-		layer.setLayout(new GridLayout(2,1,10,10));
+		layer.setBorder(BorderFactory.createEmptyBorder(View.BIG_BORDER,View.BIG_BORDER,View.BIG_BORDER,View.BIG_BORDER));
+		layer.setLayout(new GridLayout(2,1,View.BIG_BORDER,View.BIG_BORDER));
 		
 		layer.add(newPButton);
 		layer.add(loadPButton);
@@ -90,6 +95,7 @@ public class StartView {
 	
 	private String askUserForDirectory() {
 		JFileChooser fc = new JFileChooser();
+		fc.setFont(View.DEFAULT_FONT);
 		fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		
 		//now, ask!

@@ -5,7 +5,6 @@ import java.util.*;
 
 import browser.OpenViewEvent;
 import browser.ViewModel;
-import browser.ProjectController.*;
 import browser.vm.views.*;
 import core.*;
 
@@ -20,29 +19,27 @@ public class LinkVM extends ViewModel<Link> {
 		return new EditLinkView(vcl, new SwapAndEditListener(), getData());
 	}
 
-	protected ShowView<Link> getInstanceOfShowView(ViewClosedListener vcl) {
-		ActionListener openEntityListener = new ActionListener() {
+	protected View<Link> getInstanceOfShowView(ViewClosedListener vcl) {
+		return new ShowSView<Link>(vcl,getData(), new SwapAndEditListener(), new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				OpenViewEvent ove = new OpenViewEvent(arg0.getSource(), ActionEvent.ACTION_PERFORMED, "", getData().getEntity());
 				getOpenViewListener().actionPerformed(ove);
 			}
-		};
-		
-		return new ShowLinkView(new SwapAndEditListener(), openEntityListener, vcl, getData());
+		});
 	}
 
 
 	//new
 	protected View<Link> createInitView(ViewClosedListener vcl) {
-		return getInstanceOfShowView(vcl);
+		return createNextView(vcl);
 	}
 	
 	protected View<Link> createNextView(ViewClosedListener vcl) {
-		if(getView() instanceof EditView) {
-			return getInstanceOfShowView(vcl);
-		} else {
+		if(getView() instanceof ShowSView) {
 			return getInstanceOfEditView(vcl);
+		} else {
+			return getInstanceOfShowView(vcl);
 		}
 	}
 	

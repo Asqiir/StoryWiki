@@ -19,119 +19,92 @@ public class ProjectVM extends ViewModel<Project> {
 	}
 
 	//old
-	protected ShowView<Project> getInstanceOfShowView(ViewClosedListener vcl) {
-		
-		/* The newEntityListener waits for the "new entities" text field,
-		 * it creats the new Entities, and opens the view */
-		ActionListener newEntityListener = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				//1. add the entity
-				
-				ShowProjectView spView = (ShowProjectView) getView();
-				String id = spView.sendCreateAndShowEntityInput();
-				
-				if(id == null) {
-					return;
-				}
-				
-				id = id.replaceAll("–", "");
-				
-				getData().add(new Entity(id, Types.NOTE));
-				
-				//2. reload existing views
-				commitEdit();
-				
-				//3. open view of the new entity
-				getOpenViewListener().actionPerformed(new OpenViewEvent(this, ActionEvent.ACTION_PERFORMED, "", (Entity) getData().get(id)));
-			}
-		};
-		
-		ActionListener deleteEntityListener = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				String id = ((ShowProjectView) getView()).getSelected();
-				
-				if(id == null) {
-					return;
-				}
-				
-				getData().unContain(id);
-				
-				commitEdit();
-			}
-		};
-		
-		ActionListener linkListener = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				Entity e1 = (Entity) getData().get(((ShowProjectView) getView()).getSelected());
-				Entity e2 = (Entity) getData().get(((ShowProjectView) getView()).getLinkTo());
-				
-				if(e1 == null || e2 == null) {
-					return;
-				}
-				
-				//if not linked yet, link
-				if(!e1.isLinkedTo(e2)) {
-					e1.link(e2);
-					commitEdit();
-				}
-			}
-		};
-		
-		ActionListener unlinkListener = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				Entity e1 = (Entity) getData().get(((ShowProjectView) getView()).getSelected());
-				Entity e2 = (Entity) getData().get(((ShowProjectView) getView()).getUnlink());
-				
-				if(e1 == null || e2 == null) {
-					return;
-				}
-				
-				e1.unLink(e2);
-				commitEdit();
-			}
-		};
-		
-		return new ShowProjectView(getData(), new SwapAndEditListener(), vcl, newEntityListener, deleteEntityListener, linkListener, unlinkListener);
-	}
-
 	protected EditView<Project> getInstanceOfEditView(ViewClosedListener vcl) {
 		return new EditProjectView(getData().getName(), new SwapAndEditListener(), vcl);	
 	}
-	
-	
+		
 	protected SingleListView<Entity, Project> getInstanceOfListView(ViewClosedListener vcl) {
-		String[] columnNames = {"id", "from", "until"};
-		ListManager list = new ListManager(getData(), columnNames);
+		Buffer b1 = new Buffer(getData());
+		Buffer b2 = new Buffer(getData());
+		
+		String[] columnNames = {"id", "description", "type", "from", "until"};
+		ListManager list = new ListManager(getData(), columnNames, new Buffer[] {b1,b2});
 		
 		List<String> inputs = new ArrayList<String>();
 		Map<String,ActionListener> actions = new HashMap<String, ActionListener>();
 		Map<String,String> optNames = new HashMap<String, String>();
+		Map<String,Buffer> buffers = new HashMap<String,Buffer>();
+		
+		actions.put("open", new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				OpenViewEvent ove = new OpenViewEvent(this, ActionEvent.ACTION_PERFORMED, "", list.getSelected());
+				getOpenViewListener().actionPerformed(ove);
+			}
+		});
+		optNames.put("open", "Öffnen");
+		
+		actions.put("delete", new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Entity e = (Entity) list.getSelected();
+				if(e != null && getData().unContain(e.getIdentifier())) {
+					commitEdit();
+				}
+			}
+		});
+		optNames.put("delete", "Löschen");
+		
+		actions.put("create", new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String input = ((SingleListView) getView()).getInput("create");
+				
+				if(input != null && !input.equals("")) {
+					((SingleListView) getView()).emptyField("create");
+					getData().add(new Entity(input, Types.NOTE));
+					commitEdit();
+				}
+			}
+		});
+		inputs.add("create");
+		optNames.put("create", "Notitz erstellen");
+		
+		actions.put("link", new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Entity e1 = (Entity) b1.getSelected();
+				Entity e2 = (Entity) b2.getSelected();
+				
+				if(e1 != null && e2 != null && !e1.equals(e2) && !e1.getIdentifier().equals(e2.getIdentifier())) {
+					e1.link(e2);
+					commitEdit();
+				}
+			}
+		});
+		optNames.put("link", "Verlinke");
+		buffers.put("link 1", b1);
+		buffers.put("link 2", b2);
+		
 		
 		actions.put("swap", new SwapAndEditListener());
 		optNames.put("swap", "Weiter");
 		
-		return new SingleListView<Entity, Project>(vcl, getData(), list, inputs, actions, optNames);
+		String[] order = {"open", "delete", "create", "link", "swap"};
+		
+		return new SingleListView<Entity, Project>(vcl, getData(), list, inputs, actions, optNames, buffers, order);
 	}
 
 	//new
 	protected View<Project> createInitView(ViewClosedListener vcl) {
-		return getInstanceOfShowView(vcl);
+		return createNextView(vcl);
 	}
 	
 	protected View<Project> createNextView(ViewClosedListener vcl) {
-		if(getView() instanceof ShowView) {
+		if(getView() instanceof ListView) {
 			return getInstanceOfEditView(vcl);
 		} else {
-			if(getView() instanceof EditView) {
-				return getInstanceOfListView(vcl);
-			} else {
-				return getInstanceOfShowView(vcl);
-			}
-			
+			return getInstanceOfListView(vcl);
 		}
 	}
 

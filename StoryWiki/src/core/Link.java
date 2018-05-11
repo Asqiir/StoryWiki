@@ -54,5 +54,10 @@ public class Link implements Serializable, Searchable<Link> {
 	public Link get() {
 		return this;
 	}
+	
+	@Override
+	public Entity.Types getType() {
+		return linkedTo.getType();
+	}
 
 }

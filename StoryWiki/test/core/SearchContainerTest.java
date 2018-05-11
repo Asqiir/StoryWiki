@@ -15,7 +15,14 @@ public class SearchContainerTest {
 		String id;
 		LocalDate validFrom;
 		Period validTime;
+		Types t = Types.NOTE;
 
+		public ObjectToOrder() {}
+		
+		public ObjectToOrder(Types t) {
+			this.t= t;
+		}
+		
 		@Override
 		public Boolean match(String search) {
 			// TODO Auto-generated method stub
@@ -40,6 +47,17 @@ public class SearchContainerTest {
 		@Override
 		public ObjectToOrder get() {
 			return this;
+		}
+
+		@Override
+		public String getDescription() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Types getType() {
+			return t;
 		}
 		
 	}
@@ -76,5 +94,24 @@ public class SearchContainerTest {
 		p.add(new Entity("troff", Types.NOTE));
 		
 		assertEquals(1, p.getAll().size());
+	}
+	
+	@Test
+	public void testFilterForDate() {
+		List<Searchable<ObjectToOrder>> list = new ArrayList<Searchable<ObjectToOrder>>();
+		
+		list.add(new ObjectToOrder(Types.NOTE));
+		ObjectToOrder o = new ObjectToOrder(Types.PERSON);
+		list.add(o);
+		
+		assertEquals(2, list.size());
+		
+		List<Searchable<?>> filtered = SearchContainer.filterForType(list, Types.NOTE);
+		assertFalse(filtered.contains(o));
+		assertEquals(1, filtered.size());
+		
+		List<Searchable<?>> f2 = SearchContainer.filterForType(list, Types.PERSON);
+		assertTrue(f2.contains(o));
+		assertEquals(1, f2.size());
 	}
 }

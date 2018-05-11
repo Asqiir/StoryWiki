@@ -3,6 +3,9 @@ package browser;
 import java.awt.event.*;
 import java.io.IOException;
 
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 import core.Project;
 
 public class StartManager {
@@ -74,5 +77,4 @@ public class StartManager {
 			}
 		}
 	}
-
 }

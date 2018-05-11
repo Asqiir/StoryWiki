@@ -164,7 +164,7 @@ public abstract class ViewModel<MODEL> {
 				return;
 			}
 			
-			Map<String,String> input = ((EditView) getView()).getInput();
+			Map<String,String> input = ((EditView<MODEL>) getView()).getInput();
 			Map<String,Boolean> valid = isSingleValid(input);
 			
 			if(isInputValid(valid)) {

@@ -18,6 +18,8 @@ public abstract class SearchContainer<INTERN> implements Serializable {
 		containing.addAll(list);
 	}
 	
+	public abstract String getTitle();
+	
 	//manipulate inner stuff
 	public void add(Searchable<INTERN> s) {
 		if(get(s.getIdentifier())==null) {
@@ -50,10 +52,10 @@ public abstract class SearchContainer<INTERN> implements Serializable {
 		return result;
 	}
 
-	public static List<Searchable> filterForValid(final List<? extends Searchable> unfiltered, LocalDate stamp, Period gap) {
-		List<Searchable> filtered = new ArrayList<Searchable>();
+	public static List<Searchable<?>> filterForValid(final List<? extends Searchable> unfiltered, LocalDate stamp, Period gap) {
+		List<Searchable<?>> filtered = new ArrayList<Searchable<?>>();
 		
-		for(Searchable sb:unfiltered) {
+		for(Searchable<?> sb:unfiltered) {
 			if(Searchable.isValidTo(sb, stamp, gap)) {
 				filtered.add(sb);
 			}
@@ -69,14 +71,31 @@ public abstract class SearchContainer<INTERN> implements Serializable {
 			@Override
 			public int compare(Searchable<?> arg0, Searchable<?> arg1) {
 				if(earliestFirst) {
+					if(arg0.getValidFrom() == null || arg1.getValidFrom() == null) {
+						return 0;
+					}
 					return arg0.getValidFrom().compareTo(arg1.getValidFrom());
 				} else {
+					if(arg0.getValidTime() == null || arg1.getValidTime() == null) {
+						return 0;
+					}
 					return Searchable.getValidUntil(arg0).compareTo(Searchable.getValidUntil(arg1));
 				}
 			}
 		});
 		
 		return ordered;
+	}
+	
+	public static List<Searchable<?>> filterForType(final List<? extends Searchable<?>> unfiltered, Entity.Types type) {
+		List<Searchable<?>> filtered = new ArrayList<Searchable<?>>();
+		
+		for(Searchable<?> element:unfiltered) {
+			if(element.getType() != null && element.getType().equals(type)) {
+				filtered.add(element);
+			}
+		}
+		return filtered;
 	}
 	
 	public List<Searchable<INTERN>> getAll() {

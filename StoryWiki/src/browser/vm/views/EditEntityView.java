@@ -26,7 +26,7 @@ public class EditEntityView extends EditView<Entity> {
 		
 		//first line: name
 		nameField.setText(entity.get().getName());
-		nameField.setFont(new Font("Ubuntu", Font.BOLD, 16));
+		nameField.setFont(TITLE_FONT);
 		nameField.setMaximumSize(new Dimension(1000000,200));
 		
 		//dropdown
@@ -34,21 +34,24 @@ public class EditEntityView extends EditView<Entity> {
 		for(Entity.Types element:Entity.Types.values()) {
 			typeDropDown.addItem(element.showName());
 		}
-		typeDropDown.setSelectedItem(entity.getType());
+		typeDropDown.setFont(DEFAULT_FONT);
+		typeDropDown.setSelectedItem(entity.getType().showName());
 		
 		//datepicker
 		from.setText(createValidDateStringOf(entity.getValidFrom()));
+		from.setFont(DEFAULT_FONT);
 		
 		if(entity.getValidFrom() != null) {
 			until.setText(createValidDateStringOf(Searchable.getValidUntil(entity)));			
 		} else {
 			until.setText("02.01.2000");
 		}
+		until.setFont(DEFAULT_FONT);
 		
 		
 		JPanel datePanel = new JPanel();
 		
-		datePanel.setBorder(new TitledBorder("Von - bis [tt.mm.jjjj]"));
+		datePanel.setBorder(new TitledBorder(BorderFactory.createLineBorder(Color.BLACK,1), "Von - bis [tt.mm.jjjj]", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, SUBTITLE_FONT));
 		datePanel.setLayout(new GridLayout(2,1,10,10));
 		
 		datePanel.add(from);
@@ -64,9 +67,11 @@ public class EditEntityView extends EditView<Entity> {
 		descArea.setText(entity.getDescription());
 		descArea.setLineWrap(true);
 		descArea.setWrapStyleWord(true);
+		descArea.setFont(DEFAULT_FONT);
 		
 		//last line: finish edit button
 		JButton finishedEdit = new JButton("Fertig");
+		finishedEdit.setFont(DEFAULT_FONT);
 		finishedEdit.addActionListener(sasl);
 		
 		//frame

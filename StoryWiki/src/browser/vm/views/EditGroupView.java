@@ -49,5 +49,4 @@ public class EditGroupView extends EditView<Group> {
 			rename.setForeground(Color.RED);
 		}
 	}
-
 }
