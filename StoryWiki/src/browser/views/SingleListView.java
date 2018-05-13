@@ -1,4 +1,4 @@
-package vm.views;
+package browser.views;
 
 import java.awt.event.*;
 import javax.swing.*;

@@ -1,4 +1,4 @@
-package vm.views;
+package browser.views;
 
 import java.awt.Font;
 import java.awt.event.*;

@@ -5,7 +5,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-import vm.views.View;
+import browser.views.View;
 
 public class StartView {
 	JFrame frame;

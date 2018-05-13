@@ -1,11 +1,11 @@
-package vm;
+package browser.vm;
 
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import vm.views.*;
+import browser.views.*;
 
 public abstract class ViewModel<MODEL> {
 	private ActionListener cvl; //close view listener

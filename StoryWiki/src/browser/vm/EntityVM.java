@@ -1,4 +1,4 @@
-package vm;
+package browser.vm;
 
 import java.awt.event.*;
 import java.time.LocalDate;
@@ -7,9 +7,9 @@ import java.time.format.DateTimeParseException;
 import java.util.*;
 
 import browser.OpenViewEvent;
+import browser.views.*;
 import core.*;
 import core.Entity.Types;
-import vm.views.*;
 
 class EntityVM extends ViewModel<Entity> {
 	public EntityVM(ActionListener cvl, Entity data, ActionListener ovl, ActionListener ctrlQListener, ActionListener cel) {

@@ -1,11 +1,11 @@
-package vm;
+package browser.vm;
 
 import java.awt.event.*;
 import java.util.*;
 
 import browser.OpenViewEvent;
+import browser.views.*;
 import core.*;
-import vm.views.*;
 
 class GroupVM extends ViewModel<Group> {
 
