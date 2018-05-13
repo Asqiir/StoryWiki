@@ -4,6 +4,7 @@ import java.awt.event.*;
 import java.io.IOException;
 import java.util.*;
 
+import browser.vm.OpenViewEvent;
 import browser.vm.VMFactory;
 import browser.vm.ViewModel;
 import core.Project;
