@@ -59,23 +59,6 @@ public abstract class ViewModel<MODEL> {
 	protected abstract View<MODEL> createInitView(ViewClosedListener vcl);
 	protected abstract View<MODEL> createNextView(ViewClosedListener vcl);
 	
-//	protected abstract ShowView<MODEL> getInstanceOfShowView(ViewClosedListener vcl);
-//	protected abstract EditView<MODEL> getInstanceOfEditView(ViewClosedListener vcl);
-//	protected abstract ListView<MODEL> getInstanceOfListView(ViewClosedListener vcl);
-//	
-//	protected View<MODEL> getInitView(ViewClosedListener vcl) {
-//		return getInstanceOfShowView(vcl);
-//	}
-//	
-//	protected View<MODEL> createNextView(View<MODEL> oldView, ViewClosedListener vcl) {
-//		oldView.removeCloseListener();
-//		
-//		if(oldView instanceof ShowView) {
-//			return getInstanceOfEditView(vcl);
-//		} else {
-//			return getInstanceOfShowView(vcl);
-//		}
-//	}
 	/*===========================
 	 * 	Concrete
 	 *===========================*/
@@ -130,14 +113,14 @@ public abstract class ViewModel<MODEL> {
 	protected abstract Map<String,Boolean> isSingleValid(Map<String,String> input);
 	
 	protected void markInvalid(Map<String,Boolean> valids) {
-		List<String> invalidKeys = new ArrayList();
+		List<String> invalidKeys = new ArrayList<String>();
 		
 		for(String key:valids.keySet()) {
 			if(!valids.get(key)) {
 				invalidKeys.add(key);
 			}
 		}
-		((EditView) getView()).mark(invalidKeys);
+		((EditView<?>) getView()).mark(invalidKeys);
 	}
 	
 	protected boolean isInputValid(Map<String,Boolean> valids) {

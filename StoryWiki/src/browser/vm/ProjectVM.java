@@ -28,7 +28,7 @@ class ProjectVM extends ViewModel<Project> {
 		Buffer b2 = new Buffer(getData());
 		
 		String[] columnNames = {"id", "description", "type", "from", "until"};
-		ListManager list = new ListManager(getData(), columnNames, new Buffer[] {b1,b2});
+		ListManager<Entity> list = new ListManager<Entity>(getData(), columnNames, new Buffer[] {b1,b2});
 		
 		List<String> inputs = new ArrayList<String>();
 		Map<String,ActionListener> actions = new HashMap<String, ActionListener>();
@@ -58,10 +58,10 @@ class ProjectVM extends ViewModel<Project> {
 		actions.put("create", new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				String input = ((SingleListView) getView()).getInput("create");
+				String input = ((SingleListView<?,?>) getView()).getInput("create");
 				
 				if(input != null && !input.equals("")) {
-					((SingleListView) getView()).emptyField("create");
+					((SingleListView<?,?>) getView()).emptyField("create");
 					getData().add(new Entity(input, Types.NOTE));
 					commitEdit();
 				}

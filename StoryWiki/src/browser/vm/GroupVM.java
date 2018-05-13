@@ -22,7 +22,7 @@ class GroupVM extends ViewModel<Group> {
 	protected SingleListView<Link, Group> getInstanceOfListView(ViewClosedListener vcl) {
 		//columns
 		String[] columnNames = { "id", "description", "type", "from", "until" };
-		ListManager listM = new ListManager(getData(), columnNames,new Buffer[] {});
+		ListManager<Link> listM = new ListManager<Link>(getData(), columnNames,new Buffer[] {});
 		
 		List<String> input = new ArrayList<String>();
 		Map<String, ActionListener> actions = new HashMap<String, ActionListener>();

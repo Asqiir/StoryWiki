@@ -15,7 +15,7 @@ import core.Entity;
 import core.SearchContainer;
 import core.Searchable;
 
-public class ListManager {
+public class ListManager<INNER extends Searchable<?>> {
 	final JTable table = new JTable();
 	
 	private JPanel searchPanel;
@@ -26,13 +26,13 @@ public class ListManager {
 	private Map<String, JComponent> filterInput = new HashMap<String, JComponent>();
 	private Map<String, String> selectedFilterOptions = new HashMap<String, String>();
 	
-	private SearchContainer model;
-	private List<Searchable> active;
+	private SearchContainer<INNER> model;
+	private List<INNER> active;
 	
 	private static final int SMALL_BORDER = 2;
 	private static final int BIG_BORDER = 10;
 
-	public ListManager(SearchContainer m, String[] columns, Buffer[] buffers) {
+	public ListManager(SearchContainer<INNER> m, String[] columns, Buffer[] buffers) {
 		model = m;
 		columnNames = columns;
 		this.buffers = buffers;
@@ -43,7 +43,7 @@ public class ListManager {
 		update();		
 	}
 	
-	public ListManager(SearchContainer m, String[] columns, Buffer[] buffers, String searchOptionsHeader) {
+	public ListManager(SearchContainer<INNER> m, String[] columns, Buffer[] buffers, String searchOptionsHeader) {
 		model = m;
 		columnNames = columns;
 		this.buffers = buffers;
@@ -102,7 +102,9 @@ public class ListManager {
 	
 		
 		table.setModel(new DefaultTableModel(columnNames, 0) { //no rows by now
-		    @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
 		    public boolean isCellEditable(int row, int column) {
 		       //all cells false
 		       return false;
@@ -271,8 +273,8 @@ public class ListManager {
 		}
 	}
 	
-	private List<Searchable<?>> filter(SearchContainer<Searchable> con, Map<String, String> selectedFilters) {
-		List<Searchable<Searchable>> preFiltered = con.getAll();
+	private List<INNER> filter(SearchContainer<INNER> model, Map<String, String> selectedFilters) {
+		List<Searchable<INNER>> preFiltered = model.getAll();
 		
 		List<Searchable<?>> filter = convert(preFiltered);
 		
@@ -299,8 +301,7 @@ public class ListManager {
 			filter = SearchContainer.orderByDate(filter, selectedFilters.get("order").contains("eginn"));
 		}
 		
-		
-		return filter;
+		return convertToInner(filter);
 	}
 	
 	private List<Searchable<?>> removeNonValidDates(final List<Searchable<?>> filter) {
@@ -315,13 +316,24 @@ public class ListManager {
 		return f;
 	}
 
-	private List<Searchable<?>> convert(List<Searchable<Searchable>> list) {
+	private List<Searchable<?>> convert(List<Searchable<INNER>> preFiltered) {
 		List<Searchable<?>> converted = new ArrayList<Searchable<?>>();
 		
-		for(Searchable element:list) {
+		for(Searchable<?> element:preFiltered) {
 			converted.add(element);
 		}
 		return converted;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private List<INNER> convertToInner(List<Searchable<?>> con) {
+		List<INNER> ret = new ArrayList<INNER>();
+		
+		for(Searchable<?> s:con) {
+			ret.add((INNER) s);
+		}
+		
+		return ret;
 	}
 
 	protected String[] presentAsStringArray(Searchable<?> s) {
@@ -424,7 +436,7 @@ public class ListManager {
 		return "";
 	}
 
-	public Searchable getSelected() {
+	public INNER getSelected() {
 		if(table.getSelectedColumn() != -1 && table.getSelectedRow() != -1 && !active.isEmpty()) {
 			return active.get(table.getSelectedRow());
 		} else {
@@ -432,13 +444,14 @@ public class ListManager {
 		}
 	}
 	 
+	@SuppressWarnings("unchecked")
 	private void fowardBuffers() {
-		Searchable selected = getSelected();
+		INNER selected = getSelected();
 		
 		for(Buffer b:buffers) {
-			Searchable s = b.getSelected(); //the buffer selects the new searchable
+			Searchable<?> s = b.getSelected(); //the buffer selects the new searchable
 			b.select(selected);
-			selected = s; //and remembers the old one, for the next buffer
+			selected = (INNER) s; //and remembers the old one, for the next buffer
 		}
 	}
 }

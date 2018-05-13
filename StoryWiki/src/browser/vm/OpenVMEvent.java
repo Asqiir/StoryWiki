@@ -3,6 +3,7 @@ package browser.vm;
 import java.awt.event.ActionEvent;
 
 public class OpenVMEvent extends ActionEvent {
+	private static final long serialVersionUID = 1L;
 	private Object arg;
 	
 	public OpenVMEvent(Object arg0, int arg1, String arg2, Object transporting) {

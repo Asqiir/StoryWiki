@@ -10,11 +10,10 @@ public class Buffer {
 	private SearchContainer<?> con;
 	private JComboBox<String> cb = new JComboBox<String>();
 	
-	public Buffer(SearchContainer sc) {
+	public Buffer(SearchContainer<?> sc) {
 		con = sc;
 		cb.setFont(View.DEFAULT_FONT);
 		fillComboBox();
-		//TODO defaultselection
 	}
 	
 	private void fillComboBox() {
@@ -23,7 +22,7 @@ public class Buffer {
 		}
 	}
 	
-	public Searchable getSelected() {
+	public Searchable<?> getSelected() {
 		String selected = (String) cb.getSelectedItem();
 		
 		if(selected != null && !selected.equals("")) {
@@ -33,7 +32,7 @@ public class Buffer {
 		}
 	}
 	
-	public void select(Searchable s) {
+	public void select(Searchable<?> s) {
 		cb.setSelectedItem(s.getIdentifier());
 	}
 	
@@ -44,7 +43,7 @@ public class Buffer {
 		fillComboBox();
 		
 		try {
-			Searchable s = con.get(selected);
+			Searchable<?> s = con.get(selected);
 			select(s);
 		} catch (NullPointerException e) {
 		}

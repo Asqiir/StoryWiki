@@ -35,8 +35,8 @@ class EntityVM extends ViewModel<Entity> {
 		buffers.put("gen add to l", linkBuffer);
 		buffers.put("gen add to g", groupBuffer);
 		
-		ListManager linkManager = new ListManager(getData().getLinkContainer(), new String[] {"id", "description", "type", "from", "until"}, new Buffer[] {linkBuffer}, "Links durchsuchen");
-		ListManager groupManager = new ListManager(getData().getGroupContainer(), new String[] {"id"}, new Buffer[] {groupBuffer}, "Gruppen durchsuchen");
+		ListManager<Link> linkManager = new ListManager<Link>(getData().getLinkContainer(), new String[] {"id", "description", "type", "from", "until"}, new Buffer[] {linkBuffer}, "Links durchsuchen");
+		ListManager<Group> groupManager = new ListManager<Group>(getData().getGroupContainer(), new String[] {"id"}, new Buffer[] {groupBuffer}, "Gruppen durchsuchen");
 		
 		List<String> inputs = new ArrayList<String>();
 		Map<String, ActionListener> actions = new HashMap<String, ActionListener>();
@@ -93,11 +93,11 @@ class EntityVM extends ViewModel<Entity> {
 		actions.put("create group", new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				String input = ((ListView) getView()).getInput("create group");
+				String input = ((ListView<?>) getView()).getInput("create group");
 				
 				if(input !=  null && !input.equals("")) {
 					getData().createGroup(input);
-					((ListView) getView()).clearField("create group");
+					((ListView<?>) getView()).clearField("create group");
 					commitEdit();
 				}
 			}

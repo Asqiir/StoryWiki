@@ -3,9 +3,8 @@ package core;
 import java.io.Serializable;
 import java.time.*;
 
-import core.Entity.Types;
-
 public class Group extends SearchContainer<Link> implements Searchable<Group>, Serializable {
+	private static final long serialVersionUID = 1L;
 	String name;
 	
 	public Group(String name) {

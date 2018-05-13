@@ -12,7 +12,6 @@ public class ProjectTest {
 
 	@Test
 	public void testAddEntity() {
-		Entity e1 = new Entity("a", Types.NOTE);
 		Project p = new Project("someWiki");
 		
 		Entity e2 = new Entity("name", Types.NOTE);

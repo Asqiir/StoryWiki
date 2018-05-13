@@ -6,11 +6,12 @@ import java.io.*;
 import java.time.*;
 
 public abstract class SearchContainer<INTERN> implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private List<Searchable<INTERN>> containing = new ArrayList<Searchable<INTERN>>();
 	
 	public SearchContainer(){}
 	
-	public SearchContainer(SearchContainer sc) {
+	public SearchContainer(SearchContainer<INTERN> sc) {
 		containing = new ArrayList<Searchable<INTERN>>(sc.containing);
 	}
 	
@@ -52,7 +53,7 @@ public abstract class SearchContainer<INTERN> implements Serializable {
 		return result;
 	}
 
-	public static List<Searchable<?>> filterForValid(final List<? extends Searchable> unfiltered, LocalDate stamp, Period gap) {
+	public static List<Searchable<?>> filterForValid(final List<? extends Searchable<?>> unfiltered, LocalDate stamp, Period gap) {
 		List<Searchable<?>> filtered = new ArrayList<Searchable<?>>();
 		
 		for(Searchable<?> sb:unfiltered) {
@@ -126,7 +127,7 @@ public abstract class SearchContainer<INTERN> implements Serializable {
 		return null;
 	}
 
-	public SearchContainer replaceInnerWith(List<Searchable<INTERN>> newContent) {
+	public SearchContainer<INTERN> replaceInnerWith(List<Searchable<INTERN>> newContent) {
 		containing = newContent;
 		return this;
 	}

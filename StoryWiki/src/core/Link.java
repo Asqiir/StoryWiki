@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.*;
 
 public class Link implements Serializable, Searchable<Link> {
+	private static final long serialVersionUID = 1L;
 	private Entity linkedTo;
 	private String linkDesc;
 	

@@ -6,6 +6,7 @@ import java.util.*;
 import core.Entity.Types;
 
 public class Project extends SearchContainer<Entity> implements Serializable {
+	private static final long serialVersionUID = 1L;
 	public static final String UNKNOWN_TEXT = "unknown";
 	private String name;
 	
@@ -87,7 +88,7 @@ public class Project extends SearchContainer<Entity> implements Serializable {
 	private List<Entity> convertToEntity(List<Searchable<Entity>> list) {
 		List<Entity> entities = new ArrayList<Entity>();
 		
-		for(Searchable se:list) {
+		for(Searchable<Entity> se:list) {
 			entities.add((Entity) se);
 		}
 		return entities;
