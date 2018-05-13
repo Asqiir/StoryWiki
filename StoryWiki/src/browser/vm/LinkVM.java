@@ -21,7 +21,7 @@ class LinkVM extends ViewModel<Link> {
 		return new ShowView<Link>(vcl,getData(), new SwapAndEditListener(), new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				OpenViewEvent ove = new OpenViewEvent(arg0.getSource(), ActionEvent.ACTION_PERFORMED, "", getData().getEntity());
+				OpenVMEvent ove = new OpenVMEvent(arg0.getSource(), ActionEvent.ACTION_PERFORMED, "", getData().getEntity());
 				getOpenViewListener().actionPerformed(ove);
 			}
 		});

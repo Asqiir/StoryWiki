@@ -32,7 +32,7 @@ class GroupVM extends ViewModel<Group> {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Searchable<?> link = listM.getSelected();
-				OpenViewEvent ove = new OpenViewEvent(this, ActionEvent.ACTION_PERFORMED, "open link", link);
+				OpenVMEvent ove = new OpenVMEvent(this, ActionEvent.ACTION_PERFORMED, "open link", link);
 				
 				getOpenViewListener().actionPerformed(ove);
 			}

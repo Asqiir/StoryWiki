@@ -38,7 +38,7 @@ class ProjectVM extends ViewModel<Project> {
 		actions.put("open", new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				OpenViewEvent ove = new OpenViewEvent(this, ActionEvent.ACTION_PERFORMED, "", list.getSelected());
+				OpenVMEvent ove = new OpenVMEvent(this, ActionEvent.ACTION_PERFORMED, "", list.getSelected());
 				getOpenViewListener().actionPerformed(ove);
 			}
 		});

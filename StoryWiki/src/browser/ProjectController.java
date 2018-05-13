@@ -4,7 +4,7 @@ import java.awt.event.*;
 import java.io.IOException;
 import java.util.*;
 
-import browser.vm.OpenViewEvent;
+import browser.vm.OpenVMEvent;
 import browser.vm.VMFactory;
 import browser.vm.ViewModel;
 import core.Project;
@@ -15,48 +15,48 @@ public class ProjectController {
 	
 	private ActionListener runningL; //tell here, when projects "closed"-button pressed
 	
-	private List<ViewModel<?>> openViews = new ArrayList<ViewModel<?>>(); //tell them about any change within model, close them, when the main view is closed
+	private List<ViewModel<?>> openVMs = new ArrayList<ViewModel<?>>(); //tell them about any change within model, close them, when the main view is closed
 	
 	public ProjectController(Project p, String projectDirectory, ActionListener rl) {
 		project = p;
 		runningL = rl;
 		directory = projectDirectory;
 		
-		openView(project);
+		openVM(project);
 	}
 	
 	public void close() throws IOException {
-		while(!openViews.isEmpty()) {
-			if(!VMFactory.isMainVM(openViews.get(0))) { //the project vm is already closing.
+		while(!openVMs.isEmpty()) {
+			if(!VMFactory.isMainVM(openVMs.get(0))) { //the project vm is already closing.
 				//in order to the close pattern, it will remove itself in the last step from the list
-				openViews.get(0).closeView();
+				openVMs.get(0).closeView();
 			} else {
-				openViews.remove(openViews.get(0));
+				openVMs.remove(openVMs.get(0));
 			}
 		}
 		project.save(directory);
 	}
 	
-	private void openView(Object arg) {
-		openViews.add(VMFactory.createVM(arg, runningL, project, new CloseViewListener(), new OpenViewListener(), new CtrlQListener(), new CommitEditListener()));
+	private void openVM(Object arg) {
+		openVMs.add(VMFactory.createVM(arg, runningL, project, new CloseViewListener(), new OpenVMListener(), new CtrlQListener(), new CommitEditListener()));
 	}
 	
-	public class OpenViewListener implements ActionListener {
+	public class OpenVMListener implements ActionListener {
 		public void actionPerformed(ActionEvent ove) {
-			openView(((OpenViewEvent) ove).getArg());
+			openVM(((OpenVMEvent) ove).getArg());
 		}
 	}
 	
 	class CloseViewListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			//when event arrives here, the view is already closed. This event is thrown by vm.discharge()
-			openViews.remove((ViewModel<?>) e.getSource());
+			openVMs.remove((ViewModel<?>) e.getSource());
 		}
 	}
 	
 	class CommitEditListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			for(ViewModel<?> vm:openViews) {
+			for(ViewModel<?> vm:openVMs) {
 				vm.reload();
 			}
 		}
@@ -65,7 +65,7 @@ public class ProjectController {
 	class CtrlQListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			for(ViewModel element:openViews) {
+			for(ViewModel element:openVMs) {
 				if(VMFactory.isMainVM(element)) {
 					/* Having pressed CTRL + Q, anything should be closed.
 					 * This happens by closing the main frame.

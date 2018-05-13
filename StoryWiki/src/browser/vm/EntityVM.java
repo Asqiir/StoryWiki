@@ -46,7 +46,7 @@ class EntityVM extends ViewModel<Entity> {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if(linkManager.getSelected() != null) {
-					OpenViewEvent ove = new OpenViewEvent(this, ActionEvent.ACTION_PERFORMED, "", linkManager.getSelected());
+					OpenVMEvent ove = new OpenVMEvent(this, ActionEvent.ACTION_PERFORMED, "", linkManager.getSelected());
 					getOpenViewListener().actionPerformed(ove);
 				}
 			}
@@ -70,7 +70,7 @@ class EntityVM extends ViewModel<Entity> {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if(groupManager.getSelected() != null) {
-					OpenViewEvent ove = new OpenViewEvent(this, ActionEvent.ACTION_PERFORMED, "", groupManager.getSelected());
+					OpenVMEvent ove = new OpenVMEvent(this, ActionEvent.ACTION_PERFORMED, "", groupManager.getSelected());
 					getOpenViewListener().actionPerformed(ove);
 				}
 			}
