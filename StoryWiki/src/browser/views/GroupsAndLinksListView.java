@@ -10,6 +10,8 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
+import browser.detailIO.Buffer;
+import browser.detailIO.ListManager;
 import core.*;
 
 public class GroupsAndLinksListView extends ListView<Entity> {

@@ -1,6 +1,8 @@
-package browser.views;
+package browser.detailIO;
 
 import javax.swing.*;
+
+import browser.views.View;
 import core.SearchContainer;
 import core.Searchable;
 

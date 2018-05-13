@@ -4,6 +4,8 @@ import java.awt.event.*;
 import java.util.*;
 
 import browser.OpenViewEvent;
+import browser.detailIO.Buffer;
+import browser.detailIO.ListManager;
 import browser.views.*;
 import core.*;
 

@@ -1,4 +1,4 @@
-package browser.views;
+package browser.detailIO;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -10,6 +10,7 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.*;
 
+import browser.views.View;
 import core.Entity;
 import core.SearchContainer;
 import core.Searchable;

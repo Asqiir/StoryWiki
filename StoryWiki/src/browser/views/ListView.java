@@ -3,6 +3,10 @@ package browser.views;
 import java.awt.GridLayout;
 import java.awt.event.*;
 import javax.swing.*;
+
+import browser.detailIO.Buffer;
+import browser.detailIO.ListManager;
+
 import java.util.*;
 
 public abstract class ListView<MODEL> extends View<MODEL> {

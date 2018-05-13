@@ -7,6 +7,8 @@ import java.time.format.DateTimeParseException;
 import java.util.*;
 
 import browser.OpenViewEvent;
+import browser.detailIO.Buffer;
+import browser.detailIO.ListManager;
 import browser.views.*;
 import core.*;
 import core.Entity.Types;

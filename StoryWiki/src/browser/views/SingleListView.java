@@ -2,6 +2,10 @@ package browser.views;
 
 import java.awt.event.*;
 import javax.swing.*;
+
+import browser.detailIO.Buffer;
+import browser.detailIO.ListManager;
+
 import java.util.*;
 import java.util.List;
 import java.awt.*;

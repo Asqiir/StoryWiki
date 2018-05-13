@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import browser.OpenViewEvent;
+import browser.detailIO.Buffer;
+import browser.detailIO.ListManager;
 import browser.views.*;
 import core.*;
 import core.Entity.*;
