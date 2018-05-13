@@ -1,4 +1,4 @@
-package browser.vm;
+package vm;
 
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -7,12 +7,11 @@ import java.util.List;
 import java.util.Map;
 
 import browser.OpenViewEvent;
-import browser.ViewModel;
-import browser.vm.views.*;
 import core.*;
 import core.Entity.*;
+import vm.views.*;
 
-public class ProjectVM extends ViewModel<Project> {
+class ProjectVM extends ViewModel<Project> {
 
 	public ProjectVM(ActionListener cvl, Project data, ActionListener ovl, ActionListener ctrlQListener, ActionListener cel) {
 		super(cvl, data, ovl, ctrlQListener, cel);

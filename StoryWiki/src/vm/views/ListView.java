@@ -1,4 +1,4 @@
-package browser.vm.views;
+package vm.views;
 
 import java.awt.GridLayout;
 import java.awt.event.*;

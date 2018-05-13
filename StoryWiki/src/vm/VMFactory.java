@@ -1,11 +1,6 @@
-package browser;
+package vm;
 
 import java.awt.event.ActionListener;
-
-import browser.vm.EntityVM;
-import browser.vm.GroupVM;
-import browser.vm.LinkVM;
-import browser.vm.ProjectVM;
 
 import core.Entity;
 import core.Group;
@@ -32,7 +27,7 @@ public class VMFactory {
 		return null;
 	}
 	
-	public static boolean isMainVM(ViewModel vm) {
+	public static boolean isMainVM(ViewModel<?> vm) {
 		return vm instanceof ProjectVM;
 	}
 }

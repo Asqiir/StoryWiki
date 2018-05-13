@@ -4,6 +4,8 @@ import java.awt.event.*;
 import java.io.IOException;
 import java.util.*;
 import core.Project;
+import vm.VMFactory;
+import vm.ViewModel;
 
 public class ProjectController {
 	private Project project; //shared model

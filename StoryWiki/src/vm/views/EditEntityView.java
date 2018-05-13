@@ -1,4 +1,4 @@
-package browser.vm.views;
+package vm.views;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;

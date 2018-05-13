@@ -1,11 +1,11 @@
-package browser;
+package vm;
 
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import browser.vm.views.*;
+import vm.views.*;
 
 public abstract class ViewModel<MODEL> {
 	private ActionListener cvl; //close view listener
@@ -103,7 +103,7 @@ public abstract class ViewModel<MODEL> {
 	 *  2. view closes. sends event to viewclosedlistener (start here, if closed by user)
 	 *  3. vm discharges from projectcontrollers list
 	 * ===========================*/
-	protected void closeView() {
+	public void closeView() {
 		view.close();
 	}
 	private void discharge() {

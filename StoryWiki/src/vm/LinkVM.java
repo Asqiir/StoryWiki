@@ -1,14 +1,13 @@
-package browser.vm;
+package vm;
 
 import java.awt.event.*;
 import java.util.*;
 
 import browser.OpenViewEvent;
-import browser.ViewModel;
-import browser.vm.views.*;
 import core.*;
+import vm.views.*;
 
-public class LinkVM extends ViewModel<Link> {
+class LinkVM extends ViewModel<Link> {
 
 	public LinkVM(ActionListener cvl, Link data, ActionListener ovl, ActionListener ctrlQListener, ActionListener cel) {
 		super(cvl, data, ovl, ctrlQListener, cel);
