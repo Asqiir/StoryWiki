@@ -95,6 +95,7 @@ public abstract class ViewModel<MODEL> {
 	}
 	
 	protected class ViewClosedListener extends WindowAdapter {
+		@Override
 		public void windowClosing(WindowEvent e)
 	    {
 			discharge();

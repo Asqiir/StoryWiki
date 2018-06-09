@@ -28,7 +28,7 @@ public abstract class View<MODEL> {
 	private MODEL model;
 	
 	public View(WindowAdapter vcl, MODEL model) {
-		frame.addWindowListener(vcl);
+		frame.addWindowListener(vcl); //when window is closed, vcl will work
 		this.vcl = vcl; //remember, to delete later
 		this.model = model;
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
