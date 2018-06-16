@@ -38,7 +38,7 @@ public class ProjectController {
 	}
 	
 	private void openVM(Object arg) {
-		openVMs.add(VMFactory.createVM(arg, runningL, project, new CloseViewListener(), new OpenVMListener(), new CtrlQListener(), new CommitEditListener()));
+		openVMs.add(VMFactory.createVM(arg, runningL, new CloseViewListener(), new OpenVMListener(), new CtrlQListener(), new CommitEditListener()));
 	}
 	
 	public class OpenVMListener implements ActionListener {
