@@ -10,7 +10,8 @@ public class Entity implements Serializable, Searchable<Entity> {
 		NOTE("Notitz"),
 		ERA("Zeitspanne"),
 		EVENT("Ereignis"),
-		PERSON("Person");
+		PERSON("Person"),
+		PLACE("Ort");
 		
 		String shownAs;
 		Types(String s) {
